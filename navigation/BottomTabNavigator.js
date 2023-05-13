@@ -5,6 +5,9 @@ import StocksScreen from "../screens/StocksScreen";
 import SearchScreen from "../screens/SearchScreen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
+
+import NewsScreen from "../screens/NewsScreen";
+
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
 
@@ -32,6 +35,16 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: "Search",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-search" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="News"
+        component={NewsScreen}
+        options={{
+          title: "News Page",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="newspaper-outline" />
           ),
         }}
       />
