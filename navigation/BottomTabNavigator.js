@@ -42,7 +42,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="News"
         component={NewsScreen}
         options={{
-          title: "News Page",
+          title: "News",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="newspaper-outline" />
           ),

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { DarkTheme } from '@react-navigation/native';
 
-
 export default function TabBarIcon(props) {
   return (
     <Ionicons
