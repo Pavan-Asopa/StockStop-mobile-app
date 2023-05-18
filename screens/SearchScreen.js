@@ -62,7 +62,7 @@ export default function SearchScreen({ navigation }) {
 
   useEffect(() => {
     fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=02ea7babe095fdebdb6c4ef948886e07`)
-      .then(res => {res.json(); return res;})
+      .then(res => res.json())
       .then(data => 
         data.map(stock => {
           console.log(stock.name);
