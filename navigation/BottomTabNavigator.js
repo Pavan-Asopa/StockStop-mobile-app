@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from "../components/TabBarIcon";
-import StocksScreen from "../screens/StocksScreen";
 import SearchScreen from "../screens/SearchScreen";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-
-
+import StocksScreen from "../screens/StocksScreen";
 import NewsScreen from "../screens/NewsScreen";
+import HomeScreen from "../screens/HomeScreen";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
@@ -19,12 +18,12 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Stocks"
-        component={StocksScreen}
+        name="Home"
+        component={HomeScreen}
         options={{
-          title: "Stocks",
+          title: "Home",
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="md-trending-up" />
+            <TabBarIcon focused={focused} name="md-home" />
           ),
         }}
       />
@@ -35,6 +34,16 @@ export default function BottomTabNavigator({ navigation, route }) {
           title: "Search",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-search" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Watch List"
+        component={StocksScreen}
+        options={{
+          title: "Watch List",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-trending-up" />
           ),
         }}
       />

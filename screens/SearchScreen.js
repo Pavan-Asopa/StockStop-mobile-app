@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
+import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
-import { Ionicons } from '@expo/vector-icons';
 
 import SearchList from '../components/SearchList';
 
 export default function SearchScreen({ navigation }) {
   //const { ServerURL, addToWatchlist } = useStocksContext();
+  const [search, setSearch] = useState("");
   const [fullList, setFullList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [filteredList, setFilteredList] = useState([]);
-  const [search, setSearch] = useState("");
 
-// const searchFilterFunction = (props) => {
-//   if (props.searchText) {
-//     const newData = masterDataSource.filter(
-//       function (item) {
-//         const itemData = item.title
-//           ? item.title.toUpperCase()
-//           : ''.toUpperCase();
-//         const textData = text.toUpperCase();
-//         return itemData.indexOf(textData) > -1;
-//     });
-//     setFilteredDataSource(newData);
-//     setSearch(props.searchText);
-//   } else {
-//     setFilteredDataSource(props.fullList);
-//     setSearch(props.searchText);
-//   }};
+const searchFilterFunction = (searchText) => {
+  if (searchText) {
+    const newData = fullList.filter((stock) => 
+      stock.name.includes(
+        searchText[0].toUpperCase() + 
+        searchText.slice(1,-1).toLowerCase()
+        )
+      );
+    setFilteredList(newData);
+    setSearch(searchText);
+  } else {
+    setFilteredList(fullList);
+    setSearch(searchText);
+  }};
 
   useEffect(() => {
     fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=02ea7babe095fdebdb6c4ef948886e07`)
@@ -44,7 +41,10 @@ export default function SearchScreen({ navigation }) {
         }))
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false))
-    .then(stocks => setFullList(stocks))
+    .then(stocks => {
+      setFullList(stocks);
+      setFilteredList(stocks);
+    })
   }, []);
 
   if (loading) {
@@ -63,20 +63,16 @@ export default function SearchScreen({ navigation }) {
     );
   }
 
-  let test = "la";
-  const newData = fullList.filter((stock) => 
-    stock.name.includes(test[0].toUpperCase()+test.slice(1,-1).toLowerCase()))
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView>
         <Searchbar
-          placeholder="Search"
-          //onChangeText={onChangeSearch}
-          //value={searchQuery}
+          placeholder="Search for a stock here"
+          onChangeText={searchFilterFunction}
+          value={search}
         />
         <ScrollView style={styles.container}>
-          <SearchList stocks={fullList} />
+          <SearchList stocks={filteredList} />
         </ScrollView>
       </ScrollView>
     </TouchableWithoutFeedback>
@@ -86,7 +82,7 @@ export default function SearchScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000'
+    backgroundColor: '#000000',
   },
-// use scaleSize(x) to adjust sizes for small/large screens
+  text: scaleSize(18),
 });

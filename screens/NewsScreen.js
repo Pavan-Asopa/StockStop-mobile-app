@@ -1,37 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard /* include other react native components here as needed */ } from 'react-native';
-import { useStocksContext } from '../contexts/StocksContext';
+import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
+import { Searchbar } from 'react-native-paper';
 import { scaleSize } from '../constants/Layout';
 import { Ionicons } from '@expo/vector-icons';
 
-// FixMe: implement other components and functions used in SearchScreen here (don't just put all the JSX in SearchScreen below)
+import NewsList from '../components/NewsList';
 
+async function getHeadlines(symbol) {    
+    const url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&limit=10&sort=LATEST,RELEVANCE&apikey=UDOKLGMRBPTAE3WC`
 
+    let res = await fetch(url);
+    let data = await res.json();
+    let articles = data.feed;
 
-
-
-
+    return articles.map((article) => ({
+        title: article.title,
+        url: article.url
+    }));
+}
 
 export default function NewsScreen({ navigation }) {
-  const { ServerURL, addToWatchlist } = useStocksContext();
-  const [state, setState] = useState({ /* FixMe: initial state here */ });
-
-  // can put more code here
+  const [headlines, setHeadlines] = useState([]);
+  const [symbol, setSymbol] = useState("AAPL");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // FixMe: fetch symbol names from the server and save in local SearchScreen state
-  }, []);
+    getHeadlines(symbol)
+      .then(res => setHeadlines(res))
+      .catch((error) => setError(error.message))
+      .finally(() => setLoading(false))
+  }, [symbol]);
+
+  if (loading) {
+    return (
+      <Text>
+        Loading stock news...
+      </Text>
+    );
+  }
+
+  if (error) {
+    return (
+      <Text>
+        Something went wrong: {error.message}
+      </Text>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        {/* FixMe: add children here! */ }
-      </View>
+      <ScrollView style={styles.container}>
+        <NewsList headlines={headlines.slice(0,10)} />
+      </ScrollView>
     </TouchableWithoutFeedback>    
   )
 }
 
 const styles = StyleSheet.create({
-// FixMe: add styles here ...
-// use scaleSize(x) to adjust sizes for small/large screens
+  container: {
+    flex: 1,
+    backgroundColor: '#000000',
+  },
+  text: scaleSize(18),
 });
