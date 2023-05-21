@@ -10,6 +10,7 @@ export default function NewsList({headlines}) {
             title={headline.title}
             titleStyle={styles.title}
             titleNumberOfLines={3}
+            key={headline.title}
             left={props => <List.Icon {...props} color={"#2b6777"} icon="newspaper-variant-outline"/>}
             onPress={() => Linking.openURL(headline.url)}
           />

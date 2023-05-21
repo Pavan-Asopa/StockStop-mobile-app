@@ -25,6 +25,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-home" />
           ),
+          headerShown: false
         }}
       />
       <BottomTab.Screen
@@ -35,6 +36,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-search" />
           ),
+          headerShown: false
         }}
       />
       <BottomTab.Screen
@@ -45,6 +47,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-trending-up" />
           ),
+          headerShown: false
         }}
       />
       <BottomTab.Screen
@@ -55,6 +58,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="newspaper-outline" />
           ),
+          headerShown: false
         }}
       />
     </BottomTab.Navigator>
