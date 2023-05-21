@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { Searchbar, List } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 
 import SearchList from '../components/SearchList';
 
 export default function SearchScreen({ navigation }) {
-  //const { ServerURL, addToWatchlist } = useStocksContext();
+  const { ServerURL, addToWatchList } = useStocksContext();
   const [search, setSearch] = useState("");
   const [fullList, setFullList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);

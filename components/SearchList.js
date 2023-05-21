@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { List } from 'react-native-paper';
+import { useStocksContext } from '../contexts/StocksContext';
 
 export default function SearchList({stocks}) {
+  const { addToWatchList } = useStocksContext();
+
     return (
       <View>
         {stocks.map((item) =>
@@ -11,6 +14,7 @@ export default function SearchList({stocks}) {
             titleStyle={styles.title}
             key={item.symbol}
             left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
+            onPress={() => addToWatchList(item)}
           />
         )}
       </View>

@@ -1,10 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
 const StocksContext = React.createContext();
 
 export const StocksProvider = ({ children }) => {
   const [state, setState] = useState([]);
+
+  let _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@Watch");
+      console.log("Retrieved WatchList");
+
+      if (value !== null) {
+        setState(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log("Error retrieving data");
+    }
+  };
+
+  useEffect(() => {
+    _retrieveData();
+  }, []);
 
   return (
     <StocksContext.Provider value={[state, setState]}>
@@ -16,18 +33,22 @@ export const StocksProvider = ({ children }) => {
 export const useStocksContext = () => {
   const [state, setState] = useContext(StocksContext);
 
-  // can put more code here
+  function addToWatchList(newStock) {
+    setState((oldState) => 
+      Persist(oldState.push({
+          name: newStock.name,
+          symbol: newStock.symbol
+        }))
+    );
 
-  function addToWatchList(newSymbol) {
-    //FixMe: add the new symbol to the watchlist, save it in useStockContext state and persist to AsyncStorage
-    setState((newSymbol) => {
-      state.push(newSymbol);
-    })
+    AsyncStorage.setItem("@Watch", JSON.stringify(state));
+
+    return {state};
   }
 
-  useEffect(() => {
-    // FixMe: Retrieve watchlist from persistent storage
-  }, []);
+  // useEffect(() => {
+  //   _retrieveData();
+  // }, []);
 
-  return { ServerURL: 'http://131.181.190.87:3001', watchList: state,  addToWatchList };
+  return { ServerURL: 'http://131.181.190.87:3001', watchList: state, addToWatchList };
 };
