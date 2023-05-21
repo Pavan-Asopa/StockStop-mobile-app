@@ -12,7 +12,7 @@
     "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "splash": {
-      "image": "./assets/images/stockstop.png",
+      "image": "./assets/images/stockstop_splash.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

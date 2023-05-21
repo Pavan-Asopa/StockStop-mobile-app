@@ -9,7 +9,7 @@ export default function SearchList({stocks}) {
           <List.Item
             title={item.name}
             titleStyle={styles.title}
-            key={item.name}
+            key={item.symbol}
             left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
           />
         )}

@@ -18,10 +18,10 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="StockStop Home"
+        name="StockStop"
         component={HomeScreen}
         options={{
-          title: "StockStop Home",
+          title: "StockStop",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-home" />
           ),
