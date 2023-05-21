@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "IFN666 Stocks",
-    "slug": "IFN666Stocks",
+    "name": "StockStop",
+    "slug": "StockStop",
     "platforms": [
       "ios",
       "android",
@@ -9,10 +9,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/stockstop.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,6 +25,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Stock Market App for IFN666 at QUT"
+    "description": "StockStop: Stock Market App for IFN666, QUT Semester 1 2023"
   }
 }
