@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import TabBarIcon from "../components/TabBarIcon";
 import SearchScreen from "../screens/SearchScreen";
 import StocksScreen from "../screens/StocksScreen";
 import NewsScreen from "../screens/NewsScreen";
 import HomeScreen from "../screens/HomeScreen";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
@@ -25,7 +25,6 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-home" />
           ),
-          headerShown: false
         }}
       />
       <BottomTab.Screen
@@ -36,7 +35,6 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-search" />
           ),
-          headerShown: false
         }}
       />
       <BottomTab.Screen
@@ -47,7 +45,6 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="md-trending-up" />
           ),
-          headerShown: false
         }}
       />
       <BottomTab.Screen
@@ -58,7 +55,6 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="newspaper-outline" />
           ),
-          headerShown: false
         }}
       />
     </BottomTab.Navigator>
