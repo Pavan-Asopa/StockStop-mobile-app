@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { List } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
+import { scaleSize } from '../constants/Layout';
 
 export default function SearchList({stocks}) {
   const { addToWatchList } = useStocksContext();
@@ -24,7 +25,7 @@ export default function SearchList({stocks}) {
   const styles = StyleSheet.create({
     title: {
       color: '#fff',
-      fontSize: 20,
+      fontSize: scaleSize(20),
       fontWeight: 'bold'
     }
   });

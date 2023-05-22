@@ -46,8 +46,7 @@ export default function StocksScreen({route}) {
 const styles = StyleSheet.create({
   title: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: scaleSize(20),
     fontWeight: 'bold'
   }
-  // use scaleSize(x) to adjust sizes for small/large screens
   });

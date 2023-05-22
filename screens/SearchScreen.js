@@ -84,5 +84,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  text: scaleSize(18),
 });
