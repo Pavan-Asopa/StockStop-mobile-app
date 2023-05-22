@@ -3,13 +3,14 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
+import WatchList from '../components/WatchList';
 
 
 // FixMe: implement other components and functions used in StocksScreen here (don't just put all the JSX in StocksScreen below)
 
 
 export default function StocksScreen({route}) {
-  const { ServerURL, watchList } = useStocksContext();
+  const { ServerURL, watchList, addToWatchList } = useStocksContext();
   const [state, setState] = useState({ watchList });
 
   console.log(watchList);
@@ -30,14 +31,7 @@ export default function StocksScreen({route}) {
   } else {
     return (
       <ScrollView style={styles.container}>
-        {state.map((stock) => {
-            <List.Item
-              title={stock.name}
-              titleStyle={styles.title}
-              key={stock.symbol}
-              // left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
-            />
-        })}
+        <WatchList stocks={state} />
       </ScrollView>
     );
   }

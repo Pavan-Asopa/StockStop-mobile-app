@@ -35,10 +35,13 @@ export const useStocksContext = () => {
 
   function addToWatchList(newStock) {
     setState((oldState) => 
-      Persist(oldState.push({
-          name: newStock.name,
-          symbol: newStock.symbol
-        }))
+      {oldState.push([newStock.name, newStock.symbol])}
+      
+      // Persist(oldState.push({
+      //     name: newStock.name,
+      //     symbol: newStock.symbol
+      //   }))
+
     );
 
     AsyncStorage.setItem("@Watch", JSON.stringify(state));
