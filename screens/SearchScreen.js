@@ -7,7 +7,7 @@ import { scaleSize } from '../constants/Layout';
 import SearchList from '../components/SearchList';
 
 export default function SearchScreen({ navigation }) {
-  const { ServerURL, addToWatchList } = useStocksContext();
+  const { ServerURL, watchList, addToWatchList } = useStocksContext();
   const [search, setSearch] = useState("");
   const [fullList, setFullList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);

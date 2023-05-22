@@ -6,22 +6,22 @@ const StocksContext = React.createContext();
 export const StocksProvider = ({ children }) => {
   const [state, setState] = useState([]);
 
-  let _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@Watch");
-      console.log("Retrieved WatchList");
+  // let _retrieveData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("@Watch");
+  //     console.log("Retrieved WatchList");
 
-      if (value !== null) {
-        setState(JSON.parse(value));
-      }
-    } catch (error) {
-      console.log("Error retrieving data");
-    }
-  };
+  //     if (value !== null) {
+  //       setState(JSON.parse(value));
+  //     }
+  //   } catch (error) {
+  //     console.log("Error retrieving data");
+  //   }
+  // };
 
-  useEffect(() => {
-    _retrieveData();
-  }, []);
+  // useEffect(() => {
+  //   _retrieveData();
+  // }, []);
 
   return (
     <StocksContext.Provider value={[state, setState]}>
@@ -33,18 +33,13 @@ export const StocksProvider = ({ children }) => {
 export const useStocksContext = () => {
   const [state, setState] = useContext(StocksContext);
 
-  function addToWatchList(newStock) {
-    setState((oldState) => 
-      {oldState.push([newStock.name, newStock.symbol])}
-      
-      // Persist(oldState.push({
-      //     name: newStock.name,
-      //     symbol: newStock.symbol
-      //   }))
+  function addToWatchList(newStock, state, setState) {
+    setState((oldState) => {
+      oldState.push(newStock);
+      return [...state]
+    });
 
-    );
-
-    AsyncStorage.setItem("@Watch", JSON.stringify(state));
+    //AsyncStorage.setItem("@Watch", JSON.stringify(state));
 
     return {state};
   }

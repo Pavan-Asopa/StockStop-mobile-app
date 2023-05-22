@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
+import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 import WatchList from '../components/WatchList';
@@ -10,37 +9,49 @@ import WatchList from '../components/WatchList';
 
 
 export default function StocksScreen({route}) {
-  const { ServerURL, watchList, addToWatchList } = useStocksContext();
-  const [state, setState] = useState({ watchList });
+  const { ServerURL, currentList, addToWatchList } = useStocksContext();
+  const [stocks, setStocks] = useState({ currentList });
 
-  console.log(watchList);
-  console.log(state);
-
-  // can put more code here
+  console.log(stocks);
 
   useEffect(() => {
     // FixMe: fetch stock data from the server for any new symbols added to the watchlist and save in local StocksScreen state  
-  }, [watchList]);
+  }, [currentList]);
 
-  if (!state) {
+  if (stocks.currentList === undefined) {
     return (
-      <View>
-        <Text>WatchList is empty.</Text>
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}> Your WatchList is empty.</Text>
       </View>
     );
   } else {
     return (
       <ScrollView style={styles.container}>
-        <WatchList stocks={state} />
+        <Text style={styles.text}>This is your watch screen.</Text>
+        {/* <WatchList stocks={stocks} /> */}
       </ScrollView>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  title: {
-    color: '#fff',
+  container: {
+    flex: 1,
+    backgroundColor: "#000000",
+    padding: scaleSize(10),
+  },
+  text: {
     fontSize: scaleSize(20),
-    fontWeight: 'bold'
-  }
+    color: "#fff",
+  },
+  emptyContainer: {
+    flex: 1,
+    backgroundColor: "#000000",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emptyText: {
+    fontSize: scaleSize(25),
+    color: "#800000",
+  },
   });
