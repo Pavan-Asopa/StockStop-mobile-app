@@ -1,11 +1,12 @@
 import React from "react";
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from "react-native";
 import { List } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 
 export default function WatchList({stocks}) {
 
-  console.log(stocks);
+  const navigation = useNavigation();
 
     return (
       <View>
@@ -17,6 +18,7 @@ export default function WatchList({stocks}) {
               key={stock.stockSymbol}
               description={stock.stockSymbol}
               descriptionStyle={styles.description}
+              onPress={() => {navigation.push('StockInfo', {params: stock.stockSymbol})}}
             />
           );
         })}

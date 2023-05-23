@@ -4,7 +4,7 @@ import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 import WatchList from "../components/WatchList";
 
-export default function StocksScreen({route}) {
+export default function StocksScreen({route, navigation}) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
 
  // console.log(watchList);

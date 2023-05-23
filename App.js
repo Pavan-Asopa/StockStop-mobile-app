@@ -4,7 +4,9 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import { StocksProvider } from "./contexts/StocksContext";
+import StockInfoScreen from "./screens/StockInfoScreen";
 import "react-native-gesture-handler";
+
 
 const Stack = createStackNavigator();
 
@@ -16,6 +18,7 @@ export default function App(props) {
         <NavigationContainer theme={DarkTheme}>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
+            <Stack.Screen name="StockInfo" component={StockInfoScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </StocksProvider>
