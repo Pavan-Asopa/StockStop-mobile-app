@@ -33,7 +33,7 @@ export const StocksProvider = ({ children }) => {
 export const useStocksContext = () => {
   const [state, setState] = useContext(StocksContext);
 
-  function addToWatchList(newStock, state, setState) {
+  function addToWatchList(newStock) {
     setState((oldState) => {
       oldState.push(newStock);
       return [...state]

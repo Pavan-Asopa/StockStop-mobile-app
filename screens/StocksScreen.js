@@ -9,16 +9,17 @@ import WatchList from '../components/WatchList';
 
 
 export default function StocksScreen({route}) {
-  const { ServerURL, currentList, addToWatchList } = useStocksContext();
-  const [stocks, setStocks] = useState({ currentList });
+  const { ServerURL, watchList, addToWatchList } = useStocksContext();
+  //const [stocks, setStocks] = useState(watchList);
 
-  console.log(stocks);
+ // console.log(watchList);
 
   useEffect(() => {
     // FixMe: fetch stock data from the server for any new symbols added to the watchlist and save in local StocksScreen state  
-  }, [currentList]);
+  }, [watchList]);
 
-  if (stocks.currentList === undefined) {
+
+  if (watchList.length === 0) {
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}> Your WatchList is empty.</Text>
@@ -28,7 +29,7 @@ export default function StocksScreen({route}) {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.text}>This is your watch screen.</Text>
-        {/* <WatchList stocks={stocks} /> */}
+        <WatchList stocks={watchList} />
       </ScrollView>
     );
   }
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000",
+    color: "#fff",
     padding: scaleSize(10),
   },
   text: {

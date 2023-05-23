@@ -16,7 +16,8 @@ export default function SearchList({stocks}) {
             titleStyle={styles.title}
             key={item.symbol}
             left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
-            onPress={() => addToWatchList(item.name)}
+            //onPress={() => addToWatchList(item.name, state, setState)}
+            onPress={() => addToWatchList(item)}
           />
         )}
       </View>

@@ -4,14 +4,19 @@ import { List } from 'react-native-paper';
 import { scaleSize } from '../constants/Layout';
 
 export default function WatchList({stocks}) {
+
+  console.log(stocks);
+
     return (
       <View>
         {stocks.map((stock) => {
+          return (
             <List.Item
               title={stock.name}
               titleStyle={styles.title}
               key={stock.symbol}
             />
+          )
         })}
       </View>
     );
