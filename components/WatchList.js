@@ -12,13 +12,13 @@ export default function WatchList({stocks}) {
         {stocks.map((stock) => {
           return (
             <List.Item
-              title={stock[0]}
+              title={stock.stockName}
               titleStyle={styles.title}
-              key={stock[1]}
-              description={stock[1]}
+              key={stock.stockSymbol}
+              description={stock.stockSymbol}
               descriptionStyle={styles.description}
             />
-          )
+          );
         })}
       </View>
     );
