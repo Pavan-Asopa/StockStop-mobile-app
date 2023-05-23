@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
-import { Searchbar } from 'react-native-paper';
-import { scaleSize } from '../constants/Layout';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
+import { Searchbar } from "react-native-paper";
+import { scaleSize } from "../constants/Layout";
+import { Ionicons } from "@expo/vector-icons";
 
-import NewsList from '../components/NewsList';
+import NewsList from "../components/NewsList";
 
 async function getHeadlines(symbol) {    
     const url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&limit=10&sort=LATEST,RELEVANCE&apikey=UDOKLGMRBPTAE3WC`
@@ -60,6 +60,6 @@ export default function NewsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
   },
 });

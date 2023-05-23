@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { List } from 'react-native-paper';
-import { scaleSize } from '../constants/Layout';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { List } from "react-native-paper";
+import { scaleSize } from "../constants/Layout";
 
 export default function WatchList({stocks}) {
 
@@ -12,9 +12,11 @@ export default function WatchList({stocks}) {
         {stocks.map((stock) => {
           return (
             <List.Item
-              title={stock.name}
+              title={stock[0]}
               titleStyle={styles.title}
-              key={stock.symbol}
+              key={stock[1]}
+              description={stock[1]}
+              descriptionStyle={styles.description}
             />
           )
         })}
@@ -24,8 +26,13 @@ export default function WatchList({stocks}) {
 
   const styles = StyleSheet.create({
     title: {
-      color: '#fff',
+      color: "#fff",
       fontSize: scaleSize(20),
-      fontWeight: 'bold'
+      fontWeight: "bold",
+    },
+    description: {
+      color: "#D3D3D3",
+      fontSize: scaleSize(14),
+      marginRight: 5,
     },
   });

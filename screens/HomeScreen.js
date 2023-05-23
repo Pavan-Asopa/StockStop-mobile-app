@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard /* include other react native components here as needed */ } from 'react-native';
-import { useStocksContext } from '../contexts/StocksContext';
-import { scaleSize } from '../constants/Layout';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { useStocksContext } from "../contexts/StocksContext";
+import { scaleSize } from "../constants/Layout";
+import { Ionicons } from "@expo/vector-icons";
 
-// FixMe: implement other components and functions used in SearchScreen here (don't just put all the JSX in SearchScreen below)
+// FixMe: implement other components and functions used in SearchScreen here (don"t just put all the JSX in SearchScreen below)
 
 
 

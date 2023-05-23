@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from 'react-native';
-import { Searchbar, List } from 'react-native-paper';
-import { useStocksContext } from '../contexts/StocksContext';
-import { scaleSize } from '../constants/Layout';
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
+import { Searchbar } from "react-native-paper";
+import { useStocksContext } from "../contexts/StocksContext";
+import { scaleSize } from "../constants/Layout";
 
-import SearchList from '../components/SearchList';
+import SearchList from "../components/SearchList";
 
 export default function SearchScreen({ navigation }) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
@@ -49,17 +49,17 @@ const searchFilterFunction = (searchText) => {
 
   if (loading) {
     return (
-      <Text>
-        Loading available stocks...
-      </Text>
+      <View style={styles.feedbackContainer}>
+        <Text style={styles.loadingMessage}>Loading available stocks...</Text>
+      </View>
     );
   }
 
   if (error) {
     return (
-      <Text>
-        Something went wrong: {error}
-      </Text>
+      <View style={styles.feedbackContainer}>
+        <Text style={styles.errorMessage}>Something went wrong: {error}</Text>
+      </View>
     );
   }
 
@@ -82,6 +82,20 @@ const searchFilterFunction = (searchText) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
+  },
+  feedbackContainer: {
+    flex: 1,
+    backgroundColor: "#000000",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loadingMessage: {
+    fontSize: scaleSize(20),
+    color: "#fff",
+  },
+  errorMessage: {
+    fontSize: scaleSize(20),
+    color: "#fff",
   },
 });

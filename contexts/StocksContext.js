@@ -48,5 +48,5 @@ export const useStocksContext = () => {
   //   _retrieveData();
   // }, []);
 
-  return { ServerURL: 'http://131.181.190.87:3001', watchList: state, addToWatchList };
+  return { ServerURL: "http://131.181.190.87:3001", watchList: state, addToWatchList };
 };

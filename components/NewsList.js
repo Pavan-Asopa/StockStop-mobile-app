@@ -1,7 +1,7 @@
-import React from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
-import { List } from 'react-native-paper';
-import { scaleSize } from '../constants/Layout';
+import React from "react";
+import { Linking, StyleSheet, View } from "react-native";
+import { List } from "react-native-paper";
+import { scaleSize } from "../constants/Layout";
 
 export default function NewsList({headlines}) {
     return (
@@ -22,8 +22,8 @@ export default function NewsList({headlines}) {
 
   const styles = StyleSheet.create({
     title: {
-      color: '#fff',
+      color: "#fff",
       fontSize: scaleSize(14),
-      fontWeight: 'bold'
+      fontWeight: "bold"
     }
   });
