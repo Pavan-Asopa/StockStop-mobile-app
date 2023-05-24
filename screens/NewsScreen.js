@@ -35,7 +35,7 @@ export default function NewsScreen({ route, navigation }) {
 
   if (loading) {
     return (
-      <Text>
+      <Text style = {styles.text}>
         Loading stock news...
       </Text>
     );
@@ -43,7 +43,7 @@ export default function NewsScreen({ route, navigation }) {
 
   if (error) {
     return (
-      <Text>
+      <Text style = {styles.text}>
         Something went wrong: {error.message}
       </Text>
     );
