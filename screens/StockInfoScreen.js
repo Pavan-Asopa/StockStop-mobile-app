@@ -1,9 +1,9 @@
-import {Text, View, StyleSheet, ScrollView } from "react-native";
+import {Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
 import { Button } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
+
 
 export default function StockInfoScreen({route, navigation}) {
      

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
-import { Searchbar } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
-import { Ionicons } from "@expo/vector-icons";
+
 
 import NewsList from "../components/NewsList";
 

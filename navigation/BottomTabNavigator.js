@@ -4,7 +4,6 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import TabBarIcon from "../components/TabBarIcon";
 import SearchScreen from "../screens/SearchScreen";
 import StocksScreen from "../screens/StocksScreen";
-import NewsScreen from "../screens/NewsScreen";
 import HomeScreen from "../screens/HomeScreen";
 
 const BottomTab = createBottomTabNavigator();
