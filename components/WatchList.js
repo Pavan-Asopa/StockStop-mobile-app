@@ -18,7 +18,7 @@ export default function WatchList({stocks}) {
               key={stock.stockSymbol}
               description={stock.stockSymbol}
               descriptionStyle={styles.description}
-              onPress={() => {navigation.push('StockInfo', {params: stock.stockSymbol})}}
+              onPress={() => {navigation.push('StockInfo', {stock: stock.stockSymbol})}}
             />
           );
         })}

@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import { StocksProvider } from "./contexts/StocksContext";
 import StockInfoScreen from "./screens/StockInfoScreen";
+import NewsScreen from "./screens/NewsScreen";
 import "react-native-gesture-handler";
 
 
@@ -19,6 +20,7 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
             <Stack.Screen name="StockInfo" component={StockInfoScreen} />
+            <Stack.Screen name="News" component={NewsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </StocksProvider>

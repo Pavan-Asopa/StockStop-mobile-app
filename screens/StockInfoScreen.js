@@ -1,25 +1,52 @@
-import {Text, View, StyleSheet } from "react-native";
+import {Text, View, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
-
+import { Button } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
 
 export default function StockInfoScreen({route, navigation}) {
      
-    //const {itemId} = route.params;
-    //console.log(itemId); 
-    const {description} = useStockDescription("AAPL");
-    console.log(description);
+    const itemId = route.params.stock;
+    const {description} = useStockDescription(itemId);
+
+
+    if(!description){
+      return <Text style = {styles.text}>Descritpion Loading . . . </Text>
+    }
+    
 
     return (
-        <View style = {styles.container}>
-             <Text style = {styles.text}> ...</Text>
-        </View>
+        <ScrollView style = {styles.container}>
+             <Text style = {styles.text}>
+               {description.stockName}
+             </Text>
+             <Text style = {styles.text}>
+                Sector: {description.sector}
+             </Text>
+             <Text style = {styles.text}>
+                Industry: {description.industry}
+             </Text>
+             <ScrollView>
+                <Text style = {styles.text}>
+                    Description: {description.description}
+                </Text>
+             </ScrollView>
+             <Button 
+             icon = "newspaper-variant-multiple-outline" 
+             mode="contained-tonal" 
+             onPress={() => navigation.push('News', {stock: itemId})}>
+              Click for News</Button>
+        </ScrollView> 
     )
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: "#000000",
+      },
+      des_container: {
         flex: 1,
         backgroundColor: "#000000",
       },

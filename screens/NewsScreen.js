@@ -19,11 +19,12 @@ async function getHeadlines(symbol) {
     }));
 }
 
-export default function NewsScreen({ navigation }) {
+export default function NewsScreen({ route, navigation }) {
+  const symbol = route.params.stock;
   const [headlines, setHeadlines] = useState([]);
-  const [symbol, setSymbol] = useState("AAPL");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log(symbol);
 
   useEffect(() => {
     getHeadlines(symbol)
@@ -61,5 +62,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000",
+  },
+  text: {
+    fontSize: scaleSize(20),
+    color: "#fff",
   },
 });
