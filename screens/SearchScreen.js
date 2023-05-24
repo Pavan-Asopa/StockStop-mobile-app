@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, ActivityIndicator } from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 
@@ -50,10 +50,11 @@ const searchFilterFunction = (searchText) => {
   if (loading) {
     return (
       <View style={styles.feedbackContainer}>
-        <Text style={styles.loadingMessage}>Loading available stocks...</Text>
+        <Text style={styles.loadingMessage}>Loading available stocks</Text>
+        <ActivityIndicator animating={true} />
       </View>
     );
-  }
+  };
 
   if (error) {
     return (
@@ -61,7 +62,7 @@ const searchFilterFunction = (searchText) => {
         <Text style={styles.errorMessage}>Something went wrong: {error}</Text>
       </View>
     );
-  }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
   loadingMessage: {
     fontSize: scaleSize(20),
     color: "#fff",
+    paddingRight: scaleSize(5),
   },
   errorMessage: {
     fontSize: scaleSize(20),
