@@ -77,7 +77,7 @@ const searchFilterFunction = (searchText) => {
       </ScrollView>
     </TouchableWithoutFeedback>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

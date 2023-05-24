@@ -7,12 +7,9 @@ import WatchList from "../components/WatchList";
 export default function StocksScreen({route, navigation}) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
 
- // console.log(watchList);
-
   useEffect(() => {
     // FixMe: fetch stock data from the server for any new symbols added to the watchlist and save in local StocksScreen state  
   }, [watchList]);
-
 
   if (watchList.length === 0) {
     return (

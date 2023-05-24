@@ -18,7 +18,7 @@ export default function NewsList({headlines}) {
         )}
       </View>
     );
-  }
+  };
 
   const styles = StyleSheet.create({
     title: {

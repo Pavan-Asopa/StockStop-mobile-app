@@ -8,7 +8,7 @@ export default function SearchList({stocks}) {
 
   const {ServerURL, watchList, addToWatchList } = useStocksContext();
   
-  console.log(stocks.length);
+  console.log(stocks.length); // logging this to try to debug displaying no filtered stocks
 
   if (stocks.length === 0) {
     return (
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   emptyHeader: {
     fontSize: scaleSize(20),
     color: "#F62217",
+    textAlign: "center",
   },
   emptyMessage: {
     fontSize: scaleSize(16),

@@ -24,17 +24,17 @@ export default function WatchList({stocks}) {
         })}
       </View>
     );
-  }
+};
 
-  const styles = StyleSheet.create({
-    title: {
-      color: "#fff",
-      fontSize: scaleSize(20),
-      fontWeight: "bold",
-    },
-    description: {
-      color: "#D3D3D3",
-      fontSize: scaleSize(14),
-      marginRight: 5,
-    },
-  });
+const styles = StyleSheet.create({
+  title: {
+    color: "#fff",
+    fontSize: scaleSize(20),
+    fontWeight: "bold",
+  },
+  description: {
+    color: "#D3D3D3",
+    fontSize: scaleSize(14),
+    marginRight: 5,
+  },
+});

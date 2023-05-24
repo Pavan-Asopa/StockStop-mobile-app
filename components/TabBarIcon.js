@@ -11,4 +11,4 @@ export default function TabBarIcon(props) {
       color={props.focused ? DarkTheme.colors.primary : DarkTheme.colors.text }
     />
   );
-}
+};

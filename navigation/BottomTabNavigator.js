@@ -48,8 +48,8 @@ export default function BottomTabNavigator({ navigation, route }) {
       />
     </BottomTab.Navigator>
   );
-}
+};
 
 function getHeaderTitle(route) {
   return getFocusedRouteNameFromRoute(route) ?? INITIAL_ROUTE_NAME;
-}
+};

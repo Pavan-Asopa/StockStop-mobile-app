@@ -14,7 +14,7 @@ async function getStockDescription(symbol) {
         industry: data.Industry,
         description: data.Description
     };
-}
+};
 
 export function useStockDescription(symbol) {
     const [ loading, setLoading ] = useState(true);
@@ -29,15 +29,15 @@ export function useStockDescription(symbol) {
     }, [symbol]);
 
     if (loading) {
-        return<Text style = {styles.text}>Loading stock info...</Text>;
+        return<Text style={styles.text}>Loading stock info...</Text>;
     }
 
     if (error) {
-        return<Text style = {styles.text}>Something went wrong: {error}</Text>;
+        return<Text style={styles.text}>Something went wrong: {error}</Text>;
     }
 
     return { description };
-}
+};
 
 const styles = StyleSheet.create({
     container: {

@@ -16,7 +16,7 @@ async function getHeadlines(symbol) {
         title: article.title,
         url: article.url
     }));
-}
+};
 
 export default function NewsScreen({ route, navigation }) {
   const symbol = route.params.stock;
@@ -55,7 +55,7 @@ export default function NewsScreen({ route, navigation }) {
       </ScrollView>
     </TouchableWithoutFeedback>    
   )
-}
+};
 
 const styles = StyleSheet.create({
   container: {
