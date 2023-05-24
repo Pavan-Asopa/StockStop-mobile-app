@@ -7,11 +7,13 @@ async function getStockDescription(symbol) {
 
     let res = await fetch(url);
     let data = await res.json();
+    let sector = data.Sector.substring(0,1) + data.Sector.substring(1,).toLowerCase();
+    let industry = data.Industry.substring(0,1) + data.Industry.substring(1,).toLowerCase();
 
     return {
         stockName: data.Name,
-        sector: data.Sector,
-        industry: data.Industry,
+        sector: sector,
+        industry: industry,
         description: data.Description
     };
 };

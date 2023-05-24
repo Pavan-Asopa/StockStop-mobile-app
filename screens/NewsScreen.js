@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
 import { scaleSize } from "../constants/Layout";
-
-
 import NewsList from "../components/NewsList";
 
 async function getHeadlines(symbol) {    
@@ -19,6 +17,7 @@ async function getHeadlines(symbol) {
 };
 
 export default function NewsScreen({ route, navigation }) {
+  const name = route.params.name;
   const symbol = route.params.stock;
   const [headlines, setHeadlines] = useState([]);
   const [error, setError] = useState(null);
@@ -51,6 +50,7 @@ export default function NewsScreen({ route, navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView style={styles.container}>
+        <Text style={styles.header}>{name}</Text>
         <NewsList headlines={headlines.slice(0,10)} />
       </ScrollView>
     </TouchableWithoutFeedback>    
@@ -61,6 +61,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000",
+  },
+  header: {
+    fontSize: scaleSize(20),
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
   },
   text: {
     fontSize: scaleSize(20),
