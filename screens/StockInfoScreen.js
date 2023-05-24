@@ -3,6 +3,7 @@ import React from "react";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
 import { Button } from "react-native-paper";
+import ClosingChart from "../components/ClosingChart";
 
 
 export default function StockInfoScreen({route, navigation}) {
@@ -37,6 +38,7 @@ export default function StockInfoScreen({route, navigation}) {
              mode="contained-tonal" 
              onPress={() => navigation.push('News', {stock: itemId})}>
               Click for News</Button>
+              <ClosingChart/>
         </ScrollView> 
     )
 };
