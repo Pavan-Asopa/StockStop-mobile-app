@@ -1,22 +1,23 @@
 import React, {useState, useEffect} from "react";
 
 async function getDailyData(symbol) {
-    const url = `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1day&apikey=f6c31332ded14e9ea847dffce4489c6a`;
+    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&apikey=UDOKLGMRBPTAE3WC`;
     
     let res = await fetch(url);
     let data = await res.json();
-    let values = data.values;
+    let values = data["Time Series (Daily)"];
+
 
     return values;
-}
+};
 
 export function useDailyData(symbol) {
-
+    
     function updateLabels(values) {
         if (values.length == 0) return null;
 
         const labels = [];
-        for (let i = 0; i < 52; i++) {
+        for (let i = 0; i < 30; i++) {
             labels.push(Object.keys(values)[i]);
         };
 
@@ -43,25 +44,9 @@ export function useDailyData(symbol) {
     useEffect(() => {
         getDailyData(symbol)
             .then((res) => setValues(res))
-            .then((data) => 
-                data.map(stock => {
-                    return {
-                        date: stock.datetime,
-                        close: stock.close
-                    };
-                }))
-        .then(timeSeries => setRowData(timeSeries))
-        .catch((error) => setError(error.message))
-        .finally(() => setLoading(false))
+            .catch((error) => setError(error.message))
+            .finally(() => setLoading(false))
     }, [symbol]);
-
-    if (loading) {
-        return<p>Loading time series data...</p>;
-    }
-
-    if (error) {
-        return<p>Something went wrong: {error}</p>;
-    }
 
     const labels = updateLabels(values);
 
