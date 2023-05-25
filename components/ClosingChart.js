@@ -5,11 +5,11 @@ import { Button } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import { useWeeklyData } from "./WeeklyData";
 
-export default function ClosingChart(symbol) {
+export default function ClosingChart({symbol}) {
 
   const allWeeklyData = useWeeklyData(symbol);
-
-  if(!allWeeklyData) {
+  console.log(allWeeklyData)
+  if(!allWeeklyData || allWeeklyData.loading) {
     return <Text styles={styles.text}>Loading Data . . .</Text>
   };
 

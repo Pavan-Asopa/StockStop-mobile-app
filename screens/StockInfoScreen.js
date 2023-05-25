@@ -37,17 +37,23 @@ export default function StockInfoScreen({route, navigation}) {
                 <Text>{description.description}</Text>
               </Modal>
             </Portal>
-            <Button style={styles.descButton} onPress={showModal}>Display stock description</Button>
+            <Button 
+              style={styles.buttons}
+              mode="outlined"
+              textColor="#fff"
+              compact={true}
+              onPress={showModal}
+            >Display stock description</Button>
             <View style={styles.lineBreak} />
             <Button
-              style={styles.newsButton}
+              style={styles.buttons}
               icon="newspaper-variant-multiple-outline"
               mode="contained-tonal"
               compact={true}
               onPress={() => navigation.push('News', {stock: symbol, name: description.stockName})}
             >Click for News</Button>
+            <ClosingChart symbol={symbol}/>
           </PaperProvider>
-          {/* <ClosingChart symbol={symbol}/> */}
         </ScrollView> 
     );
 };
@@ -73,8 +79,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center"
       },
-      descButton: {
+      buttons: {
+        flex: 1,
+        alignSelf: "center",
+        width: scaleSize(200),
         marginTop: scaleSize(5),
+        marginBottom: scaleSize(15),
       },
       alert :{
         fontStyle: "italic",
@@ -100,12 +110,6 @@ const styles = StyleSheet.create({
       text: {
         fontSize: scaleSize(20),
         color: "#fff",
-      },
-      newsButton: {
-        flex: 1,
-        alignSelf: "center",
-        width: scaleSize(200),
-        marginTop: scaleSize(5),
       },
     }
 );

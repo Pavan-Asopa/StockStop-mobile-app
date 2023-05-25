@@ -1,20 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { List } from 'react-native-paper';
+import { Button, List } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 
 export default function SearchList({stocks}) {
 
   const {ServerURL, watchList, addToWatchList } = useStocksContext();
-  
-  console.log(stocks.length); // logging this to try to debug displaying no filtered stocks
 
   if (stocks.length === 0) {
+    console.log("updar")
     return (
       <View>
-        <Text styles={styles.emptyHeader}>No stocks meet the searched criteria.{"\n"}</Text>
-        <Text styles={styles.emptyMessage}>Please try again.</Text>
+        <Text style={styles.emptyHeader}>No stocks meet the searched criteria.{"\n"}</Text>
+        <Text style={styles.emptyMessage}>Please try again.</Text>
+        <Button>Ahh</Button>
       </View>
     );
   }

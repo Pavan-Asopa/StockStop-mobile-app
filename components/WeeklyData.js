@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 async function getWeeklyData(symbol) {
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${symbol}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_APIKEY}`;
+    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${symbol}&apikey=UDOKLGMRBPTAE3WC`;
     let res = await fetch(url);
     let data = await res.json();
+    console.log(data)
     let values = data["Weekly Adjusted Time Series"];
 
     return values;

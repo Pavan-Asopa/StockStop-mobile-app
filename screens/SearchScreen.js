@@ -64,6 +64,7 @@ const searchFilterFunction = (searchText) => {
     );
   };
 
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView>
