@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Text, View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
-import { Button, Portal, Modal, PaperProvider, ActivityIndicator } from "react-native-paper";
+import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog } from "react-native-paper";
 import ClosingChart from "../components/ClosingChart";
 
 export default function StockInfoScreen({route, navigation}) {
@@ -11,10 +11,10 @@ export default function StockInfoScreen({route, navigation}) {
     const {description} = useStockDescription(symbol);
 
     const [visible, setVisible] = useState(false);
-    const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
+    const showDialog = () => setVisible(true);
+    const hideDialog = () => setVisible(false);
 
-    if(!description){
+    if(!description) {
       return (
         <View style={styles.loadingContainer}>
           <Text style={styles.text}>Loading stock description</Text>
@@ -31,28 +31,35 @@ export default function StockInfoScreen({route, navigation}) {
           <Text style={styles.details}>Industry: {description.industry}</Text>
           <PaperProvider>
             <Portal>
-              <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.descContainer}>
-                <Text style={styles.alert}>Click outside of this window to dismiss it.</Text>
-                <Text>{'\n'}</Text>
-                <Text>{description.description}</Text>
-              </Modal>
+              <Dialog visible={visible} onDismiss={hideDialog}>
+                <Dialog.Title>{description.stockName}</Dialog.Title>
+                <Dialog.Content>
+                  <Text variant="bodyMedium">{description.description}</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                  <Button onPress={hideDialog}>Dismiss</Button>
+                </Dialog.Actions>
+              </Dialog>
             </Portal>
             <Button 
-              style={styles.buttons}
+              style={styles.descriptionButton}
               mode="outlined"
               textColor="#fff"
               compact={true}
-              onPress={showModal}
+              onPress={showDialog}
             >Display stock description</Button>
             <View style={styles.lineBreak} />
-            <Button
-              style={styles.buttons}
-              icon="newspaper-variant-multiple-outline"
-              mode="contained-tonal"
-              compact={true}
-              onPress={() => navigation.push('News', {stock: symbol, name: description.stockName})}
-            >Click for News</Button>
+            <Text style={styles.chartHeader}>Closing Data</Text>
             <ClosingChart symbol={symbol}/>
+            <View style={styles.lineBreak} />
+            <Text style={styles.newsHeader}>Want to get inside news?</Text>
+            <Button
+              style={styles.newsButton}
+              icon="newspaper-variant-multiple-outline"
+              //mode="contained-tonal"
+              textColor="#fff"
+              onPress={() => navigation.push('News', {stock: symbol, name: description.stockName})}
+            >Click here</Button>
           </PaperProvider>
         </ScrollView> 
     );
@@ -70,29 +77,21 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
       },
-      descContainer: {
-        backgroundColor: "#fff",
-        marginTop: scaleSize(150),
-        padding: scaleSize(20),
-        height: scaleSize(400),
-        width: scaleSize(325),
-        justifyContent: "center",
-        alignSelf: "center"
-      },
-      buttons: {
+      descriptionButton: {
         flex: 1,
         alignSelf: "center",
         width: scaleSize(200),
         marginTop: scaleSize(5),
-        marginBottom: scaleSize(15),
       },
-      alert :{
-        fontStyle: "italic",
+      newsButton: {
+        flex: 1,
+        alignSelf: "center",
       },
       lineBreak: {
         backgroundColor: "#A2A2A2",
         height: 2,
         width: Dimensions.get("window").width,
+        marginTop: scaleSize(10),
         marginBottom: scaleSize(10),
       },
       name: {
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         color: "#fff",
         fontWeight: "bold",
-        paddingBottom: scaleSize(10),
       },
       details: {
         fontSize: scaleSize(18),
@@ -110,6 +108,20 @@ const styles = StyleSheet.create({
       text: {
         fontSize: scaleSize(20),
         color: "#fff",
+      },
+      chartHeader: {
+        fontSize: scaleSize(20),
+        alignSelf: "center",
+        color: "#fff",
+        fontWeight: "bold",
+        paddingBottom: scaleSize(5),
+      },
+      newsHeader: {
+        fontSize: scaleSize(18),
+        alignSelf: "center",
+        color: "#fff",
+        fontWeight: "bold",
+        paddingBottom: scaleSize(5),
       },
     }
 );

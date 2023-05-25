@@ -1,16 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import { Button } from "react-native-paper";
+import { Button, ActivityIndicator } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import { useWeeklyData } from "./WeeklyData";
 
 export default function ClosingChart({symbol}) {
 
   const allWeeklyData = useWeeklyData(symbol);
-  console.log(allWeeklyData)
   if(!allWeeklyData || allWeeklyData.loading) {
-    return <Text styles={styles.text}>Loading Data . . .</Text>
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.text}>Loading closing data</Text>
+        <ActivityIndicator animating={true} />
+      </View>
+    );
   };
 
   const labels = allWeeklyData.labels?.reverse() ?? []; 
@@ -69,6 +73,12 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       backgroundColor: "#000000",
+    },
+    loadingContainer: {
+      flex: 1,
+      backgroundColor: "#000000",
+      alignItems: "center",
+      justifyContent: "center",
     },
     toggleButtons: {
       flexDirection: "row",

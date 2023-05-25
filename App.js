@@ -2,8 +2,9 @@ import * as React from "react";
 import { Platform, StyleSheet, View, StatusBar } from "react-native";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import { StocksProvider } from "./contexts/StocksContext";
+import LoginScreen from "./screens/LoginScreen";
+import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import StockInfoScreen from "./screens/StockInfoScreen";
 import NewsScreen from "./screens/NewsScreen";
 import "react-native-gesture-handler";
@@ -18,6 +19,7 @@ export default function App(props) {
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
         <NavigationContainer theme={DarkTheme}>
           <Stack.Navigator>
+            {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
             <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
             <Stack.Screen name="StockInfo" component={StockInfoScreen} />
             <Stack.Screen name="News" component={NewsScreen} />
