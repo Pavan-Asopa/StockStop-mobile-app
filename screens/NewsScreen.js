@@ -50,7 +50,7 @@ export default function NewsScreen({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView style={styles.container}>
+      <ScrollView indicatorStyle="white" style={styles.container}>
         <Text style={styles.header}>{name}</Text>
         <NewsList headlines={headlines.slice(0,10)} />
       </ScrollView>

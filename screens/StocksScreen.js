@@ -20,7 +20,7 @@ export default function StocksScreen({route, navigation}) {
     );
   } else {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView indicatorStyle="white" style={styles.container}>
         <WatchList stocks={watchList} />
       </ScrollView>
     );

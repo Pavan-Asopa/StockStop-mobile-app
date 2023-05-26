@@ -66,7 +66,7 @@ const searchFilterFunction = (searchText) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView>
+      <ScrollView indicatorStyle="white">
         <Searchbar
           placeholder="Search for a stock here"
           onChangeText={searchFilterFunction}

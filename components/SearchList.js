@@ -13,7 +13,7 @@ export default function SearchList({stocks}) {
       Alert.alert("Confirm action", `Are you sure you want to add ${props.name} to your WatchList?`,
       [
         {
-          text: "Cancel", 
+          text: "Cancel",
           onPress: () => console.log("Cancel"),
         },
         {
@@ -26,8 +26,8 @@ export default function SearchList({stocks}) {
 
   if (stocks.length === 0) {
     return (
-      <View>
-        <Text style={styles.emptyHeader}>No stocks meet the searched criteria.{"\n"}</Text>
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyHeader}>No stocks meet the searched criteria.</Text>
         <Text style={styles.emptyMessage}>Please try again.</Text>
       </View>
     );
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: scaleSize(20),
   },
   emptyHeader: {
     fontSize: scaleSize(20),
