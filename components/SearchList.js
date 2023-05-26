@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { Button, List, Dialog, Portal, PaperProvider } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
@@ -7,28 +7,23 @@ import { scaleSize } from '../constants/Layout';
 export default function SearchList({stocks}) {
 
   const {ServerURL, watchList, addToWatchList } = useStocksContext();
-  // const [visible, setVisible] = useState(false);
 
-  // const hideDialog = () => setVisible(false);
-
-  // const displayDialog = (stock) => {
-  //   console.log(stock);
-  //   return (
-  //     <PaperProvider>
-  //     <Portal>
-  //        <Dialog visible={visible} onDismiss={hideDialog}>
-  //         <Dialog.Content>
-  //           <Text style={styles.title}>This is simple dialog</Text>
-  //         </Dialog.Content>
-  //         {/* <Dialog.Actions>
-  //           <Button onPress={() => console.log('Cancel')}>Cancel</Button>
-  //           <Button onPress={() => console.log('Ok')}>Ok</Button>
-  //         </Dialog.Actions> */}
-  //       </Dialog>
-  //     </Portal>
-  //     </PaperProvider>
-  //   );
-  // };
+  const displayAlert = (props) => {
+    console.log(props);
+    return (
+      Alert.alert("Confirm action", `Are you sure you want to add ${props.name} to your WatchList?`,
+      [
+        {
+          text: "Cancel", 
+          onPress: () => console.log("Cancel"),
+        },
+        {
+          text: "Confirm",
+          onPress: () => addToWatchList({stockName: props.name, stockSymbol: props.symbol})
+        }
+      ])
+    );
+  };
 
   if (stocks.length === 0) {
     return (
@@ -47,8 +42,7 @@ export default function SearchList({stocks}) {
                 titleStyle={styles.title}
                 key={item.symbol}
                 left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
-                // onPress={() => displayDialog({stock: item.name})}
-                onPress={() => addToWatchList({stockName: item.name, stockSymbol: item.symbol})}
+                onPress={() => displayAlert({name: item.name, symbol: item.symbol})}
               />
             )}
           </View>
@@ -78,4 +72,7 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(20),
     fontWeight: "bold",
   },
+  confirm: {
+    fontStyle: "bolder",
+  }
 });
