@@ -7,30 +7,18 @@ import { useDailyData } from "./DailyData";
 import { useWeeklyData } from "./WeeklyData";
 
 export default function ClosingChart({symbol}) {
+  const allData = useWeeklyData(symbol);
 
-  //const [allData, setAllData] = useState(useWeeklyData(symbol));
-  const defaultData = useWeeklyData(symbol);
-
-  const [allData, setAllData] = useState(defaultData);
+  // const [allData, setAllData] = useState(defaultData);
 
   const getData = (which) => {
     if (which === "Daily") {
       const newData = useDailyData(symbol) 
-      setAllData(newData);
+      // setAllData(newData);
     } else {
       const newData = useWeeklyData(symbol) 
-      setAllData(newData);
+      // setAllData(newData);
     }};
-
-  // function GetData(which) {
-  //   if (which === "Daily"){
-  //     setAllData(useDailyData(symbol));
-  //     console.log(allData);
-  //   } else if (which == "Weekly") {
-  //     setAllData(useWeeklyData(symbol));
-  //     console.log(allData);
-  //   }
-  // };
 
   if(!allData || allData.loading) {
     return (
