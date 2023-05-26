@@ -23,7 +23,6 @@ export default function NewsScreen({ route, navigation }) {
   const [headlines, setHeadlines] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log(symbol);
 
   useEffect(() => {
     getHeadlines(symbol)

@@ -3,49 +3,57 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { Button, ActivityIndicator } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
-import { useWeeklyData } from "./WeeklyData";
 import { useDailyData } from "./DailyData";
-
-
+import { useWeeklyData } from "./WeeklyData";
 
 export default function ClosingChart({symbol}) {
 
-  const [allData, setAllData] = useState([]);
-  function GetData(which) {
-    if(which === "Daily"){
-      setAllData(useDailyData(symbol));
-      }
-      else {
-        setAllData(useWeeklyData(symbol));
-      }
+  //const [allData, setAllData] = useState(useWeeklyData(symbol));
+  const defaultData = useWeeklyData(symbol);
 
-      if(!allData || allData.loading) {
-        return (
-          <View style={styles.loadingContainer}>
-            <Text style={styles.text}>Loading closing data</Text>
-            <ActivityIndicator animating={true} />
-          </View>
-        );
-      };
+  const [allData, setAllData] = useState(defaultData);
+
+  const getData = (which) => {
+    if (which === "Daily") {
+      const newData = useDailyData(symbol) 
+      setAllData(newData);
+    } else {
+      const newData = useWeeklyData(symbol) 
+      setAllData(newData);
+    }};
+
+  // function GetData(which) {
+  //   if (which === "Daily"){
+  //     setAllData(useDailyData(symbol));
+  //     console.log(allData);
+  //   } else if (which == "Weekly") {
+  //     setAllData(useWeeklyData(symbol));
+  //     console.log(allData);
+  //   }
+  // };
+
+  if(!allData || allData.loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.text}>Loading closing data</Text>
+        <ActivityIndicator animating={true} />
+      </View>
+    );
+  };
   
-  
-    const labels = allData.labels?.reverse() ?? []; 
+  const labels = allData.labels?.reverse() ?? []; 
 
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          data: allData.timePoints,
-          color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-          strokeWidth: 1
-        }
-      ],
-      legend: ["Daily Adjusted 30-day Closing Prices"]
-    };
-    }
-
-
-    
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        data: allData.timePoints,
+        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        strokeWidth: 1
+      }
+    ],
+    legend: ["Prices"]
+  };
 
   // const allWeeklyData = useWeeklyData(symbol);
   // if(!allWeeklyData || allWeeklyData.loading) {
@@ -95,45 +103,39 @@ export default function ClosingChart({symbol}) {
   //       legend: ["Daily Adjusted 30-day Closing Prices"]
   //     };
 
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 1,
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false
+  };
 
-
-      const chartConfig = {
-        backgroundGradientFrom: "#1E2923",
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        strokeWidth: 1,
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false
-      };
-
-    return (
-        <View>
-            <View style={styles.toggleButtons}>
-            <Button
-              icon="chart-line"
-              mode="contained"
-              compact={true}
-              onPress={() => GetData("Daily")}
-            >30-Days</Button>
-            <Button
-              icon="chart-line"
-              mode="contained"
-              compact={true}
-            >52 Weeks</Button>
-            <Button
-              icon="chart-line"
-              mode="contained"
-              compact={true}
-            >5 Years</Button>
-            </View>
-            <LineChart
-                data={data}
-                yAxisLabel={"$"}
-                width={Dimensions.get("window").width}
-                height={200}
-                chartConfig={chartConfig}
-            />
-        </View>
-    );
+  return (
+    <View>
+      <View style={styles.toggleButtons}>
+        <Button
+          icon="chart-line"
+          mode="contained"
+          compact={true}
+          onPress={() => getData("Daily")}
+        >30 Days</Button>
+        <Button
+          icon="chart-line"
+          mode="contained"
+          compact={true}
+          onPress={() => getData("Weekly")}
+        >52 Weeks</Button>
+      </View>
+      <LineChart
+        data={data}
+        yAxisLabel={"$"}
+        width={Dimensions.get("window").width}
+        height={200}
+        chartConfig={chartConfig}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

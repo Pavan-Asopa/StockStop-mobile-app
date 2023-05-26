@@ -7,7 +7,6 @@ async function getDailyData(symbol) {
     let data = await res.json();
     let values = data["Time Series (Daily)"];
 
-
     return values;
 };
 

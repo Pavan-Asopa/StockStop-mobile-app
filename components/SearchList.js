@@ -9,7 +9,6 @@ export default function SearchList({stocks}) {
   const {ServerURL, watchList, addToWatchList } = useStocksContext();
 
   const displayAlert = (props) => {
-    console.log(props);
     return (
       Alert.alert("Confirm action", `Are you sure you want to add ${props.name} to your WatchList?`,
       [
