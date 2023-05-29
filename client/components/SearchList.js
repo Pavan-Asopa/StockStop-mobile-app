@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { Button, List, Dialog, Portal } from 'react-native-paper';
+import { Button, List, Dialog, Portal, MD3DarkTheme } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 
@@ -47,7 +47,7 @@ export default function SearchList({stocks}) {
             title={item.name}
             titleStyle={styles.title}
             key={item.symbol}
-            left={props => <List.Icon {...props} color={colors.primary} icon="plus-circle-outline"/>}
+            left={props => <List.Icon {...props} color={MD3DarkTheme.colors.primary} icon="plus-circle-outline"/>}
             onPress={() => displayAlert({name: item.name, symbol: item.symbol})} // selecting a stock asks user to confirm action
           />
         )}

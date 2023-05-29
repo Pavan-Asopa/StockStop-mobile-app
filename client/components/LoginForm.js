@@ -36,7 +36,7 @@ const LoginForm = () => {
         secureTextEntry={hidePass ? true : false} 
         value={password} 
         onChangeText={onChangePassword} 
-        placeholder="password"
+        placeholder="Password"
         right={
           <TextInput.Icon
             icon="eye"
@@ -54,7 +54,6 @@ const LoginForm = () => {
         style={styles.loginButton}
         icon={"account-arrow-right"}
         mode="contained"
-        buttonColor='#2b6777'
       >
         Login
       </Button>

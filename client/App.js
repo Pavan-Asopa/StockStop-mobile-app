@@ -8,15 +8,24 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import StockInfoScreen from "./screens/StockInfoScreen";
 import NewsScreen from "./screens/NewsScreen";
 import "react-native-gesture-handler";
+import { MD3DarkTheme } from "react-native-paper";
 
 const Stack = createStackNavigator();
+
+const MyTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: MD3DarkTheme.colors.primary,
+  },
+};
 
 export default function App(props) {
   return (
     <View style={styles.container}>
       <StocksProvider>
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-        <NavigationContainer theme={DarkTheme}>
+        <NavigationContainer theme={MyTheme}>
           <Stack.Navigator>
             {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
             <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
