@@ -1,19 +1,20 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, SafeAreaView } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import { Button, ActivityIndicator } from "react-native-paper";
+import { Button, ActivityIndicator, SegmentedButtons } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import { useDailyData } from "./DailyData";
 import { useWeeklyData } from "./WeeklyData";
 
 export default function ClosingChart({symbol}) {
   const allData = useWeeklyData(symbol); // fetch weekly data from api
-
   // const [allData, setAllData] = useState(defaultData);
+
+  const [buttonValue, setButtonValue] = useState("weekly");
 
   // set allData based on which button the user clicked
   const getData = (which) => {
-    if (which === "Daily") {
+    if (which === "daily") {
       const newData = useDailyData(symbol) 
       // setAllData(newData);
     } else {
@@ -60,20 +61,25 @@ export default function ClosingChart({symbol}) {
   // function returns a line chart with buttons to toggle between daily and weekly data
   return (
     <View>
-      <View style={styles.toggleButtons}>
-        <Button
-          icon="chart-line"
-          mode="contained"
-          compact={true}
-          onPress={() => getData("Daily")}
-        >30 Days</Button>
-        <Button
-          icon="chart-line"
-          mode="contained"
-          compact={true}
-          onPress={() => getData("Weekly")}
-        >52 Weeks</Button>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <SegmentedButtons
+          value={buttonValue}
+          onValueChange={setButtonValue}
+          density="small"
+          buttons={[
+          {
+            value: "weekly",
+            label: "Daily Data",
+            icon: "calendar-today",
+          },
+          {
+            value: "weekly",
+            label: "Weekly Data",
+            icon: "calendar-week",
+          },
+          ]}
+        />
+        </SafeAreaView>
       <LineChart
         data={data}
         yAxisLabel={"$"}
@@ -95,10 +101,6 @@ const styles = StyleSheet.create({
       backgroundColor: "#000000",
       alignItems: "center",
       justifyContent: "center",
-    },
-    toggleButtons: {
-      flexDirection: "row",
-      justifyContent: "space-evenly"
     },
     text: {
       fontSize: scaleSize(20),

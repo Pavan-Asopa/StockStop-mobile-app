@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
-import { Searchbar, ActivityIndicator } from "react-native-paper";
+import { Searchbar, ActivityIndicator, Banner, Button } from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 
@@ -14,6 +14,8 @@ export default function SearchScreen({ navigation }) {
   const [filteredList, setFilteredList] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [bannerVisible, setBannerVisible] = useState(false);
 
   // function to filter list of available stocks
   const searchFilterFunction = (searchText) => {
@@ -77,6 +79,27 @@ export default function SearchScreen({ navigation }) {
   return (
     <TouchableOpacity>
       <ScrollView indicatorStyle="white">
+        <Button
+          labelStyle={styles.help}
+          icon="help-circle-outline"
+          mode="text"
+          accessibilityHint="Display page help"
+          onPress={() => setBannerVisible(true)}
+        ></Button>
+        <Banner
+          visible={bannerVisible}
+          contentStyle={styles.banner}
+          actions={[
+            {
+              label: "Okay",
+              onPress: () => setBannerVisible(false),
+            },
+          ]}
+        >
+          Below is a list of available stocks.{'\n'}
+          Use the search bar to look for a specific stock.{'\n'}
+          Select a stock to add it to your WatchList.
+        </Banner>
         <Searchbar
           placeholder="Search for a stock here"
           onChangeText={searchFilterFunction}
@@ -110,4 +133,9 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(20),
     color: "#fff",
   },
+  help: {
+    flex: 1,
+    fontSize: scaleSize(40),
+    padding: scaleSize(10),
+  }
 });

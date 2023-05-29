@@ -8,7 +8,7 @@ import { scaleSize } from '../constants/Layout';
 export default function SearchList({stocks}) {
 
   // call useStocksContext() to get the URL, current watchList, and addToWatchList function
-  const {ServerURL, watchList, addToWatchList } = useStocksContext();
+  const { addToWatchList } = useStocksContext();
 
   const {colors} = useTheme();
 
