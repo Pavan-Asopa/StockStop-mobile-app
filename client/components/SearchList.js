@@ -19,7 +19,7 @@ export default function SearchList({stocks}) {
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancelled adding to WatchList"),
+          onPress: () => console.log(`Cancelled adding ${props.name} to WatchList`),
         },
         {
           text: "Confirm",

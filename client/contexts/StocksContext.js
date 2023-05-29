@@ -41,7 +41,7 @@ export const useStocksContext = () => {
       [
         {
           text: "Okay",
-          onPress: () => console.log("Warning acknowledged"),
+          onPress: () => console.log(`Acknowledged warning that ${props.name} is already in WatchList`),
         },
       ])
     );
