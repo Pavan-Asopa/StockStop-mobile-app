@@ -41,6 +41,14 @@ export default function WatchList({stocks}) {
             key={stock.stockSymbol}
             description={stock.stockSymbol}
             descriptionStyle={styles.description}
+            // right={props => <Button {...props}
+            //   // style={styles.binButton}
+            //   // labelStyle={styles.binSize}
+            //   icon="trash-can-outline"
+            //   // mode="contained"
+            //   onPress={() => removeFromWatchList({stockName: props.stockName, stockSymbol: props.stockSymbol})}
+            // /> // clicking on trash bin button removes stock from watchList
+            // } 
             onPress={() => displayAlert({name: stock.stockName, symbol: stock.stockSymbol})} // selecting a stock asks user to confirm action
           />
         );
