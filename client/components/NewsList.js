@@ -3,6 +3,7 @@ import { Linking, StyleSheet, View } from "react-native";
 import { List } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 
+// map each individual headline to create a list of headlines
 export default function NewsList({headlines}) {
     return (
       <View>

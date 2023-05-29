@@ -6,8 +6,10 @@ import { scaleSize } from '../constants/Layout';
 
 export default function SearchList({stocks}) {
 
+  // call useStocksContext() to get the URL, current watchList, and addToWatchList function
   const {ServerURL, watchList, addToWatchList } = useStocksContext();
 
+  // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
   const displayAlert = (props) => {
     return (
       Alert.alert("Confirm action", `Are you sure you want to add ${props.name} to your WatchList?`,
@@ -24,6 +26,7 @@ export default function SearchList({stocks}) {
     );
   };
 
+  // if user searches for a stock that does not exist in the available stocks list, display feedback message to alert them
   if (stocks.length === 0) {
     return (
       <View style={styles.emptyContainer}>
@@ -33,6 +36,7 @@ export default function SearchList({stocks}) {
     );
   }
   else {
+    // map each stock of the available stocks list to create a list users can use to search for stocks and add to watchLists
     return (
           <View>
             {stocks.map((item) =>
@@ -41,7 +45,7 @@ export default function SearchList({stocks}) {
                 titleStyle={styles.title}
                 key={item.symbol}
                 left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
-                onPress={() => displayAlert({name: item.name, symbol: item.symbol})}
+                onPress={() => displayAlert({name: item.name, symbol: item.symbol})} // selecting a stock asks user to confirm action
               />
             )}
           </View>

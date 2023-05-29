@@ -9,6 +9,7 @@ import HomeScreen from "../screens/HomeScreen";
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Search";
 
+// defines the elements of the BottomTabNavigator
 export default function BottomTabNavigator({ navigation, route }) {
   useEffect(() => {
     navigation.setOptions({ headerTitle: getHeaderTitle(route) });

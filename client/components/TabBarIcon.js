@@ -2,6 +2,7 @@ import * as React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { DarkTheme } from "@react-navigation/native";
 
+// ensures consistent styling of the icons that make up the BottomTabNavigator
 export default function TabBarIcon(props) {
   return (
     <Ionicons

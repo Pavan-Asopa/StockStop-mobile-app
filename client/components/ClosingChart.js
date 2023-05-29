@@ -7,10 +7,11 @@ import { useDailyData } from "./DailyData";
 import { useWeeklyData } from "./WeeklyData";
 
 export default function ClosingChart({symbol}) {
-  const allData = useWeeklyData(symbol);
+  const allData = useWeeklyData(symbol); // fetch weekly data from api
 
   // const [allData, setAllData] = useState(defaultData);
 
+  // set allData based on which button the user clicked
   const getData = (which) => {
     if (which === "Daily") {
       const newData = useDailyData(symbol) 
@@ -20,8 +21,10 @@ export default function ClosingChart({symbol}) {
       // setAllData(newData);
     }};
 
+  // if all data is null or still loading
   if(!allData || allData.loading) {
     return (
+      // return a mesage on the screen to let the user know data are loading
       <View style={styles.loadingContainer}>
         <Text style={styles.text}>Loading closing data</Text>
         <ActivityIndicator animating={true} />
@@ -29,13 +32,15 @@ export default function ClosingChart({symbol}) {
     );
   };
   
+  // data labels are initially in order from present day --> backwards, so need to reverse for chart
   const labels = allData.labels?.reverse() ?? []; 
 
+  // set data based on allData
   const data = {
     labels: labels,
     datasets: [
       {
-        data: allData.timePoints,
+        data: allData.timePoints, // timePoints was one of the keys of the object returned from api calls
         color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
         strokeWidth: 1
       }
@@ -43,54 +48,7 @@ export default function ClosingChart({symbol}) {
     legend: ["Prices"]
   };
 
-  // const allWeeklyData = useWeeklyData(symbol);
-  // if(!allWeeklyData || allWeeklyData.loading) {
-  //   return (
-  //     <View style={styles.loadingContainer}>
-  //       <Text style={styles.text}>Loading closing data</Text>
-  //       <ActivityIndicator animating={true} />
-  //     </View>
-  //   );
-  // };
-
-  // const labels = allWeeklyData.labels?.reverse() ?? []; 
-
-  //   const data = {
-  //       labels: labels,
-  //       datasets: [
-  //         {
-  //           data: allWeeklyData.timePoints,
-  //           color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  //           strokeWidth: 1
-  //         }
-  //       ],
-  //       legend: ["52 Week Closing Prices"]
-  //     };
-  
-  // const allDailyData = useDailyData(symbol);
-  // if(!allDailyData || allDailyData.loading) {
-  //   return (
-  //     <View style={styles.loadingContainer}>
-  //       <Text style={styles.text}>Loading closing data</Text>
-  //       <ActivityIndicator animating={true} />
-  //     </View>
-  //   );
-  // };
-
-  // const labels = allDailyData.labels?.reverse() ?? []; 
-
-  //   const data = {
-  //       labels: labels,
-  //       datasets: [
-  //         {
-  //           data: allDailyData.timePoints,
-  //           color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  //           strokeWidth: 1
-  //         }
-  //       ],
-  //       legend: ["Daily Adjusted 30-day Closing Prices"]
-  //     };
-
+  // define chart configuations, including colours and styles
   const chartConfig = {
     backgroundGradientFrom: "#1E2923",
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
@@ -99,6 +57,7 @@ export default function ClosingChart({symbol}) {
     useShadowColorFromDataset: false
   };
 
+  // function returns a line chart with buttons to toggle between daily and weekly data
   return (
     <View>
       <View style={styles.toggleButtons}>

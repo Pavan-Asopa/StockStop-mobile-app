@@ -4,8 +4,10 @@ import { StyleSheet, View } from "react-native";
 import { List } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 
+// map each individual stock contained within the watchList to create a list of watched stocks
 export default function WatchList({stocks}) {
 
+  // declare a navigation constant to be able to use the useNavigation() hook later on
   const navigation = useNavigation();
 
     return (
@@ -18,7 +20,7 @@ export default function WatchList({stocks}) {
               key={stock.stockSymbol}
               description={stock.stockSymbol}
               descriptionStyle={styles.description}
-              onPress={() => {navigation.push('StockInfo', {stock: stock.stockSymbol})}}
+              onPress={() => {navigation.push("StockInfo", {stock: stock.stockSymbol})}} // clicking on a stock navigates user to detailed stock info page
             />
           );
         })}
