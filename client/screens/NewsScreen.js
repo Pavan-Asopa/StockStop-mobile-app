@@ -5,12 +5,13 @@ import { scaleSize } from "../constants/Layout";
 import NewsList from "../components/NewsList";
 
 async function getHeadlines(symbol) {    
-    const url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&limit=10&sort=LATEST,RELEVANCE&apikey=UDOKLGMRBPTAE3WC`
+    const url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&limit=10&sort=LATEST,RELEVANCE&apikey=UDOKLGMRBPTAE3WC` // call api
 
     let res = await fetch(url);
     let data = await res.json();
-    let articles = data.feed;
+    let articles = data.feed; // just get list of articles
 
+    // return article titles and URLs
     return articles.map((article) => ({
         title: article.title,
         url: article.url
@@ -24,6 +25,7 @@ export default function NewsScreen({ route, navigation }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // useEffect to get the data (call the api) and error check
   useEffect(() => {
     getHeadlines(symbol)
       .then(res => setHeadlines(res))
@@ -31,6 +33,7 @@ export default function NewsScreen({ route, navigation }) {
       .finally(() => setLoading(false))
   }, [symbol]);
 
+  // display feedback when news articles are loading
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -40,6 +43,7 @@ export default function NewsScreen({ route, navigation }) {
     );
   };
 
+  // display feedback when an error occurs
   if (error) {
     return (
       <Text style={styles.text}>
@@ -48,6 +52,7 @@ export default function NewsScreen({ route, navigation }) {
     );
   };
 
+  // return list of news articles, calling the NewsList component to style the list
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView indicatorStyle="white" style={styles.container}>

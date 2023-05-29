@@ -14,23 +14,28 @@ export default function SearchScreen({ navigation }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-const searchFilterFunction = (searchText) => {
-  if (searchText) {
-    const newData = fullList.filter((stock) => 
-      stock.name.includes(
-        searchText[0].toUpperCase() + 
-        searchText.slice(1,-1).toLowerCase()
-        )
-      );
-    setFilteredList(newData);
-    setSearch(searchText);
-  } else {
-    setFilteredList(fullList);
-    setSearch(searchText);
-  }};
+  // function to filter list of available stocks
+  const searchFilterFunction = (searchText) => {
+
+    // if user has typed something in the search bar
+    if (searchText) {
+      // filter all available stocks based on search query
+      const newData = fullList.filter((stock) => 
+        stock.name.includes(
+          searchText[0].toUpperCase() + 
+          searchText.slice(1,-1).toLowerCase()
+        ));
+      setFilteredList(newData); // set filteredList based on filtered data
+      setSearch(searchText); // set search query
+
+    // else: if nothing has been typed into the search bar
+    } else {
+      setFilteredList(fullList); // set filteredList to be full list of available stocks
+      setSearch(searchText); // set search query (empty string)
+    }};
 
   useEffect(() => {
-    fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=02ea7babe095fdebdb6c4ef948886e07`)
+    fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=02ea7babe095fdebdb6c4ef948886e07`) // call api
       .then(res => res.json())
       .then(data => 
         data.map(stock => {
@@ -42,11 +47,12 @@ const searchFilterFunction = (searchText) => {
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false))
     .then(stocks => {
-      setFullList(stocks);
+      setFullList(stocks); // initially, full list and filtered list are the same (until user starts to search)
       setFilteredList(stocks);
     })
   }, []);
 
+  // display feedback when available stocks are loading
   if (loading) {
     return (
       <View style={styles.feedbackContainer}>
@@ -56,6 +62,7 @@ const searchFilterFunction = (searchText) => {
     );
   };
 
+  // display feedback when an error occurs
   if (error) {
     return (
       <View style={styles.feedbackContainer}>
@@ -64,6 +71,8 @@ const searchFilterFunction = (searchText) => {
     );
   };
 
+  // return list of all available stocks, calling the SearchList component to style the list
+  // include a search bar above the list for users to search for stocks
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView indicatorStyle="white">

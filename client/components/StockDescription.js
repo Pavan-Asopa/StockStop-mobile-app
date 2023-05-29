@@ -32,7 +32,7 @@ export function useStockDescription(symbol) {
             .finally(() => setLoading(false));
     }, [symbol]);
 
-    // display feedback when information is loading
+    // display feedback when stock information is loading
     if (loading) {
         return<Text style={styles.text}>Loading stock info...</Text>;
     }
