@@ -57,9 +57,6 @@ export const useStocksContext = () => {
         });
     } else {
         displayAlert({name: newStock.stockName})
-        // <Text style={styles.text}>
-        //   This stock is already in your WatchList!
-        // </Text>
     }
 
     AsyncStorage.setItem("@Watch", JSON.stringify(state));
@@ -70,27 +67,14 @@ export const useStocksContext = () => {
   function removeFromWatchList(newStock) {
     const index = state.findIndex(stock => stock.stockName === newStock.stockName);
 
-    console.log(state);
-    console.log(index);
-    
-    // first check that stock exists in watchList (state)
-    // if (index > -1) {
-    //   //newState = state.splice(index, 1); // only remove the 1 selected stock
-    //   state.splice(index, 1);
-    // }
+    setState((oldState) => {
+      oldState.splice(index, 1);
+        return [...state]
+    });
 
-    // setState(state);
+    AsyncStorage.setItem("@Watch", JSON.stringify(state));
 
-    // // setState((oldState) => {
-    // // oldState.pop(newStock);
-    // //   return [...state]
-    // // });
-
-    // console.log(state);
-
-    // AsyncStorage.setItem("@Watch", JSON.stringify(state));
-
-    // return {state};
+    return {state};
   }
 
   return { ServerURL: "http://131.181.190.87:3001", watchList: state, addToWatchList, removeFromWatchList};
