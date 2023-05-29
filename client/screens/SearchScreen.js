@@ -5,6 +5,7 @@ import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 
 import SearchList from "../components/SearchList";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function SearchScreen({ navigation }) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
@@ -74,7 +75,7 @@ export default function SearchScreen({ navigation }) {
   // return list of all available stocks, calling the SearchList component to style the list
   // include a search bar above the list for users to search for stocks
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableOpacity>
       <ScrollView indicatorStyle="white">
         <Searchbar
           placeholder="Search for a stock here"
@@ -85,7 +86,7 @@ export default function SearchScreen({ navigation }) {
           <SearchList stocks={filteredList} />
         </ScrollView>
       </ScrollView>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 

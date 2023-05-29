@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
-import { Button, List, Dialog, Portal, PaperProvider } from 'react-native-paper';
+import { useTheme } from '@react-navigation/native';
+import { Button, List, Dialog, Portal } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 
@@ -8,6 +9,8 @@ export default function SearchList({stocks}) {
 
   // call useStocksContext() to get the URL, current watchList, and addToWatchList function
   const {ServerURL, watchList, addToWatchList } = useStocksContext();
+
+  const {colors} = useTheme();
 
   // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
   const displayAlert = (props) => {
@@ -38,17 +41,17 @@ export default function SearchList({stocks}) {
   else {
     // map each stock of the available stocks list to create a list users can use to search for stocks and add to watchLists
     return (
-          <View>
-            {stocks.map((item) =>
-              <List.Item
-                title={item.name}
-                titleStyle={styles.title}
-                key={item.symbol}
-                left={props => <List.Icon {...props} color={"#2b6777"} icon="plus-circle-outline"/>}
-                onPress={() => displayAlert({name: item.name, symbol: item.symbol})} // selecting a stock asks user to confirm action
-              />
-            )}
-          </View>
+      <View>
+        {stocks.map((item) =>
+          <List.Item
+            title={item.name}
+            titleStyle={styles.title}
+            key={item.symbol}
+            left={props => <List.Icon {...props} color={colors.primary} icon="plus-circle-outline"/>}
+            onPress={() => displayAlert({name: item.name, symbol: item.symbol})} // selecting a stock asks user to confirm action
+          />
+        )}
+      </View>
     );
   }
 };

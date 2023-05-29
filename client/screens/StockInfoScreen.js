@@ -50,7 +50,7 @@ export default function StockInfoScreen({route, navigation}) {
             >Display stock description</Button>
             <View style={styles.lineBreak} />
             <Text style={styles.chartHeader}>Closing Data</Text>
-            <ClosingChart symbol={symbol}/>
+            <ClosingChart symbol={symbol} />
             <View style={styles.lineBreak} />
             <Text style={styles.newsHeader}>Want to get inside news?</Text>
             <Button
