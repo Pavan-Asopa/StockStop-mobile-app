@@ -3,6 +3,13 @@ import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
 import { View, StyleSheet, Text } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
+// function verify() {
+//   fetch(`http://localhost:3001/users/login`, {
+//     method: "POST",
+//     body:
+//   })
+// }
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

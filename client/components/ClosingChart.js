@@ -7,23 +7,13 @@ import { useDailyData } from "./DailyData";
 import { useWeeklyData } from "./WeeklyData";
 
 export default function ClosingChart({symbol}) {
-  const allData = useWeeklyData(symbol); // fetch weekly data from api
-  // const [allData, setAllData] = useState(defaultData);
+  const daily = useDailyData(symbol);
+  const weekly = useWeeklyData(symbol);  // fetch weekly data from api
+  const [isWeekly, setIsWeekly] = useState(true);
 
-  const [buttonValue, setButtonValue] = useState("weekly");
-
-  // set allData based on which button the user clicked
-  const getData = (which) => {
-    if (which === "daily") {
-      const newData = useDailyData(symbol) 
-      // setAllData(newData);
-    } else {
-      const newData = useWeeklyData(symbol) 
-      // setAllData(newData);
-    }};
 
   // if all data is null or still loading
-  if(!allData || allData.loading) {
+  if(!daily || !weekly || weekly.loading || daily.loading) {
     return (
       // return a mesage on the screen to let the user know data are loading
       <View style={styles.loadingContainer}>
@@ -33,20 +23,22 @@ export default function ClosingChart({symbol}) {
     );
   };
   
-  // data labels are initially in order from present day --> backwards, so need to reverse for chart
-  const labels = allData.labels?.reverse() ?? []; 
+
+  const labels = isWeekly ? weekly.labels : daily.labels;
+
 
   // set data based on allData
   const data = {
-    labels: labels,
+    labels: labels?.reverse() ?? [],   // data labels are initially in order from present day --> backwards, so need to reverse for chart
     datasets: [
       {
-        data: allData.timePoints, // timePoints was one of the keys of the object returned from api calls
+
+        data: isWeekly ? weekly.timePoints : daily.timePoints,  // timePoints was one of the keys of the object returned from api calls
         color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
         strokeWidth: 1
       }
     ],
-    legend: ["Prices"]
+    legend: isWeekly ? ["52-week closing prices"] : ["30 day closing prices"]
   };
 
   // define chart configuations, including colours and styles
@@ -63,21 +55,21 @@ export default function ClosingChart({symbol}) {
     <View>
       <SafeAreaView style={styles.container}>
         <SegmentedButtons
-          value={buttonValue}
-          onValueChange={setButtonValue}
+          value={isWeekly}
+          onValueChange={setIsWeekly}
           density="small"
           buttons={[
           {
-            value: "weekly",
+            value: false,
             label: "Daily Data",
             icon: "calendar-today",
           },
           {
-            value: "weekly",
+            value: true,
             label: "Weekly Data",
             icon: "calendar-week",
           },
-          ]}
+          ]} 
         />
         </SafeAreaView>
       <LineChart

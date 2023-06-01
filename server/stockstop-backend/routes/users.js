@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/register', function (req, res, next){
+router.post('/register', async function (req, res, next){
   //1. Retieve email and password from req.body
   const email = req.body.email
   const password = req.body.password
@@ -22,35 +22,67 @@ router.post('/register', function (req, res, next){
     return
   }
 
-  //2. determine if user exists in table
-    const queryUsers = req.db.from("users").select("*").where("email", "=", email)
-    queryUsers
-      .then((users) => {
-        if(users.length > 0) {
-          res.status(400).json({
-            error: true,
-            message: "User already exists"
-          })
-          //console.log("User already exists");
-          return;
-        }
-        //2.1 If they do not exist insert them in to the table
+ 
+    try {
+      const users = await req.db.from("users").select("*").where("email", "=", email)
+      //const users = queryUsers;
+      if(users.length === 0){
         console.log("No matching users");
-
         const saltRounds = 10;
         const hash = bcrypt.hashSync(password,saltRounds)
-        return req.db.from("users").insert({email, hash})
-      })
-      .then(() => {
+        await req.db.from("users").insert({email, hash})
         res.status(201).json({
-          success: true,
-          message: "New user created",
-        });
+        success: true,
+        message: "New user created"
+        })}
+      else {
+        res.status(400).json({
+          error: true,
+          message: "User already exists"
+        })
+      }
+    } catch(error){
+        res.status(500).json({
+        error: true,
+        message: "User already exists"
       })
-      .catch((error) => {
-        res.status(400).json({error: true, message: error.message})
-      });
-    });
+    }
+
+    })
+   
+
+
+
+  // //2. determine if user exists in table
+  //   const queryUsers = req.db.from("users").select("*").where("email", "=", email)
+  //   queryUsers
+  //     .then((users) => {
+  //       if(users.length > 0) {
+  //         throw new Error('User already exists')
+  //         // res.status(400).json({
+  //         //   error: true,
+  //         //   message: "User already exists"
+  //         // })
+  //         //console.log("User already exists");
+  //         return;
+  //       }
+  //       //2.1 If they do not exist insert them in to the table
+  //       console.log("No matching users");
+
+  //       const saltRounds = 10;
+  //       const hash = bcrypt.hashSync(password,saltRounds)
+  //       return req.db.from("users").insert({email, hash})
+  //     })
+  //     .then(() => {
+  //       res.status(201).json({
+  //         success: true,
+  //         message: "New user created",
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       res.status(400).json({error: true, message: error.message})
+  //     });
+    // });
     
     //2.2 If they do exist, return error response -- COMEBACK TO THIS
 
@@ -73,10 +105,10 @@ router.post('/login', function(req, res, next) {
   queryUsers
     .then((users) => {
       if(users.length === 0) {
-        // res.status(401).json({
-        //   error: true,
-        //   message: "User does not exist"
-        // })
+        res.status(401).json({
+          error: true,
+          message: "User does not exist"
+        })
         console.log("User does not exist");
         return;
       }
@@ -88,10 +120,10 @@ router.post('/login', function(req, res, next) {
   .then((match) => {
     if(!match) {
       console.log("Passwords do not match");
-      // res.status(401).json({
-      //   error: true,
-      //   message: "Incorrect password enetered"
-      // })
+      res.status(401).json({
+        error: true,
+        message: "Incorrect password enetered"
+      })
       return;
     }
   });
