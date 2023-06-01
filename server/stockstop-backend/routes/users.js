@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const auth = require("../middleware/authorize");
+const authorize = require('../middleware/authorize');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -54,6 +55,7 @@ router.post('/register', async function (req, res, next){
   }
  });
    
+
 router.post('/login', async function(req, res, next) {
   //1. Retrieve email and password from req.body
   const email = req.body.email
@@ -78,8 +80,8 @@ router.post('/login', async function(req, res, next) {
   }else {
     console.log("user exists");
     const user = users[0];
-    bcrypt.compare(password, user.hash,function(err,res) {
-      if(!res) {
+    const match = await bcrypt.compare(password, user.hash);
+      if(!match) {
         // console.log("Passwords do not match");
         res.status(401).json({
           error: true,
@@ -93,15 +95,15 @@ router.post('/login', async function(req, res, next) {
           const token = jwt.sign({email, exp}, secretKey);
           res.json({token_type: "Bearer", token, expires_in})
         }
-    });
- }
+      };
+ 
+
 } catch(error){
   res.status(500).json({
     error: true,
     message: "User already exists" 
 })
-}
-})
+}})
 
 //   queryUsers
 //     .then((users) => {
