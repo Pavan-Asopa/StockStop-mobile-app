@@ -3,12 +3,21 @@ import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
 import { View, StyleSheet, Text } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
-// function verify() {
-//   fetch(`http://localhost:3001/users/login`, {
-//     method: "POST",
-//     body:
-//   })
-// }
+const API_URL = `http://http://localhost:3001`;
+
+function login() {
+  const url = `${API_URL}/users/login`
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: '{"email":"pavan@example.com","password":"bananas"}'
+  })
+  .then(response => response.json())
+  .then(response => console.log("hi"))
+  .catch(err => console.error(err));
+};
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -61,6 +70,7 @@ const LoginForm = () => {
         style={styles.loginButton}
         icon={"account-arrow-right"}
         mode="contained"
+        onPress={() => login}
       >
         Login
       </Button>

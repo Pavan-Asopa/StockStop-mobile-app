@@ -77,7 +77,7 @@ export const useStocksContext = () => {
     return {state};
   }
 
-  return { ServerURL: "http://131.181.190.87:3001", watchList: state, addToWatchList, removeFromWatchList};
+  return { ServerURL: "http://localhost:3001", watchList: state, addToWatchList, removeFromWatchList};
 };
 
 const styles = StyleSheet.create({

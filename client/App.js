@@ -27,7 +27,7 @@ export default function App(props) {
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
         <NavigationContainer theme={MyTheme}>
           <Stack.Navigator>
-            {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
+            <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
             <Stack.Screen name="StockInfo" component={StockInfoScreen} />
             <Stack.Screen name="News" component={NewsScreen} />
