@@ -84,8 +84,9 @@ export default function SearchScreen({ navigation }) {
           icon="help-circle-outline"
           mode="text"
           accessibilityHint="Display page help"
+          contentStyle={{flexDirection: "row-reverse"}}
           onPress={() => setBannerVisible(true)}
-        ></Button>
+        >Add stocks to your WatchList</Button>
         <Banner
           visible={bannerVisible}
           contentStyle={styles.banner}
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   },
   help: {
     flex: 1,
-    fontSize: scaleSize(40),
+    fontSize: scaleSize(20),
     padding: scaleSize(10),
   }
 });

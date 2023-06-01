@@ -57,6 +57,7 @@ const LoginForm = () => {
         value={email}
         onChangeText={onChangeEmail}
         placeholder="someone@gmail.com"
+        autoCapitalize="none"
       />
       <HelperText type="error" visible={hasErrorsEmail()}>
         Email should contain '@' sign
@@ -68,6 +69,7 @@ const LoginForm = () => {
         value={password} 
         onChangeText={onChangePassword} 
         placeholder="Password"
+        autoCapitalize="none"
         right={
           <TextInput.Icon
             icon="eye"
