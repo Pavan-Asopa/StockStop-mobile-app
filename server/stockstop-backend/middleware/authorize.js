@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
         token = authorization.split(" ")[1];
         console.log(token);
     } else {
-        console.log("Unauthorized user");
+        console.log("Unauthorized user"); //error handle
         return;
     }
 
