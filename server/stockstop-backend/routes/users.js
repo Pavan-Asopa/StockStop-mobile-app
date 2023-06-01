@@ -4,7 +4,7 @@ var router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const auth = require("../middleware/authorize");
+
 const authorize = require('../middleware/authorize');
 
 /* GET users listing. */

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 const options = require('./knexfile.js'); 
 const knex = require('knex')(options); 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
   next(); 
 }) 
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

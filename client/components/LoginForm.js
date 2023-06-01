@@ -5,19 +5,34 @@ import { scaleSize } from '../constants/Layout';
 
 const API_URL = `http://http://localhost:3001`;
 
-function login() {
-  const url = `${API_URL}/users/login`
+// function login() {
+//   const url = `${API_URL}/users/login`
 
-  return fetch(url, {
+//   return fetch(url, {
+//     method: 'POST',
+//     headers: {'Content-Type': 'application/json'},
+//     Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdmFuQGV4YW1wbGUuY29tIiwiZXhwIjoxNjg1NjgyODQzMjY2LCJpYXQiOjE2ODU1OTY0NDN9.XNFCyOmYcEkVIw97a_zoTlevwULwVnd51sHOBVgjSOA',
+//     body: '{"email":"pavan@example.com","password":"bananas"}'
+//   })
+//   .then(response => response.json())
+//   .then(response => console.log(response))
+//   .catch(err => console.error(err));
+// };
+const login = () => {
+  const options = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdmFuQGV4YW1wbGUuY29tIiwiZXhwIjoxNjg1NjgyODQzMjY2LCJpYXQiOjE2ODU1OTY0NDN9.XNFCyOmYcEkVIw97a_zoTlevwULwVnd51sHOBVgjSOA'
+    },
     body: '{"email":"pavan@example.com","password":"bananas"}'
-  })
-  .then(response => response.json())
-  .then(response => console.log("hi"))
-  .catch(err => console.error(err));
 };
 
+fetch('http://localhost:3001/users/login', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+}
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -70,7 +85,7 @@ const LoginForm = () => {
         style={styles.loginButton}
         icon={"account-arrow-right"}
         mode="contained"
-        onPress={() => login}
+        onPress={() => login()}
       >
         Login
       </Button>
