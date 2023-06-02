@@ -61,7 +61,7 @@ router.post('/register', async function (req, res, next){
  });
 
 // post request to allow users to login
-router.post('/login', async function(req, res, next) {
+router.post('/login',authorize, async function(req, res, next) {
   // retrieve email and password from req.body
   const email = req.body.email;
   const password = req.body.password;
