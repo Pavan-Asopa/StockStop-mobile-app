@@ -4,38 +4,6 @@ import { View, StyleSheet, Text } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
 const API_URL = `http://http://localhost:3001`;
-// const [token, setToken] = useState("");
-
-
-// const verify = () => {
-//   const options = {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token.token}`,
-//     },
-//     body: '{"email":"pavan@example.com","password":"bananas"}'
-// };
-
-// fetch('http://localhost:3001/users/login', options)
-//   .then(response => response.json())
-//   .then(response => console.log(response))
-//   .catch(err => console.error(err));
-// }
-
-// const login = () => {
-// const options = {
-//   method: 'POST',
-//   headers: {'Content-Type': 'application/json'},
-//   body: '{"email":"pavan@example.com","password":"bananas"}'
-// };
-
-// fetch('http://localhost:3001/users/login', options)
-//   .then(response => response.json())
-//   .then(response => setToken(response))
-//   .catch(err => console.error(err));
-//   //verify();
-// }
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -69,20 +37,26 @@ const LoginForm = () => {
     .then(response => console.log(response))
     .catch(err => console.error(err));
   }
-  
+
   const login = () => {
-  const options = {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: '{"email":"pavan@example.com","password":"bananas"}'
-  };
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: "pavan@example.com",
+        password: "bananas",
+      }),
+    };
   
-  fetch('http://localhost:3001/users/login', options)
-    .then(response => response.json())
-    .then(response => setToken(response))
-    .catch(err => console.error(err));
-    verify();
-  }
+    fetch("http://localhost:3001/users/login", options)
+      .then((response) => response.json())
+      .then((response) => {
+        const { token } = response;
+        setToken(token); // Store the token in state or AsyncStorage
+        verify(); // Call the verification function
+      })
+      .catch((err) => console.error(err));
+  };
 
   
   return (
