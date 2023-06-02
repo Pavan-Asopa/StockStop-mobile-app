@@ -9,6 +9,7 @@ import StockInfoScreen from "./screens/StockInfoScreen";
 import NewsScreen from "./screens/NewsScreen";
 import "react-native-gesture-handler";
 import { MD3DarkTheme } from "react-native-paper";
+import RegisterScreen from "./screens/RegisterScreen";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App(props) {
         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
         <NavigationContainer theme={MyTheme}>
           <Stack.Navigator>
+            <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
             <Stack.Screen name="StockInfo" component={StockInfoScreen} />
