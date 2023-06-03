@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text, View } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import RegisterForm from "../components/RegisterForm";
+import { MD3DarkTheme } from "react-native-paper";
 
 export default function RegisterScreen() {
     return (
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     },
     header: {
       fontSize: scaleSize(20),
-      color: "#fff",
+      color: MD3DarkTheme.colors.primary,
       fontWeight: "bold",
       alignSelf: "center",
       marginTop: scaleSize(20),

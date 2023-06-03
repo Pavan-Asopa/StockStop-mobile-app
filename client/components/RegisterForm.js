@@ -1,72 +1,77 @@
 import React, {useState} from 'react';
 import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
-  const [hidePass, setHidePass] = useState(true);
+  const [passwordError, setPasswordError] = useState(false);
   const [password2, setPassword2] = useState("");
-  const [emailError, setEmailError] = useState(true);
-  const [passwordError, setPasswordError] = useState(true);
-  const [matchError, setMatchError] = useState("");
-    
+  const [matchError, setMatchError] = useState(false);
+
+  const [hidePass, setHidePass] = useState(true);
+  const [hidePass2, setHidePass2] = useState(true);
+
+  // as text input in email field changes, check for errors
   const onChangeEmail = (email) => {
-    if(!email.includes("@")){
-        setEmailError(true);
-    }else{ 
-        setEmailError(false)
-    };
-        setEmail(email);
-  }
-
-  const onChangePassword = (password) => {
-    if(password.length < 6 ){
-        setPasswordError(true);
-    }else{ 
-        setPasswordError(false)
-    };
-        setPassword(password);
-  }
-
-  const onChangePassword2 = (password2) => {
-    if(password !== password2){
-        setMatchError(true);
-      
-    }else{ 
-        setMatchError(false)
-    };
-        setPassword2(password2);
-  }
-
-
-  const handlePress = () => {
-    if(!emailError && !passwordError && !matchError){
-        register();
-    }else{
-        if(emailError) {
-            console.log("Email format is incorrect")
-        }
+    if (!email.includes("@") || !email.includes(".")) { // ensure email follows appropriate format (contains @ and .)
+      setEmailError(true);
+    } else { 
+      setEmailError(false);
     }
-  }
+    setEmail(email); // set email as text input changes
+  };
 
+  // as text input in password field changes, check for errors
+  const onChangePassword = (password) => {
+    if (password.length < 6 || !/\d/.test(password)) { // ensure password is at least 6 characters long and includes at least 1 number
+      setPasswordError(true);
+    } else { 
+      setPasswordError(false);
+    }
+    setPassword(password); // set password as text input changes
+  };
+
+  // as text input in second password field changes, compare this second password to first password
+  const onChangePassword2 = (password2) => {
+    if (password !== password2) { // ensure both passwords match, as this field is meant to confirm the password
+      setMatchError(true);
+    } else { 
+      setMatchError(false);
+    }
+    setPassword2(password2); // set password2 as text input changes
+  };
+
+
+
+  // function to handle actions when user clicks the register button
+  const handleRegister = () => {
+    if (!emailError && !passwordError && !matchError) { // ensure there are no errors before registering user
+      register(); // call register function to add new user to database
+    } else {
+      if (emailError || passwordError || matchError) {
+        return (
+          Alert.alert("Error", "Unable to register user with provided details. Please check the provided email and/or password.",
+        ));
+      }
+    }
+  };
+
+  // register function that adds new user to database
   const register = () => {
     const options = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email:email,password:password})
-      };
-      
-      fetch('http://localhost:3001/users/register', options)
-        .then(response => response.json())
-        .then(response => console.log(response.error))
-        .catch(err => console.error(err));
-    }
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: email, password: password})
+    };
+    fetch('http://localhost:3001/users/register', options)
+      .then(response => response.json())
+      .then(response => console.log(response.error))
+      .catch(err => console.error(err));
+  };
 
-
-
-  
   return (
     <View>
       <View style={styles.break}></View>
@@ -77,8 +82,8 @@ const RegisterForm = () => {
         placeholder="someone@gmail.com"
         autoCapitalize="none"
       />
-      <HelperText type="error" visible={emailError}>
-        Email should contain '@' sign
+      <HelperText type="error" visible={emailError} style={styles.helper}>
+        Invalid email format - should contain "@" and "."
       </HelperText>
       <View style={styles.break}></View>
       <TextInput
@@ -97,13 +102,13 @@ const RegisterForm = () => {
           />
         }
       />
-      <HelperText type="error" visible={passwordError}>
-        Passwords should be at least 6 characters in length and include atleast one number
+      <HelperText type="error" visible={passwordError} style={styles.helper}>
+        Passwords should be at least 6 characters in length and include at least one number
       </HelperText>
       <View style={styles.break}></View>
       <TextInput
         label="Confirm Password" 
-        secureTextEntry={hidePass ? true : false} 
+        secureTextEntry={hidePass2 ? true : false} 
         value={password2} 
         onChangeText={onChangePassword2} 
         placeholder="Confirm Password"
@@ -113,37 +118,31 @@ const RegisterForm = () => {
             icon="eye"
             iconColor={MD3Colors.primary50}
             size={20}
-            onPress={() => setHidePass(!hidePass)}
+            onPress={() => setHidePass2(!hidePass2)}
           />
         }
       />
-      <HelperText type="error" visible={matchError}>
+      <HelperText type="error" visible={matchError} style={styles.helper}>
         Passwords do not match
       </HelperText>
       <View style={styles.break}></View>
       <Button
         style={styles.loginButton}
-        icon={"account-arrow-right"}
+        icon={"account-plus"}
         mode="contained"
-        onPress={() => handlePress()}
-      >
-        Register
-      </Button>
+        onPress={() => handleRegister()}
+      >Register</Button>
     </View>
     );
   };
 
   const styles = StyleSheet.create({
-    header: {
-      fontSize: scaleSize(20),
-      color: "#fff",
-      fontWeight: "bold",
-      alignSelf: "center",
-      marginTop: scaleSize(20),
-      marginBottom: scaleSize(20),
+    helper: {
+      fontSize: scaleSize(15),
+      color: "#F62217",
     },
     break: {
-      margin: scaleSize(15),
+      margin: scaleSize(10),
     },
     loginButton: {
       flex: 1,
