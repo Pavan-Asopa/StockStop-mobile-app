@@ -23,19 +23,22 @@ const LoginForm = () => {
 
 
   const verify = () => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.token}`,
-      },
-      body: '{"email":"pavan@example.com","password":"bananas"}'
-  };
-  
-  fetch('http://localhost:3001/users/login', options)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token.token}`,
+        },
+        body: JSON.stringify({email:email,password:password})
+    };
+    
+    fetch('http://localhost:3001/users/login', options)
+      .then(response => response.json())
+      .then(response => console.log("hi"))
+      .catch(err => console.log(err))
+
+      
+      
   }
 
   const login = () => {
@@ -43,8 +46,8 @@ const LoginForm = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: "pavan@example.com",
-        password: "bananas",
+        email: email,
+        password: password,
       }),
     };
   

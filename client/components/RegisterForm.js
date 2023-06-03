@@ -3,31 +3,66 @@ import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
 import { View, StyleSheet, Text } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
-
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePass, setHidePass] = useState(true);
   const [password2, setPassword2] = useState("");
+  const [emailError, setEmailError] = useState(true);
+  const [passwordError, setPasswordError] = useState(true);
+  const [matchError, setMatchError] = useState("");
     
-  const onChangeEmail = (email) => setEmail(email);
-  const hasErrorsEmail = () => {
-    return !email.includes("@");
-  };
-
-  const onChangePassword = (password) => setPassword(password);
-  const hasErrorsPassword = () => {
-    return password.length < 6 ;
-  };
-
-  const onChangePassword2 = (password2) => setPassword2(password2);
-
-
-
-  const ConfirmPassword = () => {
-    const match = password === password2;
-    return !match 
+  const onChangeEmail = (email) => {
+    if(!email.includes("@")){
+        setEmailError(true);
+    }else{ 
+        setEmailError(false)
+    };
+        setEmail(email);
   }
+
+  const onChangePassword = (password) => {
+    if(password.length < 6 ){
+        setPasswordError(true);
+    }else{ 
+        setPasswordError(false)
+    };
+        setPassword(password);
+  }
+
+  const onChangePassword2 = (password2) => {
+    if(password !== password2){
+        setMatchError(true);
+      
+    }else{ 
+        setMatchError(false)
+    };
+        setPassword2(password2);
+  }
+
+
+  const handlePress = () => {
+    if(!emailError && !passwordError && !matchError){
+        register();
+    }else{
+        if(emailError) {
+            console.log("Email format is incorrect")
+        }
+    }
+  }
+
+  const register = () => {
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email:email,password:password})
+      };
+      
+      fetch('http://localhost:3001/users/register', options)
+        .then(response => response.json())
+        .then(response => console.log(response.error))
+        .catch(err => console.error(err));
+    }
 
 
 
@@ -42,7 +77,7 @@ const RegisterForm = () => {
         placeholder="someone@gmail.com"
         autoCapitalize="none"
       />
-      <HelperText type="error" visible={hasErrorsEmail()}>
+      <HelperText type="error" visible={emailError}>
         Email should contain '@' sign
       </HelperText>
       <View style={styles.break}></View>
@@ -62,8 +97,8 @@ const RegisterForm = () => {
           />
         }
       />
-      <HelperText type="error" visible={hasErrorsPassword()}>
-        Passwords should be at least 6 characters in length
+      <HelperText type="error" visible={passwordError}>
+        Passwords should be at least 6 characters in length and include atleast one number
       </HelperText>
       <View style={styles.break}></View>
       <TextInput
@@ -82,7 +117,7 @@ const RegisterForm = () => {
           />
         }
       />
-      <HelperText type="error" visible={ConfirmPassword()}>
+      <HelperText type="error" visible={matchError}>
         Passwords do not match
       </HelperText>
       <View style={styles.break}></View>
@@ -90,7 +125,7 @@ const RegisterForm = () => {
         style={styles.loginButton}
         icon={"account-arrow-right"}
         mode="contained"
-        //onPress={() => login()}
+        onPress={() => handlePress()}
       >
         Register
       </Button>
