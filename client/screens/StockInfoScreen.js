@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Text, View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
-import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog } from "react-native-paper";
+import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme } from "react-native-paper";
 import ClosingChart from "../components/ClosingChart";
 
 export default function StockInfoScreen({route, navigation}) {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: scaleSize(25),
     alignSelf: "center",
-    color: "#fff",
+    color: MD3DarkTheme.colors.primary,
     fontWeight: "bold",
   },
   details: {
