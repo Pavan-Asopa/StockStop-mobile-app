@@ -4,23 +4,12 @@ import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 import { Ionicons } from "@expo/vector-icons";
 
-// FixMe: implement other components and functions used in SearchScreen here (don"t just put all the JSX in SearchScreen below)
-
-
-
-
-
-
-
-export default function LogoutScreen({ navigation }) {
+export default function LogoutScreen() {
   const { ServerURL, addToWatchlist } = useStocksContext();
-  const [state, setState] = useState({ /* FixMe: initial state here */ });
+  // const user = route.params.user;
+  // console.log(user);
 
-  // can put more code here
 
-  useEffect(() => {
-    // FixMe: fetch symbol names from the server and save in local SearchScreen state
-  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

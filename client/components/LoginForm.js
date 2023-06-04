@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { scaleSize } from '../constants/Layout';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const API_URL = `http://http://localhost:3001`;
 
@@ -10,10 +12,11 @@ const LoginForm = () => {
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-
   const [hidePass, setHidePass] = useState(true);
 
   const [token, setToken] = useState("");
+
+  const navigation = useNavigation();
   
   const onChangeEmail = (email) => {
     if (!email.includes("@") || !email.includes(".")) { // ensure email follows appropriate format (contains @ and .)
@@ -55,11 +58,14 @@ const LoginForm = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token.token}`,
       },
-      body: JSON.stringify({email:email,password:password})
+      body: JSON.stringify({email: email, password: password})
     };
     fetch('http://localhost:3001/users/login', options)
       .then(response => response.json())
-      .then(response => console.log("hi"))
+      .then(response => {
+        console.log(response)
+
+      })
       .catch(err => console.log(err))
   };
 
@@ -75,9 +81,22 @@ const LoginForm = () => {
     fetch("http://localhost:3001/users/login", options)
       .then((response) => response.json())
       .then((response) => {
-        const { token } = response;
-        setToken(token); // Store the token in state or AsyncStorage
-        verify(); // Call the verification function
+        if (response.token_type === "Bearer") {
+          setToken(response); // store the token in state
+          AsyncStorage.setItem("@Token", JSON.stringify(token)); // store token in AsyncStorage for later use
+          navigation.navigate("Home", {user: email});
+        } else {
+          return (
+            Alert.alert("Error", "Invalid login credentials. Please try again.",
+              [
+                {
+                  text: "Ok",
+                },
+              ]
+            )
+          );
+        }
+        //verify(); // Call the verification function
       })
       .catch((err) => console.error(err));
   };
@@ -124,6 +143,10 @@ const LoginForm = () => {
         mode="contained"
         onPress={() => handleLogin()}
       >Login</Button>
+      <View style={styles.break}></View>
+      <View style={styles.break}></View>
+      <Text style={styles.registerText}>Don't have an account?</Text>
+      <Button onPress={() => navigation.navigate("Register")}>Click here to register.</Button>
     </View>
     );
   };
@@ -132,6 +155,11 @@ const LoginForm = () => {
     text: {
       fontSize: scaleSize(18),
       color: MD3DarkTheme.colors.primary,
+    },
+    registerText: {
+      color: "#fff",
+      fontSize: scaleSize(16),
+      alignSelf: "center",
     },
     helper: {
       fontSize: scaleSize(15),

@@ -96,8 +96,7 @@ const RegisterForm = () => {
             ]
           ));
         }
-      }
-      )
+      })
       .catch(err => console.error(err));
   };
 
