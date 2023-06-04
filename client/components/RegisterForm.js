@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { scaleSize } from '../constants/Layout';
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,8 @@ const RegisterForm = () => {
 
   const [hidePass, setHidePass] = useState(true);
   const [hidePass2, setHidePass2] = useState(true);
+
+  const navigation = useNavigation();
 
   // as text input in email field changes, check for errors
   const onChangeEmail = (email) => {
@@ -44,8 +47,6 @@ const RegisterForm = () => {
     setPassword2(password2); // set password2 as text input changes
   };
 
-
-
   // function to handle actions when user clicks the register button
   const handleRegister = () => {
     if (!emailError && !passwordError && !matchError) { // ensure there are no errors before registering user
@@ -68,7 +69,34 @@ const RegisterForm = () => {
     };
     fetch('http://localhost:3001/users/register', options)
       .then(response => response.json())
-      .then(response => console.log(response.error))
+      .then(response => {
+        console.log(response)
+        if (response.success === true) {
+          return (
+            Alert.alert("Success", "New user registered.",
+            [
+              {
+                text: "Login",
+                onPress: () => navigation.navigate("Login"),
+              },
+            ]
+          ));
+        } else {
+          return (
+            Alert.alert("Error", "User already exists. Register with new details or login with existing account.",
+            [
+              {
+                text: "Login",
+                onPress: () => navigation.navigate("Login"),
+              },
+              {
+                text: "Register",
+              },
+            ]
+          ));
+        }
+      }
+      )
       .catch(err => console.error(err));
   };
 
