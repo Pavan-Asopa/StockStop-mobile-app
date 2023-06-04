@@ -19,6 +19,7 @@ module.exports = function (req, res, next) {
             console.log("Token has expired");
             return;
         }
+        req.email = decoded.email;
 
         next();
     } catch(err) {
