@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Text, View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
-import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme } from "react-native-paper";
+import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme, MD3Colors } from "react-native-paper";
 import ClosingChart from "../components/ClosingChart";
 
 export default function StockInfoScreen({route, navigation}) {
@@ -42,11 +42,8 @@ export default function StockInfoScreen({route, navigation}) {
           </Dialog>
         </Portal>
         <Button 
-          style={styles.descriptionButton}
-          icon="information-outline"
-          mode="outlined"
-          textColor="#fff"
-          compact={true}
+          labelStyle={styles.descriptionButton}
+          textColor={MD3Colors.primary50}
           onPress={showDialog}
         >Display stock description</Button>
         <View style={styles.lineBreak} />
@@ -57,7 +54,8 @@ export default function StockInfoScreen({route, navigation}) {
         <Button
           style={styles.newsButton}
           icon="newspaper-variant-multiple-outline"
-          mode="outlined"
+          mode="contained"
+          buttonColor={MD3Colors.primary50}
           textColor="#fff"
           onPress={() => navigation.push('News', {stock: symbol, name: description.stockName})}
         >Click here</Button>
@@ -81,6 +79,7 @@ const styles = StyleSheet.create({
   descriptionButton: {
     flex: 1,
     alignSelf: "center",
+    fontSize: scaleSize(18),
     width: scaleSize(250),
     marginTop: scaleSize(5),
   },

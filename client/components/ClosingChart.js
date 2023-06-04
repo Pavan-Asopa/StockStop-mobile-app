@@ -9,7 +9,7 @@ import { useWeeklyData } from "./WeeklyData";
 export default function ClosingChart({symbol}) {
   const daily = useDailyData(symbol); // fetch daily data from api
   const weekly = useWeeklyData(symbol); // fetch weekly data from api
-  const [isWeekly, setIsWeekly] = useState(true); // default chart data will be the weekly data
+  const [isWeekly, setIsWeekly] = useState(false); // default chart data will be the weekly data
 
   // if data are null or still loading
   if(!daily || !weekly || weekly.loading || daily.loading) {
@@ -26,7 +26,7 @@ export default function ClosingChart({symbol}) {
   const labels = isWeekly ? weekly.labels : daily.labels;
 
   const hideLabelsDaily = [1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29];
-  const hideLabelsWeekly = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,50,51,52];
+  const hideLabelsWeekly = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52];
 
   // set chart data
   const data = {
@@ -38,7 +38,7 @@ export default function ClosingChart({symbol}) {
         strokeWidth: 1
       }
     ],
-    legend: isWeekly ? ["52-Week Closing Prices"] : ["30-Day Closing Prices"]
+    legend: isWeekly ? ["52-Week Closing Prices ($USD)"] : ["30-Day Closing Prices ($USD)"]
   };
 
   // define chart configuations, including colours and styles
@@ -49,6 +49,8 @@ export default function ClosingChart({symbol}) {
     barPercentage: 0.5,
     useShadowColorFromDataset: false
   };
+
+  const screenWidth = Dimensions.get("screen").width;
 
   // function returns a line chart with buttons to toggle between daily and weekly data
   return (
@@ -63,24 +65,27 @@ export default function ClosingChart({symbol}) {
             value: false,
             label: "Daily Data",
             icon: "calendar-today",
+            uncheckedColor: "#fff"
           },
           {
             value: true,
             label: "Weekly Data",
             icon: "calendar-week",
+            uncheckedColor: "#fff"
           },
           ]} 
         />
       </SafeAreaView>
       <LineChart
         data={data}
-        xLabelsOffset={3}
+        xLabelsOffset={5}
         yAxisLabel={"$"}
         yAxisInterval={5}
+        withDots={false}
         hidePointsAtIndex={isWeekly ? hideLabelsWeekly : hideLabelsDaily}
-        verticalLabelRotation={-10}
-        width={Dimensions.get("window").width}
-        height={300}
+        verticalLabelRotation={-15}
+        width={screenWidth}
+        height={scaleSize(200)}
         chartConfig={chartConfig}
       />
     </View>

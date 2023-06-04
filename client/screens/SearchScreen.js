@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
-import { Searchbar, ActivityIndicator, Banner, Button } from "react-native-paper";
+import { Searchbar, ActivityIndicator, Banner, Button, MD3Colors } from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 
@@ -83,6 +83,7 @@ export default function SearchScreen({ navigation }) {
           labelStyle={styles.help}
           icon="help-circle-outline"
           mode="text"
+          textColor={MD3Colors.primary50}
           accessibilityHint="Display page help"
           contentStyle={{flexDirection: "row-reverse"}}
           onPress={() => setBannerVisible(true)}
