@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
+import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
@@ -36,10 +36,11 @@ const LoginForm = () => {
 
   // function to handle actions when user clicks the login button
   const handleLogin = () => {
-    if (!emailError && !passwordError) { // ensure there are no errors before sending post requests
+    // ensure that all fields have been completed and there are no errors before sending login request
+    if (email !== "" && password !== "" && !emailError && !passwordError) {
       login(); // call login function
     } else {
-      if (emailError || passwordError) {
+      if (email === "" || password === "" || emailError || passwordError) {
         return (
           Alert.alert("Error", "Your email and/or password do not follow the appropriate formats. Please fix and try again.",
         ));
@@ -84,6 +85,7 @@ const LoginForm = () => {
   return (
     <View>
       <View style={styles.break}></View>
+      <Text style={styles.text}>Email Address</Text>
       <TextInput
         label="Email Address"
         value={email}
@@ -95,6 +97,7 @@ const LoginForm = () => {
         Invalid email format - should contain "@" and "."
       </HelperText>
       <View style={styles.break}></View>
+      <Text style={styles.text}>Password</Text>
       <TextInput
         label="Password" 
         secureTextEntry={hidePass ? true : false} 
@@ -126,6 +129,10 @@ const LoginForm = () => {
   };
 
   const styles = StyleSheet.create({
+    text: {
+      fontSize: scaleSize(18),
+      color: MD3DarkTheme.colors.primary,
+    },
     helper: {
       fontSize: scaleSize(15),
       color: "#F62217",

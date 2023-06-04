@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { TextInput, HelperText, MD3Colors, Button } from 'react-native-paper';
+import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { scaleSize } from '../constants/Layout';
 import { useNavigation } from '@react-navigation/native';
@@ -49,10 +49,11 @@ const RegisterForm = () => {
 
   // function to handle actions when user clicks the register button
   const handleRegister = () => {
-    if (!emailError && !passwordError && !matchError) { // ensure there are no errors before registering user
+    // ensure that all fields have been completed and there are no errors before registering user
+    if (email !== "" && password!== "" && password2!== "" && !emailError && !passwordError && !matchError) {
       register(); // call register function to add new user to database
     } else {
-      if (emailError || passwordError || matchError) {
+      if (email === "" || password === "" || password2 === "" || emailError || passwordError || matchError) {
         return (
           Alert.alert("Error", "Unable to register user with provided details. Please check the provided email and/or password.",
         ));
@@ -103,6 +104,7 @@ const RegisterForm = () => {
   return (
     <View>
       <View style={styles.break}></View>
+      <Text style={styles.text}>Email Address</Text>
       <TextInput
         label="Email Address"
         value={email}
@@ -114,6 +116,7 @@ const RegisterForm = () => {
         Invalid email format - should contain "@" and "."
       </HelperText>
       <View style={styles.break}></View>
+      <Text style={styles.text}>Password</Text>
       <TextInput
         label="Password" 
         secureTextEntry={hidePass ? true : false} 
@@ -134,6 +137,7 @@ const RegisterForm = () => {
         Passwords should be at least 6 characters in length and include at least one number
       </HelperText>
       <View style={styles.break}></View>
+      <Text style={styles.text}>Confirm Password</Text>
       <TextInput
         label="Confirm Password" 
         secureTextEntry={hidePass2 ? true : false} 
@@ -165,6 +169,10 @@ const RegisterForm = () => {
   };
 
   const styles = StyleSheet.create({
+    text: {
+      fontSize: scaleSize(18),
+      color: MD3DarkTheme.colors.primary,
+    },
     helper: {
       fontSize: scaleSize(15),
       color: "#F62217",
