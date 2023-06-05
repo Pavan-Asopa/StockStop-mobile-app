@@ -13,44 +13,65 @@ export default function SearchList({stocks}) {
   //const token = JSON.parse(AsyncStorage.getItem("@Token"));
   //console.log(token);
 
-  const [state, setState] = useState("");
+  // const [state, setState] = useState("");
 
-  let _retrieveToken = async () => {
+  // let _retrieveToken = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("@Token");
+  //     console.log("Retrieved Token");
+
+  //     if (value !== null) {
+  //       setState(value);
+  //     }
+  //   } catch (error) {
+  //     console.log(`Error retrieving data:`,error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   _retrieveToken();
+  // }, []);
+
+  const {colors} = useTheme();
+  
+  const updateWatchlist = async () => {
     try {
-      const value = await AsyncStorage.getItem("@Token");
-      console.log("Retrieved Token");
-
-      if (value !== null) {
-        setState(value);
+      const tokens = await AsyncStorage.getItem("@Token");
+      console.log("This")
+      console.log(tokens);
+      if (tokens) {
+        const token = JSON.parse(tokens);
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.token}`,
+          },
+          body: JSON.stringify({ symbol : "ZM" }),
+        };
+  
+        fetch("http://localhost:3001/updatewatchlist", options)
+          .then((response) => response.json())
+          .then((response) => {
+            // Handle the response
+            if (response.success) {
+              console.log("Entry added to watchlist");
+            } else {
+              console.log("Failed to add entry to watchlist");
+            }
+          })
+          .catch((err) => console.error(err));
       }
     } catch (error) {
-      console.log(`Error retrieving data:`,error);
+      console.error(error);
     }
   };
 
-  useEffect(() => {
-    _retrieveToken();
-  }, []);
 
-  const {colors} = useTheme();
-  const verify = (props) => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.token}`,
-      },
-      body: JSON.stringify({symbol: props.symbol})
-    };
-    fetch('http://localhost:3001/users/updatewatchlist', options)
-      .then(response => response.json())
-      .then(response => {
-        console.log(response)
 
-      })
-      .catch(err => console.log(err))
-  };
 
+  
+  
   // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
   const displayAlert = (props) => {
     return (
@@ -63,7 +84,7 @@ export default function SearchList({stocks}) {
         {
           text: "Confirm",
           //onPress: () => addToWatchList({stockName: props.name, stockSymbol: props.symbol})
-          onPress: () => console.log(state)
+          onPress: () => updateWatchlist()
         }
       ])
     );
