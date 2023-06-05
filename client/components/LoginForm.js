@@ -84,9 +84,8 @@ const LoginForm = () => {
         if (response.token_type === "Bearer") {
           setToken(response); // store the token in state
           AsyncStorage.setItem("@Token", JSON.stringify(token)); // store token in AsyncStorage for later use
-          AsyncStorage.setItem("@email", email)
-          AsyncStorage.setItem("@password", password)
-          navigation.navigate("Home", {user: email});
+         // AsyncStorage.setItem("@email", email)
+          navigation.navigate("Home", {token: token});
         } else {
           return (
             Alert.alert("Error", "Invalid login credentials. Please try again.",

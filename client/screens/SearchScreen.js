@@ -8,7 +8,7 @@ import SearchList from "../components/SearchList";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen({route, navigation }) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
   const [search, setSearch] = useState("");
   const [fullList, setFullList] = useState([]);
@@ -17,28 +17,12 @@ export default function SearchScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
 
   const [bannerVisible, setBannerVisible] = useState(false);
-  const email = AsyncStorage.getItem('@email');
-  console.log(email);
-  const password = AsyncStorage.getItem('@password');
-  console.log(password);
+  // const email = AsyncStorage.setItem("@email");
+  //const email = route.params.token;
+  //console.log(email);
 
-  const verify = () => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.token}`,
-      },
-      body: JSON.stringify({email, password})
-    };
-    fetch('http://localhost:3001/users/updatewatchlist', options)
-      .then(response => response.json())
-      .then(response => {
-        console.log(response)
 
-      })
-      .catch(err => console.log(err))
-  };
+
 
   // function to filter list of available stocks
   const searchFilterFunction = (searchText) => {

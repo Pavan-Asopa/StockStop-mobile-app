@@ -4,7 +4,7 @@ import { scaleSize } from "../constants/Layout";
 import LoginForm from "../components/LoginForm";
 import { MD3DarkTheme } from "react-native-paper";
 
-export default function LoginScreen() {
+export default function LoginScreen({route, navigation}) {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView style={styles.container}>

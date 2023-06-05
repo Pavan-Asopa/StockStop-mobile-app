@@ -1,16 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Button, List, Dialog, Portal, MD3DarkTheme } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SearchList({stocks}) {
 
   // call useStocksContext() to get the URL, current watchList, and addToWatchList function
   const { addToWatchList } = useStocksContext();
+  //const token = JSON.parse(AsyncStorage.getItem("@Token"));
+  //console.log(token);
+
+  const [state, setState] = useState("");
+
+  let _retrieveToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@Token");
+      console.log("Retrieved Token");
+
+      if (value !== null) {
+        setState(value);
+      }
+    } catch (error) {
+      console.log(`Error retrieving data:`,error);
+    }
+  };
+
+  useEffect(() => {
+    _retrieveToken();
+  }, []);
 
   const {colors} = useTheme();
+  const verify = (props) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.token}`,
+      },
+      body: JSON.stringify({symbol: props.symbol})
+    };
+    fetch('http://localhost:3001/users/updatewatchlist', options)
+      .then(response => response.json())
+      .then(response => {
+        console.log(response)
+
+      })
+      .catch(err => console.log(err))
+  };
 
   // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
   const displayAlert = (props) => {
@@ -23,7 +62,8 @@ export default function SearchList({stocks}) {
         },
         {
           text: "Confirm",
-          onPress: () => addToWatchList({stockName: props.name, stockSymbol: props.symbol})
+          //onPress: () => addToWatchList({stockName: props.name, stockSymbol: props.symbol})
+          onPress: () => console.log(state)
         }
       ])
     );
