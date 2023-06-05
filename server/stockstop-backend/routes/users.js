@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
@@ -55,7 +54,7 @@ router.post('/register', async function (req, res, next){
   } catch (error){ // catch other errors
       res.status(500).json({
         error: true,
-        message: "User already exists" 
+        message: "Internal server error" 
     });
   }
  });
@@ -106,7 +105,7 @@ router.post('/login', async function(req, res, next) {
   } catch(error){
     res.status(500).json({
       error: true,
-      message: "User already exists" 
+      message: "Internal server error" 
     });
   }
 });
