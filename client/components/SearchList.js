@@ -39,7 +39,7 @@ export default function SearchList({stocks}) {
               console.log("Failed to add entry to watchlist");
             }
           })
-          .catch((err) => console.error(err));
+          .catch((err) => console.log(err));
       }
     } catch (error) {
       console.error(error);
