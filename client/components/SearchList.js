@@ -10,31 +10,10 @@ export default function SearchList({stocks}) {
 
   // call useStocksContext() to get the URL, current watchList, and addToWatchList function
   const { addToWatchList } = useStocksContext();
-  //const token = JSON.parse(AsyncStorage.getItem("@Token"));
-  //console.log(token);
-
-  // const [state, setState] = useState("");
-
-  // let _retrieveToken = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem("@Token");
-  //     console.log("Retrieved Token");
-
-  //     if (value !== null) {
-  //       setState(value);
-  //     }
-  //   } catch (error) {
-  //     console.log(`Error retrieving data:`,error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   _retrieveToken();
-  // }, []);
-
+ 
   const {colors} = useTheme();
   
-  const updateWatchlist = async () => {
+  const updateWatchlist = async (props) => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
       console.log("This")
@@ -47,7 +26,7 @@ export default function SearchList({stocks}) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token.token}`,
           },
-          body: JSON.stringify({ symbol : "ZM" }),
+          body: JSON.stringify({ symbol: props.symbol }),
         };
   
         fetch("http://localhost:3001/users/updatewatchlist", options)
@@ -67,9 +46,6 @@ export default function SearchList({stocks}) {
     }
   };
 
-
-
-
   
   
   // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
@@ -83,8 +59,11 @@ export default function SearchList({stocks}) {
         },
         {
           text: "Confirm",
-          //onPress: () => addToWatchList({stockName: props.name, stockSymbol: props.symbol})
-          onPress: () => updateWatchlist()
+          onPress: () => {
+            addToWatchList({stockName: props.name, stockSymbol: props.symbol})
+            updateWatchlist(props)
+          }
+          //onPress: () => updateWatchlist()
         }
       ])
     );
