@@ -50,7 +50,7 @@ export default function SearchList({stocks}) {
           body: JSON.stringify({ symbol : "ZM" }),
         };
   
-        fetch("http://localhost:3001/updatewatchlist", options)
+        fetch("http://localhost:3001/users/updatewatchlist", options)
           .then((response) => response.json())
           .then((response) => {
             // Handle the response
