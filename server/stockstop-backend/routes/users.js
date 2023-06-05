@@ -112,8 +112,8 @@ router.post('/login', async function(req, res, next) {
 });
 
 // POST route to insert an entry into the watchlist table
-router.post('/updatewatchlist', async (req, res) => {
-  const email = req.body.email; 
+router.post('/updatewatchlist',authorize, async (req, res) => {
+  const email = req.email; 
   const symbol = req.body.symbol; 
 
 
@@ -134,8 +134,8 @@ router.post('/updatewatchlist', async (req, res) => {
 });
 
 // POST route to remove an entry from the watchlist table
-router.post('/deletewatchlist', async (req, res) => {
-  const email = req.body.email; 
+router.post('/deletewatchlist', authorize, async (req, res) => {
+  const email = req.email; 
   const symbol = req.body.symbol;
 
   try {
