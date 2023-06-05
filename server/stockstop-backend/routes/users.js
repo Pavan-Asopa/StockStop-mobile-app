@@ -34,7 +34,7 @@ router.post('/register', async function (req, res, next){
     if (users.length === 0) { // no matching users, can add to table
       console.log("No matching users");
     
-      // encrypt enteredpassword
+      // encrypt password
       const saltRounds = 10;
       const hash = bcrypt.hashSync(password, saltRounds);
 
@@ -111,39 +111,47 @@ router.post('/login', async function(req, res, next) {
   }
 });
 
-//   queryUsers
-//     .then((users) => {
-//       if(users.length === 0) {
-//         // res.status(401).json({
-//         //   error: true,
-//         //   message: "User does not exist"
-//         // })
-//         console.log("User does not exist");
-//         return;
-//       }
-//       console.log("User exists in table");
+// POST route to insert an entry into the watchlist table
+router.post('/updatewatchlist', async (req, res) => {
+  const email = req.body.email; 
+  const symbol = req.body.symbol; 
 
-//       const user = users[0];
-//       return bcrypt.compare(password, user.hash);
-//   })
-//   .then((match) => {
-//     if(!match) {
-//       console.log("Passwords do not match");
-//       // res.status(401).json({
-//       //   error: true,
-//       //   message: "Incorrect password enetered"
-//       // })
-//       return;
-//     }
-//   });
 
-// //Create and return JWT token
-//   const secretKey = "secret key" // should use .env for something secret
-//   const expires_in = 60*60*24; // 1 day
-//   const exp = Date.now() + expires_in * 1000;
+  try {
+    // Insert the entry into the watchlist table
+    await req.db('watchlist').insert({ email, symbol });
 
-//   const token = jwt.sign({email, exp}, secretKey);
-//   res.json({token_type: "Bearer", token, expires_in});
-// });
+    res.status(201).json({
+      success: true,
+      message: "Entry added to watchlist"
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: true,
+      message: "Failed to add entry to watchlist"
+    });
+  }
+});
+
+// POST route to remove an entry from the watchlist table
+router.post('/deletewatchlist', async (req, res) => {
+  const email = req.body.email; 
+  const symbol = req.body.symbol;
+
+  try {
+    // Delete the entry from the watchlist table
+    await req.db('watchlist').where({ email, symbol }).del();
+
+    res.json({
+      success: true,
+      message: "Entry removed from watchlist"
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: true,
+      message: "Failed to remove entry from watchlist"
+    });
+  }
+});
 
 module.exports = router;
