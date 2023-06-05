@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { scaleSize } from '../constants/Layout';
 import { useNavigation } from '@react-navigation/native';
 
@@ -55,8 +55,10 @@ const RegisterForm = () => {
     } else {
       if (email === "" || password === "" || password2 === "" || emailError || passwordError || matchError) {
         return (
-          Alert.alert("Error", "Unable to register user with provided details. Please check the provided email and/or password.",
-        ));
+        <TouchableOpacity>
+          Alert.alert("Error", "Unable to register user with provided details. Please check the provided email and/or password.");
+        </TouchableOpacity>
+        );
       }
     }
   };
@@ -101,7 +103,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <View>
+    <TouchableOpacity>
       <View style={styles.break}></View>
       <Text style={styles.text}>Email Address</Text>
       <TextInput
@@ -163,7 +165,7 @@ const RegisterForm = () => {
         mode="contained"
         onPress={() => handleRegister()}
       >Register</Button>
-    </View>
+    </TouchableOpacity>
     );
   };
 

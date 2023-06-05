@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-const API_URL = `http://http://localhost:3001`;
+const API_URL = `http://localhost:3001`;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -102,7 +102,7 @@ const LoginForm = () => {
   };
 
   return (
-    <View>
+    <TouchableOpacity>
       <View style={styles.break}></View>
       <Text style={styles.text}>Email Address</Text>
       <TextInput
@@ -147,7 +147,7 @@ const LoginForm = () => {
       <View style={styles.break}></View>
       <Text style={styles.registerText}>Don't have an account?</Text>
       <Button onPress={() => navigation.navigate("Register")}>Click here to register.</Button>
-    </View>
+    </TouchableOpacity>
     );
   };
 
