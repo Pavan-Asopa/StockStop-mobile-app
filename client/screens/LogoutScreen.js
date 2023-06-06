@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 
+
 export default function LogoutScreen() {
   const { ServerURL, addToWatchlist } = useStocksContext();
 
@@ -48,9 +49,14 @@ export default function LogoutScreen() {
   getUserInfo() // call function to update state with user info
 
   const handleLogout = async () => {
-    await AsyncStorage.clear();
-    navigation.navigate("Login");
-  }
+    try {
+      await AsyncStorage.clear();
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log('Failed to clear AsyncStorage:', error);
+      // Handle the error, e.g., show an error message to the user
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
