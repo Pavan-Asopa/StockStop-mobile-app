@@ -112,12 +112,12 @@ router.post('/login', async function(req, res, next) {
 // POST route to insert an entry (stock) into the watchlist table
 router.post('/updatewatchlist', authorize, async (req, res) => {
   const email = req.email; 
-  const symbol = req.body.symbol; 
-  const name = req.body.name;
+  const stockSymbol = req.body.symbol; 
+  const stockName = req.body.name;
 
   try {
     // Insert the entry (stock) into the watchlist table
-    await req.db('watchlist').insert({ email, symbol, name });
+    await req.db('watchlist').insert({ email, stockSymbol, stockName });
 
     res.status(201).json({
       success: true,
@@ -126,7 +126,7 @@ router.post('/updatewatchlist', authorize, async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: "Failed to add stock to WatchList"
+      message: "Failed to add stock to WatchList",
     });
   }
 });
@@ -134,11 +134,11 @@ router.post('/updatewatchlist', authorize, async (req, res) => {
 // POST route to remove an entry (stock) from the watchlist table
 router.post('/deletewatchlist', authorize, async (req, res) => {
   const email = req.email; 
-  const symbol = req.body.symbol;
+  const stockSymbol = req.body.symbol;
 
   try {
     // Delete the entry (stock) from the watchlist table
-    await req.db('watchlist').where({ email, symbol }).del();
+    await req.db('watchlist').where({ email, stockSymbol }).del();
 
     res.json({
       success: true,

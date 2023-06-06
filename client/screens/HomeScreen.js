@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 // FixMe: implement other components and functions used in SearchScreen here (don"t just put all the JSX in SearchScreen below)
 
-//const [list, setList]
+//const [list, setList] 
 
 const fetchWatchlist = async () => {
   try {
