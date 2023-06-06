@@ -8,6 +8,37 @@ const StocksContext = React.createContext();
 export const StocksProvider = ({ children }) => {
   const [state, setState] = useState([]);
 
+  const fetchWatchlist = async () => {
+    try {
+      const tokens = await AsyncStorage.getItem("@Token");
+      console.log(tokens);
+      if (tokens) {
+        const token = JSON.parse(tokens);
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.token}`,
+          },
+        };
+  
+        fetch("http://localhost:3001/users/retrievewatchlist", options)
+          .then((response) => response.json())
+          .then((response) => {
+            // Handle the response
+            if (response.success) {
+              setUser(response.list)
+            } else {
+              console.log("Could not fetch user info");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   let _retrieveData = async () => {
     try {
       const value = await AsyncStorage.getItem("@Watch");
