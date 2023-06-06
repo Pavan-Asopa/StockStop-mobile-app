@@ -51,23 +51,6 @@ const LoginForm = () => {
     }
   };
 
-  const verify = () => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.token}`,
-      },
-      body: JSON.stringify({email: email, password: password})
-    };
-    fetch('http://localhost:3001/users/login', options)
-      .then(response => response.json())
-      .then(response => {
-        console.log(response)
-
-      })
-      .catch(err => console.log(err))
-  };
 
   const login = () => {
     const options = {
@@ -84,6 +67,8 @@ const LoginForm = () => {
         if (response.token_type === "Bearer") {
           setToken(response); // store the token in state
           AsyncStorage.setItem("@Token", JSON.stringify(response)); // store token in AsyncStorage for later use
+          setPassword("");
+          setEmail("");
           navigation.navigate("Home", {token: response});
         } else {
           return (
