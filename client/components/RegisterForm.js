@@ -47,6 +47,12 @@ const RegisterForm = () => {
     setPassword2(password2); // set password2 as text input changes
   };
 
+  const clearForm = () => {
+    setEmail("")
+    setPassword("")
+    setPassword2("")
+  }
+
   // function to handle actions when user clicks the register button
   const handleRegister = () => {
     // ensure that all fields have been completed and there are no errors before registering user
@@ -94,6 +100,7 @@ const RegisterForm = () => {
               },
               {
                 text: "Register",
+                onPress: () => clearForm()
               },
             ]
           ));

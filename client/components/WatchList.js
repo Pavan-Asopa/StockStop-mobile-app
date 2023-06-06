@@ -4,6 +4,7 @@ import { StyleSheet, View, Alert } from "react-native";
 import { List } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import { useStocksContext } from '../contexts/StocksContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // map each individual stock contained within the watchList to create a list of watched stocks
 export default function WatchList({stocks}) {
@@ -25,10 +26,43 @@ export default function WatchList({stocks}) {
         },
         {
           text: "Remove from WatchList",
-          onPress: () => removeFromWatchList({stockName: props.name, stockSymbol: props.symbol}) // removes stock from watchList
-        }
+          onPress: () => {removeFromWatchList({stockName: props.name, stockSymbol: props.symbol}) // removes stock from watchList
+                          deleteFromWatchlist(props) //deletes from backend watchlist table
+        }}
       ])
     );
+  };
+
+  const deleteFromWatchlist = async (props) => {
+    try {
+      const tokens = await AsyncStorage.getItem("@Token");
+      console.log(tokens);
+      if (tokens) {
+        const token = JSON.parse(tokens);
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token.token}`,
+          },
+          body: JSON.stringify({ symbol: props.symbol }),
+        };
+  
+        fetch("http://localhost:3001/users/deletewatchlist", options)
+          .then((response) => response.json())
+          .then((response) => {
+            // Handle the response
+            if (response.success) {
+              console.log("Entry deleted from watchlist");
+            } else {
+              console.log("Failed to delete entry to watchlist");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

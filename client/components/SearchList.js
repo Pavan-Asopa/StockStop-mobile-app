@@ -16,7 +16,6 @@ export default function SearchList({stocks}) {
   const updateWatchlist = async (props) => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
-      console.log("This")
       console.log(tokens);
       if (tokens) {
         const token = JSON.parse(tokens);
@@ -26,7 +25,7 @@ export default function SearchList({stocks}) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token.token}`,
           },
-          body: JSON.stringify({ symbol: props.symbol }),
+          body: JSON.stringify({ symbol: props.symbol, name: props.name }),
         };
   
         fetch("http://localhost:3001/users/updatewatchlist", options)
