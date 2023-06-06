@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import {Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { scaleSize } from "../constants/Layout";
 
 async function getStockDescription(symbol) {

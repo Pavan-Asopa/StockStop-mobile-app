@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Alert } from "react-native";
-import { List } from "react-native-paper";
+import { IconButton, List, MD3Colors } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import { useStocksContext } from '../contexts/StocksContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,9 +26,11 @@ export default function WatchList({stocks}) {
         },
         {
           text: "Remove from WatchList",
-          onPress: () => {removeFromWatchList({stockName: props.name, stockSymbol: props.symbol}) // removes stock from watchList
-                          deleteFromWatchlist(props) //deletes from backend watchlist table
-        }}
+          onPress: () => {
+            removeFromWatchList({stockName: props.name, stockSymbol: props.symbol}) // removes stock from watchList
+            deleteFromWatchlist(props) //deletes from backend watchlist table
+          }
+        }
       ])
     );
   };
@@ -75,14 +77,12 @@ export default function WatchList({stocks}) {
             key={stock.stockSymbol}
             description={stock.stockSymbol}
             descriptionStyle={styles.description}
-            // right={props => <Button {...props}
-            //   // style={styles.binButton}
-            //   // labelStyle={styles.binSize}
+            // right={props => <IconButton {...props}
             //   icon="trash-can-outline"
-            //   // mode="contained"
+            //   iconColor={MD3Colors.primary50}
             //   onPress={() => removeFromWatchList({stockName: props.stockName, stockSymbol: props.stockSymbol})}
-            // /> // clicking on trash bin button removes stock from watchList
-            // } 
+            //   />
+            // }
             onPress={() => displayAlert({name: stock.stockName, symbol: stock.stockSymbol})} // selecting a stock asks user to confirm action
           />
         );

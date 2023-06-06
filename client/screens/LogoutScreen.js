@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
-import { Button } from "react-native-paper";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text, Dimensions } from "react-native";
+import { Button, MD3Colors, MD3DarkTheme } from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,8 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function LogoutScreen() {
   const { ServerURL, addToWatchlist } = useStocksContext();
-  // const user = route.params.user;
-  // console.log(user);
 
   const [user, setUser] = useState("");
   const navigation = useNavigation();
@@ -47,7 +45,7 @@ export default function LogoutScreen() {
     }
   };
 
-  getUserInfo() //call function to update state with user info
+  getUserInfo() // call function to update state with user info
 
   const handleLogout = async () => {
     await AsyncStorage.clear();
@@ -57,11 +55,20 @@ export default function LogoutScreen() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        {/* <Button onPress={() => getUserInfo()}>Press me for magic</Button>
-        <Text style = {styles.text}>{user}</Text> */}
-        {/* <Button onPress={() => getUserInfo()}>{user}</Button> */}
-        <Text style = {styles.text}>The current logged in user is : {user}</Text>
-        <Button onPress={() => handleLogout()}>Logout</Button>
+        <Text style={styles.headerText}>Thank you for using <Text style={styles.stockStop}>StockStop</Text></Text>
+        <Text style={styles.slogan}>Your one-stop shop for all info on the top-traded NASDAQ stocks</Text>
+        <View style={styles.lineBreak}></View>
+        <Text style={styles.subheaderText}>You are currently logged in as:</Text>
+        <Text style={styles.userText}>{user}</Text>
+        <Button
+          icon="logout"
+          mode="contained"
+          contentStyle={{flexDirection: "row-reverse"}}
+          buttonColor={MD3DarkTheme.colors.primary}
+          labelStyle={styles.logoutText}
+          style={styles.logoutButton}
+          onPress={() => handleLogout()}
+        >Logout</Button>
       </View>
     </TouchableWithoutFeedback>    
   )
@@ -71,9 +78,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000",
+    justifyContent: "center"
   },
-  text: {
+  headerText: {
+    fontSize: scaleSize(25),
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: scaleSize(10),
+  },
+  stockStop: {
+    fontSize: scaleSize(25),
+    color: MD3Colors.primary50,
+  },
+  slogan: {
+    fontSize: scaleSize(18),
+    color: "#DFDFDF",
+    textAlign: "center",
+    marginBottom: scaleSize(20),
+  },
+  subheaderText: {
     fontSize: scaleSize(20),
     color: "#fff",
+    textAlign: "center",
+    marginTop: scaleSize(20),
+    marginBottom: scaleSize(10),
+  },
+  userText: {
+    fontSize: scaleSize(20),
+    color: MD3DarkTheme.colors.primary,
+    alignSelf: "center",
+  },
+  logoutText: {
+    fontSize: scaleSize(18),
+    color: "#000000",
+  },
+  logoutButton: {
+    marginTop: scaleSize(30),
+    width: scaleSize(200),
+    alignSelf: "center",
+  },
+  lineBreak: {
+    backgroundColor: "#A2A2A2",
+    height: 2,
+    width: Dimensions.get("window").width,
+    marginTop: scaleSize(20),
+    marginBottom: scaleSize(20),
   },
 });

@@ -1,14 +1,16 @@
 import React, {useState} from "react";
-import {Text, View, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Dimensions, Image } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
 import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme, MD3Colors } from "react-native-paper";
 import ClosingChart from "../components/ClosingChart";
+import { useStockLogo } from "../components/StockLogo";
 
 export default function StockInfoScreen({route, navigation}) {
      
   const symbol = route.params.stock;
   const {description} = useStockDescription(symbol);
+  const logo = useStockLogo(symbol);
 
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
@@ -25,11 +27,16 @@ export default function StockInfoScreen({route, navigation}) {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.name}>{description.stockName}</Text>
-      <View style={styles.lineBreak} />
-      <Text style={styles.details}>Sector: {description.sector}</Text>
-      <Text style={styles.details}>Industry: {description.industry}</Text>
       <PaperProvider>
+        <Text style={styles.name}>{description.stockName}</Text>
+        <View style={styles.lineBreak} />
+        <View style={styles.descContainer}>
+            <Text style={styles.details}>
+              <Image style={styles.logo} src={logo} />
+              <Text style={styles.bold}>Sector: </Text>{description.sector}{'\n'}
+              <Text style={styles.bold}>Industry: </Text>{description.industry}
+            </Text>
+        </View>
         <Portal>
           <Dialog visible={visible} onDismiss={hideDialog}>
             <Dialog.Title>{description.stockName}</Dialog.Title>
@@ -76,6 +83,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  descContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+  },
   descriptionButton: {
     flex: 1,
     alignSelf: "center",
@@ -107,9 +118,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     paddingBottom: scaleSize(2),
   },
+  bold: {
+    fontWeight: "bold",
+  },
   text: {
     fontSize: scaleSize(20),
     color: "#fff",
+  },
+  logo: {
+    width: scaleSize(50),
+    height: scaleSize(50),
   },
   chartHeader: {
     fontSize: scaleSize(20),

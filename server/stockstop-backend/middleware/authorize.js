@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
 
     if (authorization && authorization.split(" ").length == 2) {
         token = authorization.split(" ")[1];
-        console.log(token);
+        //console.log(token);
     } else {
         console.log("Unauthorized user"); //error handle
         return;

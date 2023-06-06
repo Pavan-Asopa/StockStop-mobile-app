@@ -83,11 +83,10 @@ router.post('/login', async function(req, res, next) {
         message: "User does not exist"
       });
     } else {
-      console.log("user exists");
+      console.log("User exists");
       const user = users[0];
       const match = await bcrypt.compare(password, user.hash);
       if (!match) {
-        // console.log("Passwords do not match");
         res.status(401).json({
           error: true,
           message: "Incorrect password enetered"
@@ -110,92 +109,85 @@ router.post('/login', async function(req, res, next) {
   }
 });
 
-// POST route to insert an entry into the watchlist table
-router.post('/updatewatchlist',authorize, async (req, res) => {
+// POST route to insert an entry (stock) into the watchlist table
+router.post('/updatewatchlist', authorize, async (req, res) => {
   const email = req.email; 
   const symbol = req.body.symbol; 
   const name = req.body.name;
 
-
   try {
-    // Insert the entry into the watchlist table
+    // Insert the entry (stock) into the watchlist table
     await req.db('watchlist').insert({ email, symbol, name });
 
     res.status(201).json({
       success: true,
-      message: "Entry added to watchlist"
+      message: "Stock added to WatchList"
     });
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: "Failed to add entry to watchlist"
+      message: "Failed to add stock to WatchList"
     });
   }
 });
 
-// POST route to remove an entry from the watchlist table
+// POST route to remove an entry (stock) from the watchlist table
 router.post('/deletewatchlist', authorize, async (req, res) => {
   const email = req.email; 
   const symbol = req.body.symbol;
 
   try {
-    // Delete the entry from the watchlist table
+    // Delete the entry (stock) from the watchlist table
     await req.db('watchlist').where({ email, symbol }).del();
 
     res.json({
       success: true,
-      message: "Entry removed from watchlist"
+      message: "Stock removed from WatchList"
     });
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: "Failed to remove entry from watchlist"
+      message: "Failed to remove stock from WatchList"
     });
   }
 });
 
-// POST route to Query all entries from the watchlist table
-router.post('/retrievewatchlist',authorize, async (req, res) => {
+// POST route to query all entries from the watchlist table
+router.post('/retrievewatchlist', authorize, async (req, res) => {
   const email = req.email; 
-
   try {
-    // Select all symbols from the watchlist table for an email
+    // select all symbols from the watchlist table for a user
     const list = await req.db.from("watchlist").select("stockName", "stockSymbol").where("email", "=", email);
     console.log(list);
 
     res.json({
       success: true,
-      message: "Retrieved watchlist",
+      message: "Retrieved WatchList",
       watchlist: list
     });
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: "Failed to retrieve watchlist"
+      message: "Failed to retrieve WatchList"
     });
   }
 });
 
-
-router.post('/getemail',authorize, async (req, res) => {
+// POST route to query current logged in user
+router.post('/getemail', authorize, async (req, res) => {
   const email = req.email;
   try {
-    
-    console.log(email);
     res.json({
       success: true,
-      message: "Retrieved user info",
+      message: "Retrieved user information",
       user: email
     });
   } catch (error) {
     res.status(500).json({
       error: true,
-      message: "Failed to remove retrieve watchlist"
+      message: "Failed to retrieve user information"
     });
   } 
 })
 
-
-
-
-  module.exports = router;
+module.exports = router;

@@ -81,7 +81,6 @@ const LoginForm = () => {
             )
           );
         }
-        //verify(); // Call the verification function
       })
       .catch((err) => console.error(err));
   };
@@ -140,6 +139,7 @@ const LoginForm = () => {
     text: {
       fontSize: scaleSize(18),
       color: MD3DarkTheme.colors.primary,
+      padding: scaleSize(5),
     },
     registerText: {
       color: "#fff",
@@ -151,7 +151,7 @@ const LoginForm = () => {
       color: "#F62217",
     },
     break: {
-      margin: scaleSize(10),
+      margin: scaleSize(8),
     },
     loginButton: {
       flex: 1,

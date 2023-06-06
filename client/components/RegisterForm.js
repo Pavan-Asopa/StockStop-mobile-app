@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
+import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme, PaperProvider, Portal, Dialog } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { scaleSize } from '../constants/Layout';
 import { useNavigation } from '@react-navigation/native';
@@ -12,10 +12,14 @@ const RegisterForm = () => {
   const [password2, setPassword2] = useState("");
   const [matchError, setMatchError] = useState(false);
 
+  const [helpVisible, setHelpVisible] = useState(false);
   const [hidePass, setHidePass] = useState(true);
   const [hidePass2, setHidePass2] = useState(true);
 
   const navigation = useNavigation();
+
+  const showDialog = () => setHelpVisible(true);
+  const hideDialog = () => setHelpVisible(false);
 
   // as text input in email field changes, check for errors
   const onChangeEmail = (email) => {
@@ -47,12 +51,6 @@ const RegisterForm = () => {
     setPassword2(password2); // set password2 as text input changes
   };
 
-  const clearForm = () => {
-    setEmail("")
-    setPassword("")
-    setPassword2("")
-  }
-
   // function to handle actions when user clicks the register button
   const handleRegister = () => {
     // ensure that all fields have been completed and there are no errors before registering user
@@ -61,12 +59,17 @@ const RegisterForm = () => {
     } else {
       if (email === "" || password === "" || password2 === "" || emailError || passwordError || matchError) {
         return (
-        <TouchableOpacity>
-          Alert.alert("Error", "Unable to register user with provided details. Please check the provided email and/or password.");
-        </TouchableOpacity>
+          Alert.alert("Error", "Unable to register user with provided details. Please check the provided email and/or password.")
         );
       }
     }
+  };
+
+  // function used to clear the text input fields once the form has been submitted
+  const clearForm = () => {
+    setEmail("");
+    setPassword("");
+    setPassword2("");
   };
 
   // register function that adds new user to database
@@ -79,7 +82,7 @@ const RegisterForm = () => {
     fetch('http://localhost:3001/users/register', options)
       .then(response => response.json())
       .then(response => {
-        console.log(response)
+        //console.log(response)
         if (response.success === true) {
           return (
             Alert.alert("Success", "New user registered.",
@@ -100,7 +103,7 @@ const RegisterForm = () => {
               },
               {
                 text: "Register",
-                onPress: () => clearForm()
+                onPress: () => clearForm(),
               },
             ]
           ));
@@ -111,73 +114,106 @@ const RegisterForm = () => {
 
   return (
     <TouchableOpacity>
-      <View style={styles.break}></View>
-      <Text style={styles.text}>Email Address</Text>
-      <TextInput
-        label="Email Address"
-        value={email}
-        onChangeText={onChangeEmail}
-        placeholder="someone@gmail.com"
-        autoCapitalize="none"
-      />
-      <HelperText type="error" visible={emailError} style={styles.helper}>
-        Invalid email format - should contain "@" and "."
-      </HelperText>
-      <View style={styles.break}></View>
-      <Text style={styles.text}>Password</Text>
-      <TextInput
-        label="Password" 
-        secureTextEntry={hidePass ? true : false} 
-        value={password} 
-        onChangeText={onChangePassword} 
-        placeholder="Password"
-        autoCapitalize="none"
-        right={
-          <TextInput.Icon
-            icon="eye"
-            iconColor={MD3Colors.primary50}
-            size={20}
-            onPress={() => setHidePass(!hidePass)}
-          />
-        }
-      />
-      <HelperText type="error" visible={passwordError} style={styles.helper}>
-        Passwords should be at least 6 characters in length and include at least one number
-      </HelperText>
-      <View style={styles.break}></View>
-      <Text style={styles.text}>Confirm Password</Text>
-      <TextInput
-        label="Confirm Password" 
-        secureTextEntry={hidePass2 ? true : false} 
-        value={password2} 
-        onChangeText={onChangePassword2} 
-        placeholder="Confirm Password"
-        autoCapitalize="none"
-        right={
-          <TextInput.Icon
-            icon="eye"
-            iconColor={MD3Colors.primary50}
-            size={20}
-            onPress={() => setHidePass2(!hidePass2)}
-          />
-        }
-      />
-      <HelperText type="error" visible={matchError} style={styles.helper}>
-        Passwords do not match
-      </HelperText>
-      <View style={styles.break}></View>
-      <Button
-        style={styles.loginButton}
-        icon={"account-plus"}
-        mode="contained"
-        onPress={() => handleRegister()}
-      >Register</Button>
+      <PaperProvider>
+        <View style={styles.break}></View>
+        <Text style={styles.text}>Email Address</Text>
+        <TextInput
+          label="Email Address"
+          value={email}
+          onChangeText={onChangeEmail}
+          placeholder="someone@gmail.com"
+          autoCapitalize="none"
+        />
+        <HelperText type="error" visible={emailError} style={styles.helper}>
+          Invalid email format - should contain "@" and "."
+        </HelperText>
+        <View style={styles.break}></View>
+        <View style={styles.helpContainer}>
+          <Text style={styles.passwordText}>Password</Text>
+          <Button
+            labelStyle={styles.helpButton}
+            icon="information-outline"
+            mode='text'
+            onPress={() => setHelpVisible(true)}
+            ></Button>
+        </View>
+        <Portal>
+          <Dialog visible={helpVisible} onDismiss={hideDialog}>
+            <Dialog.Title>Password Tips</Dialog.Title>
+            <Dialog.Content>
+              <Text variant="bodyMedium">
+                Passwords must be at least 6 characters in length and contain at least 1 number.
+              </Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>Ok</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+        <TextInput
+          label="Password" 
+          secureTextEntry={hidePass ? true : false} 
+          value={password} 
+          onChangeText={onChangePassword} 
+          placeholder="Password"
+          autoCapitalize="none"
+          right={
+            <TextInput.Icon
+              icon="eye"
+              iconColor={MD3Colors.primary50}
+              size={20}
+              onPress={() => setHidePass(!hidePass)}
+            />
+          }
+        />
+        <HelperText type="error" visible={passwordError} style={styles.helper}>
+          Passwords should be at least 6 characters in length and include at least one number
+        </HelperText>
+        <View style={styles.break}></View>
+        <Text style={styles.text}>Confirm Password</Text>
+        <TextInput
+          label="Confirm Password" 
+          secureTextEntry={hidePass2 ? true : false} 
+          value={password2} 
+          onChangeText={onChangePassword2} 
+          placeholder="Confirm Password"
+          autoCapitalize="none"
+          right={
+            <TextInput.Icon
+              icon="eye"
+              iconColor={MD3Colors.primary50}
+              size={20}
+              onPress={() => setHidePass2(!hidePass2)}
+            />
+          }
+        />
+        <HelperText type="error" visible={matchError} style={styles.helper}>
+          Passwords do not match
+        </HelperText>
+        <View style={styles.break}></View>
+        <Button
+          style={styles.loginButton}
+          icon="account-plus"
+          mode="contained"
+          onPress={() => handleRegister()}
+        >Register</Button>
+      </PaperProvider>
     </TouchableOpacity>
     );
   };
 
   const styles = StyleSheet.create({
+    helpContainer: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+    },
     text: {
+      fontSize: scaleSize(18),
+      color: MD3DarkTheme.colors.primary,
+      paddingBottom: scaleSize(5),
+    },
+    passwordText: {
       fontSize: scaleSize(18),
       color: MD3DarkTheme.colors.primary,
     },
@@ -186,12 +222,17 @@ const RegisterForm = () => {
       color: "#F62217",
     },
     break: {
-      margin: scaleSize(10),
+      margin: scaleSize(8),
+    },
+    helpButton: {
+      flex: 1,
+      color: MD3DarkTheme.colors.primary,
+      justifyContent: "center"
     },
     loginButton: {
       flex: 1,
       width: scaleSize(200),
-      alignSelf: "center"
+      alignSelf: "center",
     }
 });
   
