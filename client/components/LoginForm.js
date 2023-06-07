@@ -43,6 +43,7 @@ const LoginForm = () => {
   const handleLogin = () => {
     // ensure that all fields have been completed and there are no errors before sending login request
     if (email !== "" && password !== "" && !emailError && !passwordError) {
+      console.log("Calling login function");
       login(); // call login function
     } else {
       if (email === "" || password === "" || emailError || passwordError) {
@@ -54,37 +55,42 @@ const LoginForm = () => {
   };
 
 
-  const login = () => {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    };
-    fetch("http://localhost:3001/users/login", options)
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.token_type === "Bearer") {
-          setToken(response); // store the token in state
-          AsyncStorage.setItem("@Token", JSON.stringify(response)); // store token in AsyncStorage for later use
-          setPassword("");
-          setEmail("");
-          navigation.navigate("Home", {token: response});
-        } else {
-          return (
-            Alert.alert("Error", "Invalid login credentials. Please try again.",
-              [
-                {
-                  text: "Ok",
-                },
-              ]
-            )
-          );
-        }
-      })
-      .catch((err) => console.error(err));
+  const login = async () => {
+    try {
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({email: email, password: password}),
+        };
+  
+        fetch("http://localhost:3001/users/login", options)
+          .then((response) => response.json())
+          .then((response) => {
+            if(response.success){
+              setToken(response);
+              AsyncStorage.setItem("@Token", JSON.stringify(response));
+              setPassword("");
+              setEmail("");
+              navigation.navigate("Home", {token: response});
+            }else {
+              return (
+                          Alert.alert("Error", "Invalid login credentials. Please try again.",
+                            [
+                              {
+                                text: "Ok",
+                              },
+                            ]
+                          )
+                        );
+            }
+          })
+           .catch((err) => console.log(err));
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

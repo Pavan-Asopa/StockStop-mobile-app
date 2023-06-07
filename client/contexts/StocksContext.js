@@ -6,7 +6,7 @@ import { scaleSize } from "../constants/Layout";
 export const fetchWatchlistData = async () => {
   try {
     const tokens = await AsyncStorage.getItem("@Token");
-    console.log(tokens);
+    //console.log(tokens);
     if (tokens) {
       const token = JSON.parse(tokens);
       const options = {
@@ -36,14 +36,16 @@ export const fetchWatchlistData = async () => {
 const StocksContext = React.createContext();
 
 export const StocksProvider = ({ children }) => {
-  const [state, setState] = useState([]);
+  const [list, setList] = useState([]);
+
+
   // const [token, setToken] = useState("");
 
   // useEffect(() => {
   //   AsyncStorage.getItem("@Token")
-  //     .then((tokens) => {
-  //       if (tokens) {
-  //         const parsedToken = JSON.parse(tokens);
+  //     .then((token) => {
+  //       if (token) {
+  //         const parsedToken = JSON.parse(token);
   //         setToken(parsedToken.token);
   //       }
   //     })
@@ -102,27 +104,28 @@ export const StocksProvider = ({ children }) => {
 
   // useEffect(() => {
   //   //_retrieveData();
-  //   fetchWatchlistData()
+  //   fetchWatchlist()
   //     .then((watchlist) => setState(watchlist))
   //     .catch((error) => console.log(error));
   //   console.log(state);
-  // }, [token]);
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
         try {
           const watchlist = await fetchWatchlistData();
-          setState(watchlist);
+          setList(watchlist);
         } catch (error) {
           console.log(error);
         } 
     };
     fetchData();
+    //const interval = setInterval(fetchData, 5000);
   }, []);
   
 
   return (
-    <StocksContext.Provider value={[state, setState]}>
+    <StocksContext.Provider value={[list, setList]}>
       {children}
     </StocksContext.Provider>
   );

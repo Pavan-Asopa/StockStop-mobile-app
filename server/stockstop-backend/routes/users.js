@@ -98,7 +98,7 @@ router.post('/login', async function(req, res, next) {
         const exp = Date.now() + expires_in * 1000;
 
         const token = jwt.sign({email, exp}, secretKey);
-        res.json({token_type: "Bearer", token, expires_in})
+        res.status(201).json({success: true, token_type: "Bearer", token, expires_in})
       }
     };
   } catch(error){

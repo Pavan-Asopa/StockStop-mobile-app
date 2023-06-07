@@ -39,7 +39,7 @@ export default function WatchList({stocks}) {
   const deleteFromWatchlist = async (props) => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
-      console.log(tokens);
+      //console.log(tokens);
       if (tokens) {
         const token = JSON.parse(tokens);
         const options = {

@@ -8,6 +8,7 @@ import SearchList from "../components/SearchList";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 export default function SearchScreen({route, navigation }) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
   const [search, setSearch] = useState("");
@@ -20,8 +21,6 @@ export default function SearchScreen({route, navigation }) {
   // const email = AsyncStorage.setItem("@email");
   //const email = route.params.token;
   //console.log(email);
-
-
 
 
   // function to filter list of available stocks

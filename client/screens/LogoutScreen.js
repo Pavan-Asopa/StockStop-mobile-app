@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text, Dimensions } from "react-native";
 import { Button, MD3Colors, MD3DarkTheme } from "react-native-paper";
-import { useStocksContext } from "../contexts/StocksContext";
+//import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function LogoutScreen() {
-  const { ServerURL, addToWatchlist } = useStocksContext();
+  //const { ServerURL, addToWatchlist} = useStocksContext();
 
   const [user, setUser] = useState("");
   const navigation = useNavigation();
@@ -18,7 +18,7 @@ export default function LogoutScreen() {
   const getUserInfo = async () => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
-      console.log(tokens);
+      //console.log(tokens);
       if (tokens) {
         const token = JSON.parse(tokens);
         const options = {
@@ -49,14 +49,20 @@ export default function LogoutScreen() {
   getUserInfo() // call function to update state with user info
 
   const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem('@Token');
-      console.log("Token Cleared from AsyncStorage")
-      navigation.navigate('Login');
-    } catch (error) {
-      console.log('Failed to clear AsyncStorage:', error);
+    //try {
+      //await AsyncStorage.removeItem('@Token');
+      //await AsyncStorage.clear();
+      //console.log("Token Cleared from AsyncStorage")
+      console.log("calling logout function");
+      try {
+        await AsyncStorage.removeItem('@Token');
+        navigation.navigate('Login');
+      } catch (error) {
+        console.log(error);
+      } 
+      //navigation.navigate('Login');
       // Handle the error, e.g., show an error message to the user
-    }
+  
   };
 
   return (
