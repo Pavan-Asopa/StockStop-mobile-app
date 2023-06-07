@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Alert } from "react-native";
 import { IconButton, List, MD3Colors } from "react-native-paper";
@@ -34,6 +34,7 @@ export default function WatchList({stocks}) {
       ])
     );
   };
+
 
   const deleteFromWatchlist = async (props) => {
     try {

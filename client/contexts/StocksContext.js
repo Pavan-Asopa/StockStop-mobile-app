@@ -37,7 +37,20 @@ const StocksContext = React.createContext();
 
 export const StocksProvider = ({ children }) => {
   const [state, setState] = useState([]);
-  //const [list, setList] = useState([]);
+  // const [token, setToken] = useState("");
+
+  // useEffect(() => {
+  //   AsyncStorage.getItem("@Token")
+  //     .then((tokens) => {
+  //       if (tokens) {
+  //         const parsedToken = JSON.parse(tokens);
+  //         setToken(parsedToken.token);
+  //       }
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
+
+  // const [list, setList] = useState([]);
 
   // const fetchWatchlist = async () => {
   //   try {
@@ -86,12 +99,25 @@ export const StocksProvider = ({ children }) => {
   //   }
   // };
 
+
+  // useEffect(() => {
+  //   //_retrieveData();
+  //   fetchWatchlistData()
+  //     .then((watchlist) => setState(watchlist))
+  //     .catch((error) => console.log(error));
+  //   console.log(state);
+  // }, [token]);
+
   useEffect(() => {
-    //_retrieveData();
-    fetchWatchlistData()
-      .then((watchlist) => setState(watchlist))
-      .catch((error) => console.log(error));
-    console.log(state);
+    const fetchData = async () => {
+        try {
+          const watchlist = await fetchWatchlistData();
+          setState(watchlist);
+        } catch (error) {
+          console.log(error);
+        } 
+    };
+    fetchData();
   }, []);
   
 

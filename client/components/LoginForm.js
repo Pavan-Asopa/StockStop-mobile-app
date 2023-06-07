@@ -5,6 +5,7 @@ import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
+
 const API_URL = `http://localhost:3001`;
 
 const LoginForm = () => {
@@ -36,6 +37,7 @@ const LoginForm = () => {
     }
     setPassword(password); // set password as text input changes
   };
+ 
 
   // function to handle actions when user clicks the login button
   const handleLogin = () => {
