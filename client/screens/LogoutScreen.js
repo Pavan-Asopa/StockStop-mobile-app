@@ -48,22 +48,56 @@ export default function LogoutScreen() {
 
   getUserInfo() // call function to update state with user info
 
+  // const handleLogout = async () => {
+  //   //try {
+  //     //await AsyncStorage.removeItem('@Token');
+  //     //await AsyncStorage.clear();
+  //     //console.log("Token Cleared from AsyncStorage")
+  //     console.log('Before clearing token');
+  //     try {
+  //       const token = await AsyncStorage.getItem('@Token');
+  //       console.log('Token value:', token);
+  //       await AsyncStorage.removeItem('@Token');
+  //       console.log('Token Cleared from AsyncStorage');
+  //       console.log('Token value:', token);
+  //       navigation.navigate('Login');
+  //     } catch (error) {
+  //       console.log(error);
+  //     } 
+  //     //navigation.navigate('Login');
+  //     // Handle the error, e.g., show an error message to the user
+  
+  // };
+
   const handleLogout = async () => {
-    //try {
-      //await AsyncStorage.removeItem('@Token');
-      //await AsyncStorage.clear();
-      //console.log("Token Cleared from AsyncStorage")
-      console.log("calling logout function");
+      console.log('Before clearing token');
       try {
+        const token = await AsyncStorage.getItem('@Token');
+        console.log('Token value:', token);
         await AsyncStorage.removeItem('@Token');
+        console.log('Token Cleared from AsyncStorage');
+        console.log('Token value:', token);
         navigation.navigate('Login');
       } catch (error) {
         console.log(error);
-      } 
-      //navigation.navigate('Login');
-      // Handle the error, e.g., show an error message to the user
-  
+      }   
   };
+
+//   const handleLogout = async () => {
+//     console.log('Before clearing token');
+//     try {
+//       const token = await AsyncStorage.getItem('@Token');
+//       console.log('Token value:', token);
+//       await AsyncStorage.removeItem('@Token');
+//       console.log('Token Cleared from AsyncStorage');
+//       const token2 = await AsyncStorage.getItem('@Token');
+//       console.log('Token value:', token2);
+//       navigation.navigate('Login');
+//     } catch (error) {
+//       console.log(error);
+//     }   
+// };
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
