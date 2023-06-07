@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { Text, View, StyleSheet, ScrollView, Dimensions, Image } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
-import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme, MD3Colors } from "react-native-paper";
+import { Button, Portal, Modal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme, MD3Colors, Avatar } from "react-native-paper";
 import ClosingChart from "../components/ClosingChart";
 import { useStockLogo } from "../components/StockLogo";
 
@@ -11,12 +11,13 @@ export default function StockInfoScreen({route, navigation}) {
   const symbol = route.params.stock;
   const {description} = useStockDescription(symbol);
   const logo = useStockLogo(symbol);
+  console.log(logo);
 
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
-  if(!description) {
+  if(!description || !logo) {
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.text}>Loading stock description</Text>
@@ -31,8 +32,8 @@ export default function StockInfoScreen({route, navigation}) {
         <Text style={styles.name}>{description.stockName}</Text>
         <View style={styles.lineBreak} />
         <View style={styles.descContainer}>
+        {logo}
             <Text style={styles.details}>
-              <Image style={styles.logo} src={logo} />
               <Text style={styles.bold}>Sector: </Text>{description.sector}{'\n'}
               <Text style={styles.bold}>Industry: </Text>{description.industry}
             </Text>
@@ -50,7 +51,7 @@ export default function StockInfoScreen({route, navigation}) {
         </Portal>
         <Button 
           labelStyle={styles.descriptionButton}
-          textColor={MD3Colors.primary50}
+          textColor={MD3Colors.primary60}
           onPress={showDialog}
         >Display stock description</Button>
         <View style={styles.lineBreak} />
@@ -60,9 +61,10 @@ export default function StockInfoScreen({route, navigation}) {
         <Text style={styles.newsHeader}>Want to get inside news?</Text>
         <Button
           style={styles.newsButton}
+          labelStyle={styles.newsButtonText}
           icon="newspaper-variant-multiple-outline"
           mode="contained"
-          buttonColor={MD3Colors.primary50}
+          buttonColor={MD3DarkTheme.colors.primary}
           textColor="#fff"
           onPress={() => navigation.push('News', {stock: symbol, name: description.stockName})}
         >Click here</Button>
@@ -85,11 +87,13 @@ const styles = StyleSheet.create({
   },
   descContainer: {
     flex: 1,
-    alignItems: "flex-start",
+    alignItems: "center",
+    flexDirection:"row",
+    justifyContent:"center",
   },
   descriptionButton: {
-    flex: 1,
-    alignSelf: "center",
+   flex: 1,
+   alignSelf: "center",
     fontSize: scaleSize(18),
     width: scaleSize(250),
     marginTop: scaleSize(5),
@@ -112,11 +116,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: MD3DarkTheme.colors.primary,
     fontWeight: "bold",
+    justifyContent: "center",
   },
   details: {
     fontSize: scaleSize(18),
     color: "#fff",
     paddingBottom: scaleSize(2),
+    paddingLeft: scaleSize(10),
   },
   bold: {
     fontWeight: "bold",
@@ -143,4 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: scaleSize(5),
   },
+  newsButtonText:{
+    color: "#000000",
+  }
 });

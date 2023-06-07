@@ -7,6 +7,7 @@ const StocksContext = React.createContext();
 
 export const StocksProvider = ({ children }) => {
   const [state, setState] = useState([]);
+  //const [list, setList] = useState([]);
 
   const fetchWatchlist = async () => {
     try {
@@ -27,9 +28,11 @@ export const StocksProvider = ({ children }) => {
           .then((response) => {
             // Handle the response
             if (response.success) {
-              setUser(response.list)
+              console.log("Watchlist retrieved from db");
+              console.log(response);
+              setState(response.watchlist)
             } else {
-              console.log("Could not fetch user info");
+              console.log("Could not fetch watchlist from db");
             }
           })
           .catch((err) => console.log(err));
@@ -38,6 +41,7 @@ export const StocksProvider = ({ children }) => {
       console.log(error);
     }
   };
+
 
   let _retrieveData = async () => {
     try {
@@ -53,8 +57,11 @@ export const StocksProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    _retrieveData();
+    //_retrieveData();
+    fetchWatchlist();
+    console.log(state);
   }, []);
+  
 
   return (
     <StocksContext.Provider value={[state, setState]}>
@@ -90,7 +97,7 @@ export const useStocksContext = () => {
         displayAlert({name: newStock.stockName})
     }
 
-    AsyncStorage.setItem("@Watch", JSON.stringify(state));
+   // AsyncStorage.setItem("@Watch", JSON.stringify(state));
 
     return {state};
   }
@@ -103,7 +110,7 @@ export const useStocksContext = () => {
         return [...state]
     });
 
-    AsyncStorage.setItem("@Watch", JSON.stringify(state));
+    //AsyncStorage.setItem("@Watch", JSON.stringify(state));
 
     return {state};
   }

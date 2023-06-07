@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, Image } from "react-native";
+import { Text, StyleSheet, Image, View } from "react-native";
 import { scaleSize } from '../constants/Layout';
 
 async function getStockLogo(symbol) {
@@ -36,7 +36,7 @@ export function useStockLogo(symbol) {
     }
 
     // return stock logo URL
-    return (logo);
+    return <View><Image style={styles.logo} source = {{uri:logo}}/></View>;
 };
 
 const styles = StyleSheet.create({
@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
       text: {
         fontSize: scaleSize(20),
         color: "#fff",
+      },
+      logo: {
+        width: scaleSize(50),
+        height: scaleSize(50),
       },
     }
 );

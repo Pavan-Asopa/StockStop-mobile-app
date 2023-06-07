@@ -50,7 +50,8 @@ export default function LogoutScreen() {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.removeItem('@Token');
+      console.log("Token Cleared from AsyncStorage")
       navigation.navigate('Login');
     } catch (error) {
       console.log('Failed to clear AsyncStorage:', error);

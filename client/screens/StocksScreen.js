@@ -6,10 +6,44 @@ import WatchList from "../components/WatchList";
 
 export default function StocksScreen({route, navigation}) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
+  const [state, setState] = useState([])
 
-  useEffect(() => {
-    // FixMe: fetch stock data from the server for any new symbols added to the watchlist and save in local StocksScreen state  
-  }, [watchList]);
+  // const fetchWatchlist = async () => {
+  //   try {
+  //     const tokens = await AsyncStorage.getItem("@Token");
+  //     console.log(tokens);
+  //     if (tokens) {
+  //       const token = JSON.parse(tokens);
+  //       const options = {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token.token}`,
+  //         },
+  //       };
+  
+  //       fetch("http://localhost:3001/users/retrievewatchlist", options)
+  //         .then((response) => response.json())
+  //         .then((response) => {
+  //           // Handle the response
+  //           if (response.success) {
+  //             console.log("Watchlist retrieved from db");
+  //             console.log(response);
+  //             setState(response.watchlist)
+  //           } else {
+  //             console.log("Could not fetch watchlist from db");
+  //           }
+  //         })
+  //         .catch((err) => console.log(err));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchWatchlist
+  // }, [watchList]);
 
   if (watchList.length === 0) {
     return (
