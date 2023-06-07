@@ -3,62 +3,94 @@ import { StyleSheet, Text, Alert } from "react-native";
 import  AsyncStorage  from "@react-native-async-storage/async-storage";
 import { scaleSize } from "../constants/Layout";
 
+export const fetchWatchlistData = async () => {
+  try {
+    const tokens = await AsyncStorage.getItem("@Token");
+    console.log(tokens);
+    if (tokens) {
+      const token = JSON.parse(tokens);
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      };
+
+      const response = await fetch("http://localhost:3001/users/retrievewatchlist", options);
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Watchlist retrieved from the database");
+        console.log(data);
+        return data.watchlist;
+      } else {
+        console.log("Could not fetch watchlist from the database");
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const StocksContext = React.createContext();
 
 export const StocksProvider = ({ children }) => {
   const [state, setState] = useState([]);
   //const [list, setList] = useState([]);
 
-  const fetchWatchlist = async () => {
-    try {
-      const tokens = await AsyncStorage.getItem("@Token");
-      console.log(tokens);
-      if (tokens) {
-        const token = JSON.parse(tokens);
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token.token}`,
-          },
-        };
+  // const fetchWatchlist = async () => {
+  //   try {
+  //     const tokens = await AsyncStorage.getItem("@Token");
+  //     console.log(tokens);
+  //     if (tokens) {
+  //       const token = JSON.parse(tokens);
+  //       const options = {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token.token}`,
+  //         },
+  //       };
   
-        fetch("http://localhost:3001/users/retrievewatchlist", options)
-          .then((response) => response.json())
-          .then((response) => {
-            // Handle the response
-            if (response.success) {
-              console.log("Watchlist retrieved from db");
-              console.log(response);
-              setState(response.watchlist)
-            } else {
-              console.log("Could not fetch watchlist from db");
-            }
-          })
-          .catch((err) => console.log(err));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //       fetch("http://localhost:3001/users/retrievewatchlist", options)
+  //         .then((response) => response.json())
+  //         .then((response) => {
+  //           // Handle the response
+  //           if (response.success) {
+  //             console.log("Watchlist retrieved from db");
+  //             console.log(response);
+  //             setState(response.watchlist)
+  //           } else {
+  //             console.log("Could not fetch watchlist from db");
+  //           }
+  //         })
+  //         .catch((err) => console.log(err));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
-  let _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@Watch");
-      console.log("Retrieved WatchList");
+  // let _retrieveData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("@Watch");
+  //     console.log("Retrieved WatchList");
 
-      if (value !== null) {
-        setState(JSON.parse(value));
-      }
-    } catch (error) {
-      console.log(`Error retrieving data:`,error);
-    }
-  };
+  //     if (value !== null) {
+  //       setState(JSON.parse(value));
+  //     }
+  //   } catch (error) {
+  //     console.log(`Error retrieving data:`,error);
+  //   }
+  // };
 
   useEffect(() => {
     //_retrieveData();
-    fetchWatchlist();
+    fetchWatchlistData()
+      .then((watchlist) => setState(watchlist))
+      .catch((error) => console.log(error));
     console.log(state);
   }, []);
   
