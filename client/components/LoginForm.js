@@ -5,7 +5,6 @@ import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-
 const API_URL = `http://localhost:3001`;
 
 const LoginForm = () => {
@@ -38,7 +37,6 @@ const LoginForm = () => {
     setPassword(password); // set password as text input changes
   };
  
-
   // function to handle actions when user clicks the login button
   const handleLogin = () => {
     // ensure that all fields have been completed and there are no errors before sending login request
@@ -57,37 +55,36 @@ const LoginForm = () => {
 
   const login = async () => {
     try {
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({email: email, password: password}),
-        };
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email: email, password: password}),
+      };
   
-        fetch("http://localhost:3001/users/login", options)
-          .then((response) => response.json())
-          .then((response) => {
-            if(response.success){
-              setToken(response);
-              AsyncStorage.setItem("@Token", JSON.stringify(response));
-              setPassword("");
-              setEmail("");
-              navigation.navigate("Home", {token: response});
-            }else {
-              return (
-                          Alert.alert("Error", "Invalid login credentials. Please try again.",
-                            [
-                              {
-                                text: "Ok",
-                              },
-                            ]
-                          )
-                        );
-            }
-          })
-           .catch((err) => console.log(err));
-      
+      fetch("http://localhost:3001/users/login", options)
+        .then((response) => response.json())
+        .then((response) => {
+          if(response.success){
+            setToken(response);
+            AsyncStorage.setItem("@Token", JSON.stringify(response));
+            setPassword("");
+            setEmail("");
+            navigation.navigate("Home", {token: response});
+          } else {
+            return (
+              Alert.alert("Error", "Invalid login credentials. Please try again.",
+                [
+                  {
+                    text: "Ok",
+                  },
+                ]
+              )
+            );
+          }
+        })
+        .catch((err) => console.log(err));
     } catch (error) {
       console.error(error);
     }

@@ -11,7 +11,6 @@ export default function StockInfoScreen({route, navigation}) {
   const symbol = route.params.stock;
   const {description} = useStockDescription(symbol);
   const logo = useStockLogo(symbol);
-  console.log(logo);
 
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
@@ -32,11 +31,11 @@ export default function StockInfoScreen({route, navigation}) {
         <Text style={styles.name}>{description.stockName}</Text>
         <View style={styles.lineBreak} />
         <View style={styles.descContainer}>
-        {logo}
-            <Text style={styles.details}>
-              <Text style={styles.bold}>Sector: </Text>{description.sector}{'\n'}
-              <Text style={styles.bold}>Industry: </Text>{description.industry}
-            </Text>
+          {logo}
+          <Text style={styles.details}>
+            <Text style={styles.bold}>Sector: </Text>{description.sector}{'\n'}
+            <Text style={styles.bold}>Industry: </Text>{description.industry}
+          </Text>
         </View>
         <Portal>
           <Dialog visible={visible} onDismiss={hideDialog}>

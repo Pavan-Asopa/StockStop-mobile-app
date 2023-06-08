@@ -8,7 +8,7 @@ import StocksScreen from "../screens/StocksScreen";
 import LogoutScreen from "../screens/LogoutScreen";
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = "Search";
+const INITIAL_ROUTE_NAME = "StockStop";
 
 // defines the elements of the BottomTabNavigator
 export default function BottomTabNavigator({ navigation, route }) {

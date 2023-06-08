@@ -35,7 +35,6 @@ export default function WatchList({stocks}) {
     );
   };
 
-
   const deleteFromWatchlist = async (props) => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
@@ -78,12 +77,6 @@ export default function WatchList({stocks}) {
             key={stock.stockSymbol}
             description={stock.stockSymbol}
             descriptionStyle={styles.description}
-            // right={props => <IconButton {...props}
-            //   icon="trash-can-outline"
-            //   iconColor={MD3Colors.primary50}
-            //   onPress={() => removeFromWatchList({stockName: props.stockName, stockSymbol: props.stockSymbol})}
-            //   />
-            // }
             onPress={() => displayAlert({name: stock.stockName, symbol: stock.stockSymbol})} // selecting a stock asks user to confirm action
           />
         );

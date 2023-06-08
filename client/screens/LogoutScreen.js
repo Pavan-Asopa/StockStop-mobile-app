@@ -98,7 +98,6 @@ export default function LogoutScreen() {
 //     }   
 // };
 
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
