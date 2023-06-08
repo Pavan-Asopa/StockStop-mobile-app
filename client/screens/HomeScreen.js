@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image, Text, ScrollView } from "react-native";
-import { MD3Colors, MD3DarkTheme, List } from "react-native-paper";
+import { StyleSheet, View, Image, Text, ScrollView, Dimensions, Icon } from "react-native";
+import { MD3Colors, MD3DarkTheme, List, Button } from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
 const image = require ('../assets/images/nasdaq.jpg');
 
 export default function HomeScreen({ navigation }) {
@@ -14,7 +14,8 @@ export default function HomeScreen({ navigation }) {
     <ScrollView indicatorStyle="white" style={styles.container}>
       <View>
         <Text style={styles.headerText}>
-          Welcome to <Text style={styles.stockStop}>StockStop</Text>
+          Welcome to <Text style={styles.stockStop}>StockStop </Text>
+          <FontAwesome name="line-chart" size={scaleSize(25)} color={MD3Colors.primary50} style={styles.logo} />
         </Text>
         <Text style={styles.slogan}>
           Your one-stop shop for all info on the top-traded NASDAQ stocks
@@ -49,6 +50,15 @@ export default function HomeScreen({ navigation }) {
           descriptionStyle={styles.description}
           left={props => <List.Icon {...props} icon="numeric-4-circle-outline" color={MD3DarkTheme.colors.primary}/>}
         />
+        <Button
+          icon="information-outline"
+          mode="contained"
+          contentStyle={{flexDirection: "row-reverse"}}
+          labelStyle={styles.buttonLabel}
+          buttonColor={MD3Colors.primary80}
+          style={styles.button}
+          onPress={() => navigation.push("About")}
+        >About StockStop</Button>
       </View>
     </ScrollView>    
   )
@@ -79,13 +89,14 @@ const styles = StyleSheet.create({
     marginBottom: scaleSize(20),
   },
   image: {
-    width: scaleSize(100),
-    height: scaleSize(100),
+    borderRadius: scaleSize(10),
+    width: Dimensions.get("screen").width,
+    height: scaleSize(200),
   },
   info: {
     fontSize: scaleSize(20),
     color: MD3DarkTheme.colors.primary,
-    marginTop: scaleSize(10),
+    marginTop: scaleSize(20),
   },
   title: {
     color: "#fff",
@@ -96,5 +107,14 @@ const styles = StyleSheet.create({
     color: "#D3D3D3",
     fontSize: scaleSize(14),
     marginRight: 5,
+  },
+  buttonLabel: {
+    fontSize: scaleSize(18),
+    color: "#000000"
+  },
+  button: {
+    marginTop: scaleSize(20),
+    width: scaleSize(200),
+    alignSelf: "center"
   },
 });
