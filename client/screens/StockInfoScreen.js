@@ -88,8 +88,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     flexDirection: "row",
-    //flexWrap: "wrap",
-    //justifyContent:"center",
   },
   descriptionButton: {
    flex: 1,
@@ -123,6 +121,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     paddingBottom: scaleSize(2),
     paddingLeft: scaleSize(10),
+    marginRight: scaleSize(10),
+    paddingRight: scaleSize(10),
   },
   bold: {
     fontWeight: "bold",

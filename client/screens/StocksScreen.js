@@ -6,6 +6,7 @@ import WatchList from "../components/WatchList";
 
 export default function StocksScreen({route, navigation}) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
+  console.log("Watchlist from context on stocks screen:", watchList);
   const [state, setState] = useState([])
 
   // const fetchWatchlist = async () => {

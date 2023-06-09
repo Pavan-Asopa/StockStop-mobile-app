@@ -52,6 +52,9 @@ const LoginForm = () => {
     }
   };
 
+  const clearForm = () => {
+    setPassword("");
+  }
 
   const login = async () => {
     try {
@@ -69,8 +72,6 @@ const LoginForm = () => {
           if(response.success){
             setToken(response);
             AsyncStorage.setItem("@Token", JSON.stringify(response));
-            setPassword("");
-            setEmail("");
             navigation.navigate("Home", {token: response});
           } else {
             return (
@@ -87,7 +88,10 @@ const LoginForm = () => {
         .catch((err) => console.log(err));
     } catch (error) {
       console.error(error);
+    } finally {
+      clearForm();
     }
+
   };
 
   return (
