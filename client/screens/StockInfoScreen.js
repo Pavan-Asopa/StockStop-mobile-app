@@ -87,8 +87,9 @@ const styles = StyleSheet.create({
   descContainer: {
     flex: 1,
     alignItems: "center",
-    flexDirection:"row",
-    justifyContent:"center",
+    flexDirection: "row",
+    //flexWrap: "wrap",
+    //justifyContent:"center",
   },
   descriptionButton: {
    flex: 1,

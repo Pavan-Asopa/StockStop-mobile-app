@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
-import { useTheme } from '@react-navigation/native';
-import { Button, List, Dialog, Portal, MD3DarkTheme } from 'react-native-paper';
+import { Button, List, MD3DarkTheme } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,10 +10,7 @@ export default function SearchList({stocks}) {
 
   // call useStocksContext() to get the URL, current watchList, and addToWatchList function
   const { addToWatchList } = useStocksContext();
- 
-  const {colors} = useTheme();
 
-  
   const updateWatchlist = async (props) => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");

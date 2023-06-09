@@ -81,6 +81,9 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(18),
     color: "#fff",
     paddingTop: scaleSize(20),
+    paddingBottom: scaleSize(20),
+    marginLeft: scaleSize(20),
+    marginRight: scaleSize(20),
   },
   title: {
     color: MD3DarkTheme.colors.primary,

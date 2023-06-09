@@ -82,8 +82,7 @@ const RegisterForm = () => {
     fetch('http://localhost:3001/users/register', options)
       .then(response => response.json())
       .then(response => {
-        //console.log(response)
-        if (response.success === true) {
+        if (response.success) {
           return (
             Alert.alert("Success", "New user registered.",
             [
@@ -134,7 +133,7 @@ const RegisterForm = () => {
             labelStyle={styles.helpButton}
             icon="information-outline"
             mode='text'
-            onPress={() => setHelpVisible(true)}
+            onPress={() => showDialog}
             ></Button>
         </View>
         <Portal>
