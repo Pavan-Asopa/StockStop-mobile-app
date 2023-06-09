@@ -79,7 +79,7 @@ const RegisterForm = () => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({email: email, password: password})
     };
-    fetch('http://localhost:3001/users/register', options)
+    fetch('http://172.22.26.70:3001/users/register', options)
       .then(response => response.json())
       .then(response => {
         if (response.success) {

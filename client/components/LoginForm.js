@@ -5,7 +5,7 @@ import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-const API_URL = `http://localhost:3001`;
+const API_URL = `http://172.22.26.70:3001`;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -66,7 +66,7 @@ const LoginForm = () => {
         body: JSON.stringify({email: email, password: password}),
       };
   
-      fetch("http://localhost:3001/users/login", options)
+      fetch("http://172.22.26.70:3001/users/login", options)
         .then((response) => response.json())
         .then((response) => {
           if(response.success){

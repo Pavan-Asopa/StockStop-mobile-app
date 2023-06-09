@@ -50,7 +50,7 @@ export default function WatchList({stocks}) {
           body: JSON.stringify({ symbol: props.symbol }),
         };
   
-        fetch("http://localhost:3001/users/deletewatchlist", options)
+        fetch("http://172.22.26.70:3001/users/deletewatchlist", options)
           .then((response) => response.json())
           .then((response) => {
             // Handle the response

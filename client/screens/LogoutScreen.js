@@ -29,7 +29,7 @@ export default function LogoutScreen() {
           },
         };
   
-        fetch("http://localhost:3001/users/getemail", options)
+        fetch("http://172.22.26.70:3001/users/getemail", options)
           .then((response) => response.json())
           .then((response) => {
             // Handle the response

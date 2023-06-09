@@ -17,7 +17,7 @@ export const fetchWatchlistData = async () => {
         },
       };
 
-      const response = await fetch("http://localhost:3001/users/retrievewatchlist", options);
+      const response = await fetch("http://172.22.26.70:3001/users/retrievewatchlist", options);
       const data = await response.json();
 
       if (data.success) {
@@ -176,7 +176,7 @@ export const useStocksContext = () => {
     return {state};
   }
 
-  return { ServerURL: "http://localhost:3001", watchList: state, addToWatchList, removeFromWatchList};
+  return { ServerURL: "http://172.22.26.70:3001", watchList: state, addToWatchList, removeFromWatchList};
 };
 
 const styles = StyleSheet.create({

@@ -26,7 +26,7 @@ export default function SearchList({stocks}) {
           body: JSON.stringify({ symbol: props.symbol, name: props.name }),
         };
   
-        fetch("http://localhost:3001/users/updatewatchlist", options)
+        fetch("http://172.22.26.70:3001/users/updatewatchlist", options)
           .then((response) => response.json())
           .then((response) => {
             // Handle the response
