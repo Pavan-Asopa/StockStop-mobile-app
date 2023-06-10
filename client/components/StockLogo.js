@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, Image, View } from "react-native";
+import { ActivityIndicator } from 'react-native-paper';
 import { scaleSize } from '../constants/Layout';
 
 async function getStockLogo(symbol) {
@@ -27,7 +28,7 @@ export function useStockLogo(symbol) {
 
     // display feedback when stock logo is loading
     if (loading) {
-        return<Text style={styles.text}>Loading stock image...</Text>;
+        return<ActivityIndicator animating={true} />;
     }
 
     // display feedback when an error occurs

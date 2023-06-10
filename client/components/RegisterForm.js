@@ -191,7 +191,8 @@ const RegisterForm = () => {
         </HelperText>
         <View style={styles.break}></View>
         <Button
-          style={styles.loginButton}
+          labelStyle={styles.registerButtonText}
+          style={styles.registerButton}
           icon="account-plus"
           mode="contained"
           onPress={() => handleRegister()}
@@ -228,10 +229,13 @@ const RegisterForm = () => {
       color: MD3DarkTheme.colors.primary,
       justifyContent: "center"
     },
-    loginButton: {
+    registerButton: {
       flex: 1,
       width: scaleSize(200),
       alignSelf: "center",
+    },
+    registerButtonText: {
+      fontSize: scaleSize(16),
     }
 });
   

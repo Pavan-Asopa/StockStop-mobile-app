@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text, View } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import LoginForm from "../components/LoginForm";

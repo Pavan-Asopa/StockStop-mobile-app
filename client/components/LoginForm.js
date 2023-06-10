@@ -131,6 +131,7 @@ const LoginForm = () => {
       </HelperText>
       <View style={styles.break}></View>
       <Button
+        labelStyle={styles.loginButtonText}
         style={styles.loginButton}
         icon={"account-arrow-right"}
         mode="contained"
@@ -139,7 +140,9 @@ const LoginForm = () => {
       <View style={styles.break}></View>
       <View style={styles.break}></View>
       <Text style={styles.registerText}>Don't have an account?</Text>
-      <Button onPress={() => navigation.navigate("Register")}>Click here to register.</Button>
+      <Button
+        labelStyle={styles.registerButton}
+        onPress={() => navigation.navigate("Register")}>Click here to register.</Button>
     </TouchableOpacity>
     );
   };
@@ -152,7 +155,7 @@ const LoginForm = () => {
     },
     registerText: {
       color: "#fff",
-      fontSize: scaleSize(16),
+      fontSize: scaleSize(18),
       alignSelf: "center",
     },
     helper: {
@@ -162,10 +165,16 @@ const LoginForm = () => {
     break: {
       margin: scaleSize(8),
     },
+    loginButtonText: {
+      fontSize: scaleSize(16),
+    },
     loginButton: {
       flex: 1,
       width: scaleSize(200),
       alignSelf: "center"
+    },
+    registerButton: {
+      fontSize: scaleSize(16),
     }
 });
   
