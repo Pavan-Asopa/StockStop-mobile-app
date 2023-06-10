@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, Keyboard, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Searchbar, ActivityIndicator, Banner, Button, MD3Colors } from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 
 import SearchList from "../components/SearchList";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-export default function SearchScreen({route, navigation }) {
+// search screen displays list of available stocks
+export default function SearchScreen({ route, navigation }) {
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
   const [search, setSearch] = useState("");
   const [fullList, setFullList] = useState([]);
@@ -18,10 +17,6 @@ export default function SearchScreen({route, navigation }) {
   const [loading, setLoading] = useState(true);
 
   const [bannerVisible, setBannerVisible] = useState(false);
-  // const email = AsyncStorage.setItem("@email");
-  //const email = route.params.token;
-  //console.log(email);
-
 
   // function to filter list of available stocks
   const searchFilterFunction = (searchText) => {

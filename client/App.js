@@ -14,6 +14,8 @@ import { MD3DarkTheme } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
+// modifying react native's dark theme to include colors from react native paper's dark theme
+// want to create a consistent look and feel where all components work well together
 const MyTheme = {
   ...DarkTheme,
   colors: {

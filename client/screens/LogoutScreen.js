@@ -1,24 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text, Dimensions } from "react-native";
 import { Button, MD3Colors, MD3DarkTheme } from "react-native-paper";
-//import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
-import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-
-
+// logout screen allows user to logout of application
 export default function LogoutScreen() {
-  //const { ServerURL, addToWatchlist} = useStocksContext();
-
   const [user, setUser] = useState("");
   const navigation = useNavigation();
 
   const getUserInfo = async () => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
-      //console.log(tokens);
       if (tokens) {
         const token = JSON.parse(tokens);
         const options = {
@@ -48,55 +42,18 @@ export default function LogoutScreen() {
 
   getUserInfo() // call function to update state with user info
 
-  // const handleLogout = async () => {
-  //   //try {
-  //     //await AsyncStorage.removeItem('@Token');
-  //     //await AsyncStorage.clear();
-  //     //console.log("Token Cleared from AsyncStorage")
-  //     console.log('Before clearing token');
-  //     try {
-  //       const token = await AsyncStorage.getItem('@Token');
-  //       console.log('Token value:', token);
-  //       await AsyncStorage.removeItem('@Token');
-  //       console.log('Token Cleared from AsyncStorage');
-  //       console.log('Token value:', token);
-  //       navigation.navigate('Login');
-  //     } catch (error) {
-  //       console.log(error);
-  //     } 
-  //     //navigation.navigate('Login');
-  //     // Handle the error, e.g., show an error message to the user
-  
-  // };
-
+  // function to handle logout actions
   const handleLogout = async () => {
-      console.log('Before clearing token');
       try {
-        const token = await AsyncStorage.getItem('@Token');
-        console.log('Token value:', token);
-        await AsyncStorage.removeItem('@Token');
-        console.log('Token Cleared from AsyncStorage');
-        console.log('Token value:', token);
-        navigation.navigate('Login');
+        // remove token from AsyncStorage
+        await AsyncStorage.removeItem("@Token");
+        console.log("Token cleared from AsyncStorage");
+        // navigate user back to login screen
+        navigation.navigate("Login");
       } catch (error) {
         console.log(error);
       }   
   };
-
-//   const handleLogout = async () => {
-//     console.log('Before clearing token');
-//     try {
-//       const token = await AsyncStorage.getItem('@Token');
-//       console.log('Token value:', token);
-//       await AsyncStorage.removeItem('@Token');
-//       console.log('Token Cleared from AsyncStorage');
-//       const token2 = await AsyncStorage.getItem('@Token');
-//       console.log('Token value:', token2);
-//       navigation.navigate('Login');
-//     } catch (error) {
-//       console.log(error);
-//     }   
-// };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -113,7 +70,7 @@ export default function LogoutScreen() {
           buttonColor={MD3DarkTheme.colors.primary}
           labelStyle={styles.logoutText}
           style={styles.logoutButton}
-          onPress={() => handleLogout()}
+          onPress={() => handleLogout()} // pressing logout button calls the handleLogout function
         >Logout</Button>
       </View>
     </TouchableWithoutFeedback>    

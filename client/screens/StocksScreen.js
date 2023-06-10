@@ -1,51 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 import WatchList from "../components/WatchList";
 
-export default function StocksScreen({route, navigation}) {
+// stocks screen displays users' watchlists
+export default function StocksScreen({ route, navigation}) {
+
+  // get current watchlist from stocks context, which calls the database for watchlist
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
-  console.log("Watchlist from context on stocks screen:", watchList);
-  const [state, setState] = useState([])
 
-  // const fetchWatchlist = async () => {
-  //   try {
-  //     const tokens = await AsyncStorage.getItem("@Token");
-  //     console.log(tokens);
-  //     if (tokens) {
-  //       const token = JSON.parse(tokens);
-  //       const options = {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token.token}`,
-  //         },
-  //       };
-  
-  //       fetch("http://localhost:3001/users/retrievewatchlist", options)
-  //         .then((response) => response.json())
-  //         .then((response) => {
-  //           // Handle the response
-  //           if (response.success) {
-  //             console.log("Watchlist retrieved from db");
-  //             console.log(response);
-  //             setState(response.watchlist)
-  //           } else {
-  //             console.log("Could not fetch watchlist from db");
-  //           }
-  //         })
-  //         .catch((err) => console.log(err));
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchWatchlist
-  // }, [watchList]);
-
+  // display message if watchlist is empty
   if (watchList.length === 0) {
     return (
       <View style={styles.emptyContainer}>
@@ -53,6 +18,7 @@ export default function StocksScreen({route, navigation}) {
         <Text style={styles.emptyMessage}>Go to the Search Screen to add stocks to your WatchList.</Text>
       </View>
     );
+  // render list calling the watchlist component and passing watchlist from context
   } else {
     return (
       <ScrollView indicatorStyle="white" style={styles.container}>

@@ -6,7 +6,6 @@ import { scaleSize } from "../constants/Layout";
 export const fetchWatchlistData = async () => {
   try {
     const tokens = await AsyncStorage.getItem("@Token");
-    //console.log(tokens);
     if (tokens) {
       const token = JSON.parse(tokens);
       const options = {
@@ -38,78 +37,6 @@ const StocksContext = React.createContext();
 export const StocksProvider = ({ children }) => {
   const [list, setList] = useState([]);
 
-
-  // const [token, setToken] = useState("");
-
-  // useEffect(() => {
-  //   AsyncStorage.getItem("@Token")
-  //     .then((token) => {
-  //       if (token) {
-  //         const parsedToken = JSON.parse(token);
-  //         setToken(parsedToken.token);
-  //       }
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
-
-  // const [list, setList] = useState([]);
-
-  // const fetchWatchlist = async () => {
-  //   try {
-  //     const tokens = await AsyncStorage.getItem("@Token");
-  //     console.log(tokens);
-  //     if (tokens) {
-  //       const token = JSON.parse(tokens);
-  //       const options = {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token.token}`,
-  //         },
-  //       };
-  
-  //       fetch("http://localhost:3001/users/retrievewatchlist", options)
-  //         .then((response) => response.json())
-  //         .then((response) => {
-  //           // Handle the response
-  //           if (response.success) {
-  //             console.log("Watchlist retrieved from db");
-  //             console.log(response);
-  //             setState(response.watchlist)
-  //           } else {
-  //             console.log("Could not fetch watchlist from db");
-  //           }
-  //         })
-  //         .catch((err) => console.log(err));
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
-  // let _retrieveData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem("@Watch");
-  //     console.log("Retrieved WatchList");
-
-  //     if (value !== null) {
-  //       setState(JSON.parse(value));
-  //     }
-  //   } catch (error) {
-  //     console.log(`Error retrieving data:`,error);
-  //   }
-  // };
-
-
-  // useEffect(() => {
-  //   //_retrieveData();
-  //   fetchWatchlist()
-  //     .then((watchlist) => setState(watchlist))
-  //     .catch((error) => console.log(error));
-  //   console.log(state);
-  // }, []);
-
   useEffect(() => {
     const fetchData = async () => {
         try {
@@ -120,7 +47,6 @@ export const StocksProvider = ({ children }) => {
         } 
     };
     fetchData();
-    //const interval = setInterval(fetchData, 5000);
   }, []);
   
 
@@ -158,8 +84,6 @@ export const useStocksContext = () => {
         displayAlert({name: newStock.stockName})
     }
 
-   // AsyncStorage.setItem("@Watch", JSON.stringify(state));
-
     return {state};
   }
 
@@ -170,8 +94,6 @@ export const useStocksContext = () => {
       oldState.splice(index, 1);
         return [...state]
     });
-
-    //AsyncStorage.setItem("@Watch", JSON.stringify(state));
 
     return {state};
   }

@@ -5,6 +5,7 @@ import { scaleSize } from "../constants/Layout";
 import { FontAwesome } from '@expo/vector-icons';
 const image = require ('../assets/images/stock-market.jpg');
 
+// about screen displays important information about the application
 export default function AboutScreen({ navigation }) {
 
   return (

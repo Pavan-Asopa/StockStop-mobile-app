@@ -6,16 +6,18 @@ import { Button, Portal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme,
 import ClosingChart from "../components/ClosingChart";
 import { useStockLogo } from "../components/StockLogo";
 
-export default function StockInfoScreen({route, navigation}) {
-     
-  const symbol = route.params.stock;
-  const {description} = useStockDescription(symbol);
+// stock info screen displays detailed information about stocks in users' watchlists
+export default function StockInfoScreen({ route, navigation}) {
+  const symbol = route.params.stock; // symbol is passed as params, need to extract and use it to call apis
+  const { description } = useStockDescription(symbol);
   const logo = useStockLogo(symbol);
 
+  // states related to help dialog
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
+  // display message when information is loading
   if(!description || !logo) {
     return (
       <View style={styles.loadingContainer}>

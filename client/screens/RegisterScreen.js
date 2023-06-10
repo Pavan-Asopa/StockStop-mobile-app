@@ -4,15 +4,16 @@ import { scaleSize } from "../constants/Layout";
 import RegisterForm from "../components/RegisterForm";
 import { MD3DarkTheme } from "react-native-paper";
 
+// register screen displays register form
 export default function RegisterScreen() {
-    return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ScrollView style={styles.container}>
-            <Text style={styles.header}>Register for a StockStop account</Text>
-            <RegisterForm />
-          </ScrollView>
-        </TouchableWithoutFeedback>    
-      );
+  return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={styles.container}>
+          <Text style={styles.header}>Register for a StockStop account</Text>
+          <RegisterForm />
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    );
 };
 
 const styles = StyleSheet.create({

@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image, Text, ScrollView, Dimensions, Icon } from "react-native";
+import React from "react";
+import { StyleSheet, View, Image, Text, ScrollView, Dimensions } from "react-native";
 import { MD3Colors, MD3DarkTheme, List, Button } from "react-native-paper";
-import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 import { FontAwesome } from '@expo/vector-icons';
 const image = require ('../assets/images/nasdaq.jpg');
 
+// home screen displays crucial information about how to use the app
 export default function HomeScreen({ navigation }) {
-  const { ServerURL, addToWatchlist } = useStocksContext();
-  const [state, setState] = useState({ /* FixMe: initial state here */ });
 
   return (
     <ScrollView indicatorStyle="white" style={styles.container}>
