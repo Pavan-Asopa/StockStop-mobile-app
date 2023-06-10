@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme, PaperProvider, Portal, Dialog } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { scaleSize } from '../constants/Layout';
@@ -18,7 +18,7 @@ const RegisterForm = () => {
 
   const navigation = useNavigation();
 
-  const showDialog = () => setHelpVisible(true);
+  // const showDialog = () => setHelpVisible(true);
   const hideDialog = () => setHelpVisible(false);
 
   // as text input in email field changes, check for errors
@@ -72,17 +72,19 @@ const RegisterForm = () => {
     setPassword2("");
   };
 
-  // register function that adds new user to database
+  // POST request that adds new user to the database
   const register = () => {
     const options = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({email: email, password: password})
     };
+
     fetch('http://172.22.26.70:3001/users/register', options)
       .then(response => response.json())
       .then(response => {
         if (response.success) {
+          // if response is successful, display message and allow user to login
           return (
             Alert.alert("Success", "New user registered.",
             [
@@ -92,6 +94,7 @@ const RegisterForm = () => {
               },
             ]
           ));
+          // if response is not successful (user already exists), display message to alert user
         } else {
           return (
             Alert.alert("Error", "User already exists. Register with new details or login with existing account.",
@@ -133,7 +136,7 @@ const RegisterForm = () => {
             labelStyle={styles.helpButton}
             icon="information-outline"
             mode='text'
-            onPress={() => showDialog}
+            onPress={() => setHelpVisible(true)}
             ></Button>
         </View>
         <Portal>

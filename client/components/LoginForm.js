@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { TextInput, HelperText, MD3Colors, Button, MD3DarkTheme } from 'react-native-paper';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-
-const API_URL = `http://172.22.26.70:3001`;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +16,7 @@ const LoginForm = () => {
 
   const navigation = useNavigation();
   
+  // as text input in email field changes, check for error
   const onChangeEmail = (email) => {
     if (!email.includes("@") || !email.includes(".")) { // ensure email follows appropriate format (contains @ and .)
       setEmailError(true);
@@ -40,10 +39,12 @@ const LoginForm = () => {
   // function to handle actions when user clicks the login button
   const handleLogin = () => {
     // ensure that all fields have been completed and there are no errors before sending login request
+    // if no errors and all fields are complete
     if (email !== "" && password !== "" && !emailError && !passwordError) {
-      console.log("Calling login function");
       login(); // call login function
-    } else {
+
+    // if errors or incomplete fields, display alert
+    } else { 
       if (email === "" || password === "" || emailError || passwordError) {
         return (
           Alert.alert("Error", "Your email and/or password do not follow the appropriate formats. Please fix and try again.",
@@ -52,10 +53,12 @@ const LoginForm = () => {
     }
   };
 
+  // function to clear password from form before navigating to another screen
   const clearForm = () => {
     setPassword("");
   }
 
+  // POST request to check whether user exists in database and if so, to allow them to login
   const login = async () => {
     try {
       const options = {
@@ -71,8 +74,8 @@ const LoginForm = () => {
         .then((response) => {
           if(response.success){
             setToken(response);
-            AsyncStorage.setItem("@Token", JSON.stringify(response));
-            navigation.navigate("Home", {token: response});
+            AsyncStorage.setItem("@Token", JSON.stringify(response)); // set token in AsyncStorage so other POST requests can use it
+            navigation.navigate("Home", {token: response}); // navigate to main application screen
           } else {
             return (
               Alert.alert("Error", "Invalid login credentials. Please try again.",
@@ -89,9 +92,8 @@ const LoginForm = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      clearForm();
+      clearForm(); // clear text input in form
     }
-
   };
 
   return (

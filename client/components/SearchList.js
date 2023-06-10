@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import { Button, List, MD3DarkTheme } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 export default function SearchList({stocks}) {
 
@@ -14,7 +13,6 @@ export default function SearchList({stocks}) {
   const updateWatchlist = async (props) => {
     try {
       const tokens = await AsyncStorage.getItem("@Token");
-      //console.log(tokens);
       if (tokens) {
         const token = JSON.parse(tokens);
         const options = {
@@ -42,7 +40,6 @@ export default function SearchList({stocks}) {
       console.error(error);
     }
   };
-  
   
   // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
   const displayAlert = (props) => {

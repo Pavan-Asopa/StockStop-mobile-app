@@ -36,7 +36,7 @@ export function useStockLogo(symbol) {
         return<Text style={styles.text}>Something went wrong: {error}</Text>;
     }
 
-    // return stock logo URL
+    // return stock logo image
     return <View><Image style={styles.logo} source = {{uri:logo}}/></View>;
 };
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, SafeAreaView } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { ActivityIndicator, SegmentedButtons } from "react-native-paper";
@@ -9,7 +9,7 @@ import { useWeeklyData } from "./WeeklyData";
 export default function ClosingChart({symbol}) {
   const daily = useDailyData(symbol); // fetch daily data from api
   const weekly = useWeeklyData(symbol); // fetch weekly data from api
-  const [isWeekly, setIsWeekly] = useState(false); // default chart data will be the weekly data
+  const [isWeekly, setIsWeekly] = useState(false); // default chart data will be the daily data
 
   // if data are null or still loading
   if(!daily || !weekly || weekly.loading || daily.loading) {
@@ -22,9 +22,10 @@ export default function ClosingChart({symbol}) {
     );
   };
   
-  // set labels for chart
+  // set labels for chart based on if isWeekly
   const labels = isWeekly ? weekly.labels : daily.labels;
 
+  // hide labels to decrease clutter on the chart x-axis
   const hideLabelsDaily = [1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29];
   const hideLabelsWeekly = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52];
 
@@ -38,7 +39,7 @@ export default function ClosingChart({symbol}) {
         strokeWidth: 1
       }
     ],
-    legend: isWeekly ? ["52-Week Closing Prices ($USD)"] : ["30-Day Closing Prices ($USD)"]
+    legend: isWeekly ? ["52-Week Closing Prices ($USD)"] : ["30-Day Closing Prices ($USD)"] // set chart legend based on if isWeekly
   };
 
   // define chart configuations, including colours and styles
@@ -50,6 +51,7 @@ export default function ClosingChart({symbol}) {
     useShadowColorFromDataset: false
   };
 
+  // get screen width - used to render chart
   const screenWidth = Dimensions.get("screen").width;
 
   // function returns a line chart with buttons to toggle between daily and weekly data

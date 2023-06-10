@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Alert } from "react-native";
 import { IconButton, List, MD3Colors } from "react-native-paper";

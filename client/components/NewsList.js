@@ -7,6 +7,7 @@ import { scaleSize } from "../constants/Layout";
 // map each individual headline to create a list of headlines
 export default function NewsList({headlines}) {
 
+  // ensuring consistent styling and colours with useTheme()
   const { colors } = useTheme();
 
     return (
@@ -18,7 +19,7 @@ export default function NewsList({headlines}) {
             titleNumberOfLines={3}
             key={headline.title}
             left={props => <List.Icon {...props} color={colors.primary} icon="newspaper-variant-outline"/>}
-            onPress={() => Linking.openURL(headline.url)}
+            onPress={() => Linking.openURL(headline.url)} // clicking on a headline navigates user to article in web browser
           />
         )}
       </View>
