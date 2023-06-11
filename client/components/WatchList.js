@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Alert } from "react-native";
-import { IconButton, List, MD3Colors } from "react-native-paper";
+import { List } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import { useStocksContext } from '../contexts/StocksContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,10 +35,12 @@ export default function WatchList({stocks}) {
     );
   };
 
+  // POST request to delete stock from watchlist in database table
   const deleteFromWatchlist = async (props) => {
     try {
+      // get JWT token from AsyncStorage
       const tokens = await AsyncStorage.getItem("@Token");
-      //console.log(tokens);
+      // if token exists, use it to complete POST request
       if (tokens) {
         const token = JSON.parse(tokens);
         const options = {
@@ -50,14 +52,15 @@ export default function WatchList({stocks}) {
           body: JSON.stringify({ symbol: props.symbol }),
         };
   
+        // fetch data from database
         fetch("http://172.22.26.70:3001/users/deletewatchlist", options)
           .then((response) => response.json())
           .then((response) => {
-            // Handle the response
+            // handle the response
             if (response.success) {
               console.log("Entry deleted from watchlist");
             } else {
-              console.log("Failed to delete entry to watchlist");
+              console.log("Failed to delete entry from watchlist");
             }
           })
           .catch((err) => console.log(err));
@@ -67,6 +70,7 @@ export default function WatchList({stocks}) {
     }
   };
 
+  // map each stock within watchlist to create and display watchlist
   return (
     <View>
       {stocks.map((stock) => {

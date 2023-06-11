@@ -1,18 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
-import { Button, List, MD3DarkTheme } from 'react-native-paper';
+import { List, MD3DarkTheme } from 'react-native-paper';
 import { useStocksContext } from '../contexts/StocksContext';
 import { scaleSize } from '../constants/Layout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SearchList({stocks}) {
 
-  // call useStocksContext() to get the URL, current watchList, and addToWatchList function
+  // call useStocksContext() to get the addToWatchList function
   const { addToWatchList } = useStocksContext();
 
+  // POST request to update watchlist (add new stock) in database table
   const updateWatchlist = async (props) => {
     try {
+      // get JWT token from AsyncStorage
       const tokens = await AsyncStorage.getItem("@Token");
+      // if token exists, use it to complete POST request
       if (tokens) {
         const token = JSON.parse(tokens);
         const options = {
@@ -24,10 +27,11 @@ export default function SearchList({stocks}) {
           body: JSON.stringify({ symbol: props.symbol, name: props.name }),
         };
   
+        // fetch data from database
         fetch("http://172.22.26.70:3001/users/updatewatchlist", options)
           .then((response) => response.json())
           .then((response) => {
-            // Handle the response
+            // handle the response
             if (response.success) {
               console.log("Entry added to watchlist");
             } else {
@@ -56,7 +60,6 @@ export default function SearchList({stocks}) {
             addToWatchList({stockName: props.name, stockSymbol: props.symbol})
             updateWatchlist(props)
           }
-          //onPress: () => updateWatchlist()
         }
       ])
     );
