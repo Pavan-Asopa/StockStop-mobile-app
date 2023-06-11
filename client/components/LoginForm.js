@@ -12,8 +12,6 @@ const LoginForm = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [hidePass, setHidePass] = useState(true);
 
-  const [token, setToken] = useState("");
-
   const navigation = useNavigation();
   
   // as text input in email field changes, check for error
@@ -73,7 +71,6 @@ const LoginForm = () => {
         .then((response) => response.json())
         .then((response) => {
           if(response.success){
-            setToken(response);
             AsyncStorage.setItem("@Token", JSON.stringify(response)); // set token in AsyncStorage so other POST requests can use it
             navigation.navigate("Home", {token: response}); // navigate to main application screen
           } else {
@@ -101,6 +98,7 @@ const LoginForm = () => {
       <View style={styles.break}></View>
       <Text style={styles.text}>Email Address</Text>
       <TextInput
+        style={styles.input}
         label="Email Address"
         value={email}
         onChangeText={onChangeEmail}
@@ -113,6 +111,7 @@ const LoginForm = () => {
       <View style={styles.break}></View>
       <Text style={styles.text}>Password</Text>
       <TextInput
+        style={styles.input}
         label="Password" 
         secureTextEntry={hidePass ? true : false} 
         value={password} 
@@ -153,7 +152,11 @@ const LoginForm = () => {
     text: {
       fontSize: scaleSize(18),
       color: MD3DarkTheme.colors.primary,
-      padding: scaleSize(5),
+      padding: scaleSize(10),
+    },
+    input: {
+      marginLeft: scaleSize(10),
+      marginRight: scaleSize(10),
     },
     registerText: {
       color: "#fff",

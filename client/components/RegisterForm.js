@@ -120,6 +120,7 @@ const RegisterForm = () => {
         <View style={styles.break}></View>
         <Text style={styles.text}>Email Address</Text>
         <TextInput
+          style={styles.input}
           label="Email Address"
           value={email}
           onChangeText={onChangeEmail}
@@ -153,6 +154,7 @@ const RegisterForm = () => {
           </Dialog>
         </Portal>
         <TextInput
+          style={styles.input}
           label="Password" 
           secureTextEntry={hidePass ? true : false} 
           value={password} 
@@ -174,6 +176,7 @@ const RegisterForm = () => {
         <View style={styles.break}></View>
         <Text style={styles.text}>Confirm Password</Text>
         <TextInput
+          style={styles.input}
           label="Confirm Password" 
           secureTextEntry={hidePass2 ? true : false} 
           value={password2} 
@@ -214,11 +217,16 @@ const RegisterForm = () => {
     text: {
       fontSize: scaleSize(18),
       color: MD3DarkTheme.colors.primary,
-      paddingBottom: scaleSize(5),
+      padding: scaleSize(10),
+    },
+    input: {
+      marginLeft: scaleSize(10),
+      marginRight: scaleSize(10),
     },
     passwordText: {
       fontSize: scaleSize(18),
       color: MD3DarkTheme.colors.primary,
+      paddingLeft: scaleSize(10),
     },
     helper: {
       fontSize: scaleSize(15),
