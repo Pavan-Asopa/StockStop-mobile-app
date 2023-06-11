@@ -89,11 +89,11 @@ router.post('/login', async function(req, res, next) {
       if (!match) {
         res.status(401).json({
           error: true,
-          message: "Incorrect password enetered"
+          message: "Incorrect password entered"
         })
       } else {
         // create and return JWT token
-        const secretKey = "secret key" // should use .env for something secret
+        const secretKey = "secret key"
         const expires_in = 60*60*24; // 1 day
         const exp = Date.now() + expires_in * 1000;
 
