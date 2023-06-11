@@ -72,8 +72,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: scaleSize(10),
-    marginTop: scaleSize(10),
+    margin: scaleSize(10),
   },
   stockStop: {
     fontSize: scaleSize(25),
@@ -95,6 +94,7 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(20),
     color: MD3DarkTheme.colors.primary,
     marginTop: scaleSize(20),
+    marginLeft: scaleSize(10),
   },
   title: {
     color: "#fff",
