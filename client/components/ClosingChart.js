@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, Dimensions, SafeAreaView, ScrollView } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { ActivityIndicator, SegmentedButtons } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
