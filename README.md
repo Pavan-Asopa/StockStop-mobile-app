@@ -19,7 +19,9 @@ This will install the required dependencies for the project (in a folder called 
 #### `npm start`
 
 You will be asked where to open the app (iOS, Android, web).
+
 If you have the Expo Go app installed on your mobile device, you may scan the QR code displayed in your console from your mobile device to open the project in Expo Go. 
+
 Alternatively, if you want to view the project on an emulator on your local machine, you will need to have the following installed:
 - XCode required to open iOS emulator
 - Android Studio required to open Android emulator
