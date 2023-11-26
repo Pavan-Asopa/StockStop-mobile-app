@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Text, View } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Text,
+  View,
+} from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
 import NewsList from "../components/NewsList";
 
-async function getHeadlines(symbol) {    
-    const url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&limit=10&sort=LATEST,RELEVANCE&apikey=UDOKLGMRBPTAE3WC` // call api
+async function getHeadlines(symbol) {
+  const ALPHAVANTAGE_API_KEY = process.env.ALPHAVANTAGE_API_KEY;
+  const url = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&limit=10&sort=LATEST,RELEVANCE&apikey=${ALPHAVANTAGE_API_KEY}`; // call api
 
-    let res = await fetch(url);
-    let data = await res.json();
-    let articles = data.feed; // just get list of articles
+  let res = await fetch(url);
+  let data = await res.json();
+  let articles = data.feed; // just get list of articles
 
-    // return article titles and URLs
-    return articles.map((article) => ({
-        title: article.title,
-        url: article.url
-    }));
-};
+  // return article titles and URLs
+  return articles.map((article) => ({
+    title: article.title,
+    url: article.url,
+  }));
+}
 
 export default function NewsScreen({ route, navigation }) {
   const name = route.params.name;
@@ -28,9 +36,9 @@ export default function NewsScreen({ route, navigation }) {
   // useEffect to get the data (call the api) and error check
   useEffect(() => {
     getHeadlines(symbol)
-      .then(res => setHeadlines(res))
+      .then((res) => setHeadlines(res))
       .catch((error) => setError(error.message))
-      .finally(() => setLoading(false))
+      .finally(() => setLoading(false));
   }, [symbol]);
 
   // display feedback when news articles are loading
@@ -41,27 +49,25 @@ export default function NewsScreen({ route, navigation }) {
         <ActivityIndicator animating={true} />
       </View>
     );
-  };
+  }
 
   // display feedback when an error occurs
   if (error) {
     return (
-      <Text style={styles.text}>
-        Something went wrong: {error.message}
-      </Text>
+      <Text style={styles.text}>Something went wrong: {error.message}</Text>
     );
-  };
+  }
 
   // return list of news articles, calling the NewsList component to style the list
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView indicatorStyle="white" style={styles.container}>
         <Text style={styles.header}>{name}</Text>
-        <NewsList headlines={headlines.slice(0,10)} />
+        <NewsList headlines={headlines.slice(0, 10)} />
       </ScrollView>
-    </TouchableWithoutFeedback>    
-  )
-};
+    </TouchableWithoutFeedback>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

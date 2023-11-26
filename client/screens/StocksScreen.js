@@ -5,8 +5,7 @@ import { scaleSize } from "../constants/Layout";
 import WatchList from "../components/WatchList";
 
 // stocks screen displays users' watchlists
-export default function StocksScreen({ route, navigation}) {
-
+export default function StocksScreen({ route, navigation }) {
   // get current watchlist from stocks context, which calls the database for watchlist
   const { ServerURL, watchList, addToWatchList } = useStocksContext();
 
@@ -15,10 +14,12 @@ export default function StocksScreen({ route, navigation}) {
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyHeader}>Your WatchList is empty.{"\n"}</Text>
-        <Text style={styles.emptyMessage}>Go to the Search Screen to add stocks to your WatchList.</Text>
+        <Text style={styles.emptyMessage}>
+          Go to the Search Screen to add stocks to your WatchList.
+        </Text>
       </View>
     );
-  // render list calling the watchlist component and passing watchlist from context
+    // render list calling the watchlist component and passing watchlist from context
   } else {
     return (
       <ScrollView indicatorStyle="white" style={styles.container}>
@@ -26,7 +27,7 @@ export default function StocksScreen({ route, navigation}) {
       </ScrollView>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   container: {

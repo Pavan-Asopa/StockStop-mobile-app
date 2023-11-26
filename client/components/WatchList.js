@@ -1,37 +1,43 @@
 import React from "react";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Alert } from "react-native";
 import { List } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
-import { useStocksContext } from '../contexts/StocksContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useStocksContext } from "../contexts/StocksContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // map each individual stock contained within the watchList to create a list of watched stocks
-export default function WatchList({stocks}) {
-
-    // call useStocksContext() to get the URL, current watchList, and add/delete from watchList functions
-  const {ServerURL, watchList, addToWatchList, removeFromWatchList } = useStocksContext();
+export default function WatchList({ stocks }) {
+  // call useStocksContext() to get the URL, current watchList, and add/delete from watchList functions
+  const { ServerURL, watchList, addToWatchList, removeFromWatchList } =
+    useStocksContext();
 
   // declare a navigation constant to be able to use the useNavigation() hook later on
   const navigation = useNavigation();
 
   // function to display an alert for the user to confirm whether they want to add the selected stock to their watchList
   const displayAlert = (props) => {
-    return (
-      Alert.alert("Confirm action", `What would you like to do with ${props.name}?`,
+    return Alert.alert(
+      "Confirm action",
+      `What would you like to do with ${props.name}?`,
       [
         {
           text: "View detailed information",
-          onPress: () => {navigation.push("StockInfo", {stock: props.symbol})} // navigates user to detailed stock info page
+          onPress: () => {
+            navigation.push("StockInfo", { stock: props.symbol });
+          }, // navigates user to detailed stock info page
         },
         {
           text: "Remove from WatchList",
           onPress: () => {
-            removeFromWatchList({stockName: props.name, stockSymbol: props.symbol}) // removes stock from watchList
-            deleteFromWatchlist(props) //deletes from backend watchlist table
-          }
-        }
-      ])
+            removeFromWatchList({
+              stockName: props.name,
+              stockSymbol: props.symbol,
+            }); // removes stock from watchList
+            deleteFromWatchlist(props); //deletes from backend watchlist table
+          },
+        },
+      ]
     );
   };
 
@@ -51,7 +57,7 @@ export default function WatchList({stocks}) {
           },
           body: JSON.stringify({ symbol: props.symbol }),
         };
-  
+
         // fetch data from database
         fetch("http://172.22.26.70:3001/users/deletewatchlist", options)
           .then((response) => response.json())
@@ -81,13 +87,15 @@ export default function WatchList({stocks}) {
             key={stock.stockSymbol}
             description={stock.stockSymbol}
             descriptionStyle={styles.description}
-            onPress={() => displayAlert({name: stock.stockName, symbol: stock.stockSymbol})} // selecting a stock asks user to confirm action
+            onPress={() =>
+              displayAlert({ name: stock.stockName, symbol: stock.stockSymbol })
+            } // selecting a stock asks user to confirm action
           />
         );
       })}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   title: {

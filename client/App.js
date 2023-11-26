@@ -33,7 +33,11 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false }}/>
+            <Stack.Screen
+              name="Home"
+              component={BottomTabNavigator}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="About" component={AboutScreen} />
             <Stack.Screen name="StockInfo" component={StockInfoScreen} />
             <Stack.Screen name="News" component={NewsScreen} />

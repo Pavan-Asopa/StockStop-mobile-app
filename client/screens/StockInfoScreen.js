@@ -2,12 +2,20 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { scaleSize } from "../constants/Layout";
 import { useStockDescription } from "../components/StockDescription";
-import { Button, Portal, PaperProvider, ActivityIndicator, Dialog, MD3DarkTheme, MD3Colors } from "react-native-paper";
+import {
+  Button,
+  Portal,
+  PaperProvider,
+  ActivityIndicator,
+  Dialog,
+  MD3DarkTheme,
+  MD3Colors,
+} from "react-native-paper";
 import ClosingChart from "../components/ClosingChart";
 import { useStockLogo } from "../components/StockLogo";
 
 // stock info screen displays detailed information about stocks in users' watchlists
-export default function StockInfoScreen({ route, navigation}) {
+export default function StockInfoScreen({ route, navigation }) {
   const symbol = route.params.stock; // symbol is passed as params, need to extract and use it to call apis
   const { description } = useStockDescription(symbol);
   const logo = useStockLogo(symbol);
@@ -18,14 +26,14 @@ export default function StockInfoScreen({ route, navigation}) {
   const hideDialog = () => setVisible(false);
 
   // display message when information is loading
-  if(!description || !logo) {
+  if (!description || !logo) {
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.text}>Loading stock description</Text>
         <ActivityIndicator animating={true} />
       </View>
     );
-  };
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -35,8 +43,11 @@ export default function StockInfoScreen({ route, navigation}) {
         <View style={styles.descContainer}>
           {logo}
           <Text style={styles.details}>
-            <Text style={styles.bold}>Sector: </Text>{description.sector}{'\n'}
-            <Text style={styles.bold}>Industry: </Text>{description.industry}
+            <Text style={styles.bold}>Sector: </Text>
+            {description.sector}
+            {"\n"}
+            <Text style={styles.bold}>Industry: </Text>
+            {description.industry}
           </Text>
         </View>
         <Portal>
@@ -50,11 +61,13 @@ export default function StockInfoScreen({ route, navigation}) {
             </Dialog.Actions>
           </Dialog>
         </Portal>
-        <Button 
+        <Button
           labelStyle={styles.descriptionButton}
           textColor={MD3Colors.primary60}
           onPress={showDialog}
-        >Display stock description</Button>
+        >
+          Display stock description
+        </Button>
         <View style={styles.lineBreak} />
         <Text style={styles.chartHeader}>Closing Data</Text>
         <ClosingChart symbol={symbol} />
@@ -67,12 +80,19 @@ export default function StockInfoScreen({ route, navigation}) {
           mode="contained"
           buttonColor={MD3DarkTheme.colors.primary}
           textColor="#fff"
-          onPress={() => navigation.push('News', {stock: symbol, name: description.stockName})}
-        >Click here</Button>
+          onPress={() =>
+            navigation.push("News", {
+              stock: symbol,
+              name: description.stockName,
+            })
+          }
+        >
+          Click here
+        </Button>
       </PaperProvider>
-    </ScrollView> 
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -92,8 +112,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   descriptionButton: {
-   flex: 1,
-   alignSelf: "center",
+    flex: 1,
+    alignSelf: "center",
     fontSize: scaleSize(18),
     width: scaleSize(250),
     marginTop: scaleSize(5),
@@ -151,7 +171,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: scaleSize(5),
   },
-  newsButtonText:{
+  newsButtonText: {
     color: "#000000",
-  }
+  },
 });

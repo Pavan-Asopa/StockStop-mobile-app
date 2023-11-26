@@ -1,19 +1,30 @@
 import React from "react";
-import { StyleSheet, View, Image, Text, ScrollView, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import { MD3Colors, MD3DarkTheme, List, Button } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
-import { FontAwesome } from '@expo/vector-icons';
-const image = require ('../assets/images/nasdaq.jpg');
+import { FontAwesome } from "@expo/vector-icons";
+const image = require("../assets/images/nasdaq.jpg");
 
 // home screen displays crucial information about how to use the app
 export default function HomeScreen({ navigation }) {
-
   return (
     <ScrollView indicatorStyle="white" style={styles.container}>
       <View>
         <Text style={styles.headerText}>
           Welcome to <Text style={styles.stockStop}>StockStop </Text>
-          <FontAwesome name="line-chart" size={scaleSize(25)} color={MD3Colors.primary50} style={styles.logo} />
+          <FontAwesome
+            name="line-chart"
+            size={scaleSize(25)}
+            color={MD3Colors.primary50}
+            style={styles.logo}
+          />
         </Text>
         <Text style={styles.slogan}>
           Your one-stop shop for all info on the top-traded NASDAQ stocks
@@ -25,41 +36,67 @@ export default function HomeScreen({ navigation }) {
           titleStyle={styles.title}
           description="Browse and filter all available stocks on the search screen"
           descriptionStyle={styles.description}
-          left={props => <List.Icon {...props} icon="numeric-1-circle-outline" color={MD3DarkTheme.colors.primary}/>}
+          left={(props) => (
+            <List.Icon
+              {...props}
+              icon="numeric-1-circle-outline"
+              color={MD3DarkTheme.colors.primary}
+            />
+          )}
         />
         <List.Item
           title="Add"
           titleStyle={styles.title}
           description="Click on a stock to add it to your WatchList"
           descriptionStyle={styles.description}
-          left={props => <List.Icon {...props} icon="numeric-2-circle-outline" color={MD3DarkTheme.colors.primary}/>}
+          left={(props) => (
+            <List.Icon
+              {...props}
+              icon="numeric-2-circle-outline"
+              color={MD3DarkTheme.colors.primary}
+            />
+          )}
         />
         <List.Item
           title="Learn"
           titleStyle={styles.title}
           description="Click on stocks in your WatchList to view more detailed information"
           descriptionStyle={styles.description}
-          left={props => <List.Icon {...props} icon="numeric-3-circle-outline" color={MD3DarkTheme.colors.primary}/>}
+          left={(props) => (
+            <List.Icon
+              {...props}
+              icon="numeric-3-circle-outline"
+              color={MD3DarkTheme.colors.primary}
+            />
+          )}
         />
         <List.Item
           title="Manage"
           titleStyle={styles.title}
           description="Delete stocks from your WatchList when you no longer wish to track them"
           descriptionStyle={styles.description}
-          left={props => <List.Icon {...props} icon="numeric-4-circle-outline" color={MD3DarkTheme.colors.primary}/>}
+          left={(props) => (
+            <List.Icon
+              {...props}
+              icon="numeric-4-circle-outline"
+              color={MD3DarkTheme.colors.primary}
+            />
+          )}
         />
         <Button
           icon="information-outline"
           mode="contained"
-          contentStyle={{flexDirection: "row-reverse"}}
+          contentStyle={{ flexDirection: "row-reverse" }}
           labelStyle={styles.buttonLabel}
           buttonColor={MD3Colors.primary80}
           style={styles.button}
           onPress={() => navigation.push("About")}
-        >About StockStop</Button>
+        >
+          About StockStop
+        </Button>
       </View>
-    </ScrollView>    
-  )
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -108,7 +145,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: scaleSize(18),
-    color: "#000000"
+    color: "#000000",
   },
   button: {
     marginTop: scaleSize(20),

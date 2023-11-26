@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Text, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Text,
+  Dimensions,
+} from "react-native";
 import { Button, MD3Colors, MD3DarkTheme } from "react-native-paper";
 import { scaleSize } from "../constants/Layout";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 // logout screen allows user to logout of application
 export default function LogoutScreen() {
@@ -22,13 +29,13 @@ export default function LogoutScreen() {
             Authorization: `Bearer ${token.token}`,
           },
         };
-  
+
         fetch("http://172.22.26.70:3001/users/getemail", options)
           .then((response) => response.json())
           .then((response) => {
             // Handle the response
             if (response.success) {
-              setUser(response.user)
+              setUser(response.user);
             } else {
               console.log("Could not fetch user info");
             }
@@ -40,48 +47,56 @@ export default function LogoutScreen() {
     }
   };
 
-  getUserInfo() // call function to update state with user info
+  getUserInfo(); // call function to update state with user info
 
   // function to handle logout actions
   const handleLogout = async () => {
-      try {
-        // remove token from AsyncStorage
-        await AsyncStorage.removeItem("@Token");
-        console.log("Token cleared from AsyncStorage");
-        // navigate user back to login screen
-        navigation.navigate("Login");
-      } catch (error) {
-        console.log(error);
-      }   
+    try {
+      // remove token from AsyncStorage
+      await AsyncStorage.removeItem("@Token");
+      console.log("Token cleared from AsyncStorage");
+      // navigate user back to login screen
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.headerText}>Thank you for using <Text style={styles.stockStop}>StockStop</Text></Text>
-        <Text style={styles.slogan}>Your one-stop shop for all info on the top-traded NASDAQ stocks</Text>
+        <Text style={styles.headerText}>
+          Thank you for using <Text style={styles.stockStop}>StockStop</Text>
+        </Text>
+        <Text style={styles.slogan}>
+          Your one-stop shop for all info on the top-traded NASDAQ stocks
+        </Text>
         <View style={styles.lineBreak}></View>
-        <Text style={styles.subheaderText}>You are currently logged in as:</Text>
+        <Text style={styles.subheaderText}>
+          You are currently logged in as:
+        </Text>
         <Text style={styles.userText}>{user}</Text>
         <Button
           icon="logout"
           mode="contained"
-          contentStyle={{flexDirection: "row-reverse"}}
+          contentStyle={{ flexDirection: "row-reverse" }}
           buttonColor={MD3DarkTheme.colors.primary}
           labelStyle={styles.logoutText}
           style={styles.logoutButton}
           onPress={() => handleLogout()} // pressing logout button calls the handleLogout function
-        >Logout</Button>
+        >
+          Logout
+        </Button>
       </View>
-    </TouchableWithoutFeedback>    
-  )
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   headerText: {
     fontSize: scaleSize(25),

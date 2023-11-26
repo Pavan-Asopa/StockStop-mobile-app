@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Searchbar, ActivityIndicator, Banner, Button, MD3Colors } from "react-native-paper";
+import {
+  Searchbar,
+  ActivityIndicator,
+  Banner,
+  Button,
+  MD3Colors,
+} from "react-native-paper";
 import { useStocksContext } from "../contexts/StocksContext";
 import { scaleSize } from "../constants/Layout";
 
@@ -20,40 +26,44 @@ export default function SearchScreen({ route, navigation }) {
 
   // function to filter list of available stocks
   const searchFilterFunction = (searchText) => {
-
     // if user has typed something in the search bar
     if (searchText) {
       // filter all available stocks based on search query
-      const newData = fullList.filter((stock) => 
+      const newData = fullList.filter((stock) =>
         stock.name.includes(
-          searchText[0].toUpperCase() + 
-          searchText.slice(1,-1).toLowerCase()
-        ));
+          searchText[0].toUpperCase() + searchText.slice(1, -1).toLowerCase()
+        )
+      );
       setFilteredList(newData); // set filteredList based on filtered data
       setSearch(searchText); // set search query
 
-    // else: if nothing has been typed into the search bar
+      // else: if nothing has been typed into the search bar
     } else {
       setFilteredList(fullList); // set filteredList to be full list of available stocks
       setSearch(searchText); // set search query (empty string)
-    }};
+    }
+  };
 
+  const FMP_API_KEY = process.env.FMP_API_KEY;
   useEffect(() => {
-    fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=02ea7babe095fdebdb6c4ef948886e07`) // call api
-      .then(res => res.json())
-      .then(data => 
-        data.map(stock => {
+    fetch(
+      `https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=${FMP_API_KEY}`
+    ) // call api
+      .then((res) => res.json())
+      .then((data) =>
+        data.map((stock) => {
           return {
             name: stock.name,
-            symbol: stock.symbol
+            symbol: stock.symbol,
           };
-        }))
+        })
+      )
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false))
-    .then(stocks => {
-      setFullList(stocks); // initially, full list and filtered list are the same (until user starts to search)
-      setFilteredList(stocks);
-    })
+      .then((stocks) => {
+        setFullList(stocks); // initially, full list and filtered list are the same (until user starts to search)
+        setFilteredList(stocks);
+      });
   }, []);
 
   // display feedback when available stocks are loading
@@ -64,7 +74,7 @@ export default function SearchScreen({ route, navigation }) {
         <ActivityIndicator animating={true} />
       </View>
     );
-  };
+  }
 
   // display feedback when an error occurs
   if (error) {
@@ -73,7 +83,7 @@ export default function SearchScreen({ route, navigation }) {
         <Text style={styles.errorMessage}>Something went wrong: {error}</Text>
       </View>
     );
-  };
+  }
 
   // return list of all available stocks, calling the SearchList component to style the list
   // include a search bar above the list for users to search for stocks
@@ -86,9 +96,11 @@ export default function SearchScreen({ route, navigation }) {
           mode="text"
           textColor={MD3Colors.primary50}
           accessibilityHint="Display page help"
-          contentStyle={{flexDirection: "row-reverse"}}
+          contentStyle={{ flexDirection: "row-reverse" }}
           onPress={() => setBannerVisible(true)}
-        >Add Stocks to WatchList</Button>
+        >
+          Add Stocks to WatchList
+        </Button>
         <Banner
           visible={bannerVisible}
           contentStyle={styles.banner}
@@ -99,8 +111,8 @@ export default function SearchScreen({ route, navigation }) {
             },
           ]}
         >
-          Below is a list of available stocks.{'\n'}
-          Use the search bar to look for a specific stock.{'\n'}
+          Below is a list of available stocks.{"\n"}
+          Use the search bar to look for a specific stock.{"\n"}
           Select a stock to add it to your WatchList.
         </Banner>
         <Searchbar
@@ -114,7 +126,7 @@ export default function SearchScreen({ route, navigation }) {
       </ScrollView>
     </TouchableOpacity>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -141,5 +153,5 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(20),
     padding: scaleSize(10),
     fontWeight: "bold",
-  }
+  },
 });

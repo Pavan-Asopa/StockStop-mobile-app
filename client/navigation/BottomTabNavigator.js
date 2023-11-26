@@ -49,19 +49,19 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-      name="Logout"
-      component={LogoutScreen}
-      options={{
-        title: "Logout",
-        tabBarIcon: ({ focused }) => (
-          <TabBarIcon focused={focused} name="log-out-outline" />
-        ),
-      }}
-    />
+        name="Logout"
+        component={LogoutScreen}
+        options={{
+          title: "Logout",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="log-out-outline" />
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
-};
+}
 
 function getHeaderTitle(route) {
   return getFocusedRouteNameFromRoute(route) ?? INITIAL_ROUTE_NAME;
-};
+}
