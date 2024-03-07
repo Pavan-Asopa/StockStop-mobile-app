@@ -1,4 +1,4 @@
-# StockStop-mobile-app
+# StockStop mobile application
 This is a mobile application called StockStop, with the purpose of allowing users to view detailed information on the companies listed on the NASDAQ-100. Users may track companies of interest using the app's WatchList feature.
 
 ### Directories:
